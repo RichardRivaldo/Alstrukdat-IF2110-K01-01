@@ -1,0 +1,1 @@
+1,Wahana1,Tipe1,10000,2_4,10,Deskripsi1.
