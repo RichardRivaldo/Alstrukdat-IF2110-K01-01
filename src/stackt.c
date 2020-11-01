@@ -1,8 +1,3 @@
-//NIM				: 13519189
-//Nama				: Leonardus James Wang
-//Tanggal			: 20 Oktober 2020
-//Topik praktikum	: Stack, Praktikum 8
-//Deskripsi			:
 #include <stdio.h>
 #include "boolean.h"
 #include "stackt.h"

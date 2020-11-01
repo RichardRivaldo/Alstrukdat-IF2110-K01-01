@@ -1,7 +1,3 @@
-//NIM: 13519189
-//Nama: Leonardus James Wang
-
-
 /* File: jam.c */
 /* Tanggal: 2 September 2020 */
 /* *** Realisasi ABSTRACT DATA TYPE JAM *** */

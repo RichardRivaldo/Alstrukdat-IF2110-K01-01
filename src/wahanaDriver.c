@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "boolean.h"
+#include "mesinkar.h"
+#include "mesinkata.h"
 
 int convertToInt(char data[]){
     int res = atoi(data);
