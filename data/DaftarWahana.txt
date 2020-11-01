@@ -1,0 +1,6 @@
+ID-Nama Wahana-Harga-Kapasitas-Deskripsi
+01-Roller Coaster-10-6-wahana permainan berupa kereta yang dipacu dengan kecepatan tinggi pada jalur rel khusus, tidak disarankan untuk dinaiki pengecut.
+02-Rumah Kaca-5-8-wahana permainan berupa sebuah rumah yang memiliki banyak tembok kaca sehingga membuat efek ilusi optik yang katanya memusingkan.
+03-Bianglala-6-10-wahana permainan berbentuk roda yang digantungi kabin-kabin penumpang yang dipasang pada bagian pelek sehingga ketika roda berputar, kabin tetap dalam keadaan tegak.
+04-Arung Jeram-12-4-wahana permainan yang memadukan unsur petualangan adventure, olahraga, dan rekreasi dengan mengarungi alur sungai yang berjeram.
+05-Impact-100-4-Place where magic like Expurosion happen!

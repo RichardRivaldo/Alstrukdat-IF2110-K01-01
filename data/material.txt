@@ -1,0 +1,5 @@
+Semen,10
+Baja,20
+Sekrup,5
+Kayu,15
+Primogem,1000
