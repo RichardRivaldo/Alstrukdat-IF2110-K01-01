@@ -28,4 +28,19 @@ extern Wahana CWahana;
 #define kapasitas(W) (W).kapasitas
 #define deskripsi(W) (W).deskripsi
 
+/* Mengubah array of char menjadi integer */
+int convertToInt(char data[]);
+
+/* Mengubah array of char menjadi Point */
+POINT convertToPoint(char data[]);
+
+/* Memetakan array of char berdasarkan part yang sesuai kedalam struct wahana */
+void mapToWahana(int part, char data[], Wahana * wahana);
+
+/* Membaca 1 baris dari wahana.txt */
+void readWahanaRow(char data[], Wahana* wahana);
+
+/* Mencetak detil setiap wahana yang dibaca dari wahana.txt */
+void cetakDetailWahana(Wahana* wahana);
+
 #endif

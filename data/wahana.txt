@@ -1,1 +1,2 @@
 1,Wahana1,Tipe1,10000,2_4,10,Deskripsi1.
+2,Wahana2,Tipe2,20000,2_8,20,Deskripsi2.
