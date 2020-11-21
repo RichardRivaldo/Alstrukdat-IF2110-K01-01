@@ -1,2 +1,5 @@
-1,Wahana1,Tipe1,10000,2_4,10,Deskripsi1.
-2,Wahana2,Tipe2,20000,2_8,20,Deskripsi2.
+Rumah Kaca-8-5-600-100-10800-5,2,5,5,0-1800-15-Wahana permainan Rumah Kaca.
+Bianglala-10-6-1200-175-21600-5,5,10,0,0-7200-30-Wahana permainan Bianglala.
+Arung Jeram-4-12-1080-250-28800-20,0,0,10,0-12600-20-Wahana permainan Arung Jeram.
+Roller Coaster-6-10-900-390-36000-0,20,20,0,0-14400-25-Wahana permainanRoller Coaster.
+Impact-4-500-5400-10000-39600-0,0,0,0,5-0-0-Place where expurosion happen!
