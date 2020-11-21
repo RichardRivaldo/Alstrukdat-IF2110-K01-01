@@ -14,9 +14,8 @@
 /* Definisi elemen dan address */
 typedef struct {
     int prio;  /* [1..100], prioritas dengan nilai 1..100 (1 adalah prioritas tertinggi) */
-    char[] nama;  /* nama pengunjung atau ID */
-    char[] wahana; /* wahana yang dituju */
     int kesabaran; /* tingkat kesabaran */
+    char wahana[5][255]; /* wahana yang dituju */
 } Pengunjung;
 typedef int address;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype PrioQueueChar : */

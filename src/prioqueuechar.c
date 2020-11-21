@@ -1,4 +1,5 @@
 #include "prioqueuechar.h"
+#include "customString.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -86,13 +87,19 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
     /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
             Q mungkin kosong */
     if(NBElmt(*Q) == 1){
-        Nama(*X) = Nama(InfoHead(*Q)), Prio(*X) = Prio(InfoHead(*Q));
-        Wahana(*X) = Nama(InfoHead(*Q)), Sabar(*X) = Sabar((InfoHead(*Q)));
-        Head(*Q) = Nil, Tail(*Q) = Nil;
+        Prio(*X) = Prio(InfoHead(*Q));
+        for(int i = 0; i < 5; i++){
+            StringCopy(100, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+        }
+        Sabar(*X) = Sabar(InfoHead(*Q));
+        Head(*Q) = Nil; Tail(*Q) = Nil;
     }
     else{
-        Nama(*X) = Nama(InfoHead(*Q)), Prio(*X) = Prio(InfoHead(*Q));
-        Wahana(*X) = Nama(InfoHead(*Q)), Sabar(*X) = Sabar((InfoHead(*Q)));
+        Prio(*X) = Prio(InfoHead(*Q));
+        for(int i = 0; i < 5; i++){
+            StringCopy(100, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+        }
+        Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = (Head(*Q) % MaxEl(*Q)) + 1;
     }
 }
@@ -108,9 +115,27 @@ void PrintPrioQueueChar (PrioQueueChar Q){
     #
     */
     Pengunjung CInfo;
-    while(!IsEmpty(Q)){
-        Dequeue(&Q, &CInfo);
-        printf("%d %s %s %d\n", Prio(CInfo), Nama(CInfo), Wahana(CInfo), Sabar(CInfo));
+    int count = 0;
+
+    if(IsEmpty(Q)){
+        printf("The Wangky's Queue is empty.\n");
     }
-    printf("#\n");
+    else{
+        printf("Queue [%d/%d]:\n", NBElmt(Q), MaxEl(Q));
+        while(!IsEmpty(Q)){
+            Dequeue(&Q, &CInfo);
+            printf("Wangkies %d ", count + 1);
+            printf("(");
+            int i = 0;
+            while(CInfo.wahana[i][0] != '\0'){
+                printf("%s", CInfo.wahana[i]);
+                if(CInfo.wahana[i+1][0] != '\0'){
+                    printf(", ");
+                }
+                i++;
+            }
+            printf("), Patience: %d\n", CInfo.kesabaran);
+            count++;
+        }
+    }
 }
