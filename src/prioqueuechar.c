@@ -139,3 +139,10 @@ void PrintPrioQueueChar (PrioQueueChar Q){
         }
     }
 }
+
+void RandomizePrio (Pengunjung X){
+    /* Melakukan randomize terhadap priority pengunjung */
+    /* I.S. Pengunjung tidak memiliki priority */
+    /* F.S. Pengunjung memiliki priority antara 0-100 */
+    Pengunjung.prio = rand() % 100 + 1;
+}
