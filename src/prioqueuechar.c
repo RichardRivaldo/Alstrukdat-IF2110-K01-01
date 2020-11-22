@@ -144,5 +144,52 @@ void RandomizePrio (Pengunjung X){
     /* Melakukan randomize terhadap priority pengunjung */
     /* I.S. Pengunjung tidak memiliki priority */
     /* F.S. Pengunjung memiliki priority antara 0-100 */
-    Pengunjung.prio = rand() % 100 + 1;
+    X.prio = rand() % 100 + 1;
+    if(X.prio == 1){
+        X.prio += 25;
+    }
+}
+
+void SistemQueue(PrioQueueChar Q){
+    /* Sistem Queue yang akan digunakan dalam main phase */
+    MakeEmpty(&Q, 20);
+}
+
+void Serve(PrioQueueChar *Q){
+    char whnSelected[255];
+    Pengunjung X;
+    int i = 0;
+    boolean found = false;
+
+    scanf("%s", &whnSelected);
+
+    Dequeue(Q, &X);
+    while(X.wahana[i][0] != '\0' && !found){
+        if(StringCompare(255, whnSelected, X.wahana[i])){
+            found = true;
+        }
+        else{
+            i++;
+        }
+    }
+    if(found){
+        if(X.wahana[i][0] != '\0'){
+            if(X.prio - 2 < 1){
+                X.prio = 1;
+            }
+            else{
+                X.prio -= 3;
+            }
+            Enqueue(Q, X);
+        }
+    }
+}
+
+void Prepare(PrioQueueChar *Q){
+    printf("Starting Preparation Phase...\n");
+    Pengunjung temp;
+    while(!IsEmpty(*Q)){
+        Dequeue(Q, &temp);
+    }
+    /* Call Prep Phase */
 }

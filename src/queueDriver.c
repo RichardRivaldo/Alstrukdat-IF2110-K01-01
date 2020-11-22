@@ -1,7 +1,8 @@
-#include "prioqueuechar.c"
+#include "prioqueuechar.h"
 #include <stdio.h>
 
 int main(){
+
     PrioQueueChar Q;
     Pengunjung A, B;
     Pengunjung X;
@@ -14,14 +15,28 @@ int main(){
 
     MakeEmpty(&Q, 5);
     Enqueue(&Q, A);
-    Dequeue(&Q, &X);
+    Enqueue(&Q,B);
+    PrintPrioQueueChar(Q);
+
+    /*Dequeue(&Q, &X);
+
+    printf("%s\n", X.wahana[1]);
+    printf("%d\n", X.prio);
+    printf("%d\n", X.kesabaran);
+    */
+    Serve(&Q);
+    PrintPrioQueueChar(Q);
+
+    Dequeue(&Q, &X); printf("%d\n", X.prio);
+    /*
     printf("%d\n", Prio(X));
     printf("%d\n", Sabar(X));
 
     PrintPrioQueueChar(Q);
 
-    Enqueue(&Q,B);
+    Prepare(&Q);
     PrintPrioQueueChar(Q);
+    */
 
     return 0;
 }

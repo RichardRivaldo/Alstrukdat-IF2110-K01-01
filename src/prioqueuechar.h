@@ -31,7 +31,6 @@ typedef struct {
 /* ********* AKSES (Selektor) ********* */
 /* Jika e adalah Pengunjung dan Q adalah PrioQueueChar, maka akses elemen : */
 #define Prio(e)     (e).prio
-#define Nama(e)     (e).nama
 #define Wahana(e)   (e).wahana
 #define Sabar(e)    (e).kesabaran
 #define Head(Q)     (Q).HEAD
