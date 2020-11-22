@@ -96,4 +96,24 @@ void RandomizeWahana (Pengunjung X);
     /* I.S. Pengunjung tidak memiliki tujuan wahana */
     /* F.S. Pengunjung memiliki wahana yang ingin dituju */
 
+void SistemQueue(PrioQueueChar Q);
+    /* Sistem Queue yang akan digunakan dalam main phase */
+
+void Serve(PrioQueueChar *Q);
+    /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
+
+void ChanceRusak(Wahana* wahana);
+    /* Probabilitas Wahana rusak (30%) */
+
+void Repair(Wahana* wahana);
+    /* Mengembalikan state wahana */
+
+void Detail();
+    /* Mengecek detail wahana yang berada disekitar P */
+
+void Office();
+
+void Prepare(PrioQueueChar *Q);
+    /* Masuk ke dalam Prepare Phase */
+
 #endif

@@ -1,5 +1,7 @@
 #include "prioqueuechar.h"
 #include "customString.h"
+#include "wahana.c"
+#include "peta.c"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -156,6 +158,7 @@ void SistemQueue(PrioQueueChar Q){
 }
 
 void Serve(PrioQueueChar *Q){
+    /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
     char whnSelected[255];
     Pengunjung X;
     int i = 0;
@@ -183,6 +186,38 @@ void Serve(PrioQueueChar *Q){
             Enqueue(Q, X);
         }
     }
+}
+
+void ChanceRusak(Wahana* wahana){
+    /* Probabilitas Wahana rusak (25%) */
+    int i = rand() % 4;
+
+    if (i == 1){
+        wahana.state = false;
+    }
+}
+
+/*** Kurang Waktu ***/
+void Repair(Wahana* wahana){
+    /* Mengembalikan state wahana */
+    wahana.state = true;
+}
+
+
+void Detail(Peta * peta){
+    /* Mengecek detail wahana yang berada disekitar P */
+    int currentArea = (*peta).currentArea;
+    Wahana wahana;
+    /* Ngecek sekitar player */
+    /* Daftar kan wahana yang ada di sekitar player */
+    cetakDetailWahana(wahana);
+}
+
+/*** Tunggu ada detail wahana ***/
+void Office(){
+    /* Mengecek detail dan laporan Wahana */
+    int i;
+        cetakDetailWahana(wahana[i]);
 }
 
 void Prepare(PrioQueueChar *Q){
