@@ -1,4 +1,4 @@
-#include "prioqueuechar.h"
+#include "prioqueuechar.c"
 #include <stdio.h>
 
 int main(){

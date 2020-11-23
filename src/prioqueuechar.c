@@ -1,7 +1,5 @@
 #include "prioqueuechar.h"
 #include "customString.h"
-#include "wahana.c"
-#include "peta.c"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,8 +11,8 @@ boolean IsEmpty (PrioQueueChar Q){
 
 boolean IsFull (PrioQueueChar Q){
     /* Mengirim true jika tabel penampung elemen Q sudah penuh */
-    /* yaitu mengandung elemen sebanyak MaxEl */
-    return(NBElmt(Q) == MaxEl(Q));
+    /* yaitu mengandung elemen sebanyak MaxElQ */
+    return(NBElmt(Q) == MaxElQ(Q));
 }
 
 int NBElmt (PrioQueueChar Q){
@@ -26,7 +24,7 @@ int NBElmt (PrioQueueChar Q){
         return(Tail(Q) - Head(Q) + 1);
     }
     else{
-        return(((Tail(Q) - Head(Q) + MaxEl(Q)) % MaxEl(Q)) + 1);
+        return(((Tail(Q) - Head(Q) + MaxElQ(Q)) % MaxElQ(Q)) + 1);
     }
 }
 
@@ -34,24 +32,24 @@ void MakeEmpty (PrioQueueChar * Q, int Max){
     /* I.S. sembarang */
     /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
     /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max */
-    /* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
+    /* atau : jika alokasi gagal, Q kosong dg MaxElQ=0 */
     /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
     (*Q).T = (Pengunjung*) malloc((Max) * sizeof(Pengunjung));
 
     if(((*Q).T) != NULL){
         Head(*Q) = Nil, Tail(*Q) = Nil;
-        MaxEl(*Q) = Max;
+        MaxElQ(*Q) = Max;
     }
     else{
-        MaxEl(*Q) = 0;
+        MaxElQ(*Q) = 0;
     }
 }
 
 void DeAlokasi(PrioQueueChar * Q){
     /* Proses: Mengembalikan memori Q */
     /* I.S. Q pernah dialokasi */
-    /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
-    MaxEl(*Q) = 0;
+    /* F.S. Q menjadi tidak terdefinisi lagi, MaxElQ(Q) diset 0 */
+    MaxElQ(*Q) = 0;
     free((*Q).T);
 }
 
@@ -68,18 +66,18 @@ void Enqueue (PrioQueueChar * Q, Pengunjung X){
         int idx = Tail(*Q), threshold = NBElmt(*Q);
 
         while((Prio(X) < Prio((*Q).T[idx])) && (threshold > 0)){
-            (*Q).T[(idx % MaxEl(*Q)) + 1] = (*Q).T[idx];
+            (*Q).T[(idx % MaxElQ(*Q)) + 1] = (*Q).T[idx];
 
             idx -= 1;
             threshold -= 1;
 
             if(idx == -1){
-                idx = MaxEl(*Q) -1;
+                idx = MaxElQ(*Q) -1;
             }
         }
 
-        (*Q).T[(idx + 1) % MaxEl(*Q)] = X;
-        Tail(*Q) = (Tail(*Q) + 1) % MaxEl(*Q);
+        (*Q).T[(idx + 1) % MaxElQ(*Q)] = X;
+        Tail(*Q) = (Tail(*Q) + 1) % MaxElQ(*Q);
     }
 }
 
@@ -102,7 +100,7 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
             StringCopy(100, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
-        Head(*Q) = (Head(*Q) % MaxEl(*Q)) + 1;
+        Head(*Q) = (Head(*Q) % MaxElQ(*Q)) + 1;
     }
 }
 
@@ -123,7 +121,7 @@ void PrintPrioQueueChar (PrioQueueChar Q){
         printf("The Wangky's Queue is empty.\n");
     }
     else{
-        printf("Queue [%d/%d]:\n", NBElmt(Q), MaxEl(Q));
+        printf("Queue [%d/%d]:\n", NBElmt(Q), MaxElQ(Q));
         while(!IsEmpty(Q)){
             Dequeue(&Q, &CInfo);
             printf("Wangkies %d ", count + 1);
@@ -193,7 +191,7 @@ void ChanceRusak(Wahana* wahana){
     int i = rand() % 4;
 
     if (i == 1){
-        wahana.state = false;
+        (*wahana).state = false;
     }
 }
 
