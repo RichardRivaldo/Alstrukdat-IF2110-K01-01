@@ -31,12 +31,10 @@ boolean verifyGerak(char target);
 //print tempat player berada sekarang
 void printCurrentArea(Peta *P);
 
-//hapus posisi sebelumnya
-void removeP(Peta *peta);
-
-//menambahkan legend P di peta yang telah di update
-void addP(Peta *peta);
-
 //update peta
 void updatePeta(char target, POINT P, int area, Peta *peta);
+
+//check apakah posisi sekarang di office
+boolean isInOffice(Peta * peta);
+
 #endif
