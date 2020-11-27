@@ -7,7 +7,6 @@
 #define prioqueuechar_H
 
 #include "boolean.h"
-#include "wahana.h"
 
 #define Nil -1
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
@@ -25,7 +24,7 @@ typedef struct {
     Pengunjung * T;   /* tabel penyimpan elemen */
     address HEAD;  /* alamat penghapusan */
     address TAIL;  /* alamat penambahan */
-    int MaxElQ;     /* Max elemen queue */
+    int MaxEl;     /* Max elemen queue */
 } PrioQueueChar;
 /* Definisi PrioQueueChar kosong: HEAD=Nil; TAIL=Nil. */
 
@@ -38,7 +37,7 @@ typedef struct {
 #define Tail(Q)     (Q).TAIL
 #define InfoHead(Q) (Q).T[(Q).HEAD]
 #define InfoTail(Q) (Q).T[(Q).TAIL]
-#define MaxElQ(Q)   (Q).MaxElQ
+#define MaxEl(Q)    (Q).MaxEl
 #define Elmt(Q,i)   (Q).T[(i)]
 
 /* ********* Prototype ********* */
@@ -113,6 +112,7 @@ void Detail();
     /* Mengecek detail wahana yang berada disekitar P */
 
 void Office();
+    /* Mengecek detail dan laporan Wahana */
 
 void Prepare(PrioQueueChar *Q);
     /* Masuk ke dalam Prepare Phase */
