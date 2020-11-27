@@ -51,10 +51,11 @@ int startupPanel(int choice, boolean picked){
 
 		char input;
 		input = _getch();
+		input = toupper(input);
 
-		if(input =='P'){
+		if(input =='P' || input=='S'){
 			choice+=1;
-		}else if(input=='H'){
+		}else if(input=='H' || input=='W'){
 			choice-=1;
 		}else if(input==' '){
 			picked=true;
