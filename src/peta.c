@@ -1,5 +1,8 @@
 #include "peta.h"
-#include "point.c"
+#include "point.h"
+#include "string.h"
+#include "stdio.h"
+#include "system.h"
 
 Peta bacaPeta(){
     FILE * fPointer = fopen("../data/map.txt","r");
@@ -16,10 +19,13 @@ Peta bacaPeta(){
             // printf("\nMap %d\n",(q+1));
         }else{
             for(int i = 0; i<255; i++){
-                peta.areas[q][r][i] = line[i];
+                
                 if(line[i]=='P'){
                     peta.currentArea = q;
                     peta.coords = MakePOINT(i,r);
+                    peta.areas[q][r][i] = '-';
+                }else{
+                    peta.areas[q][r][i] = line[i];
                 }
             }
             // printf("%s\n", peta.areas[q][r]);
@@ -51,21 +57,17 @@ void handleGerak(char opsi, Peta * peta){
     char target = (*peta).areas[currentArea][Y][X];
     boolean bisaGerak = verifyGerak(target);
     if(bisaGerak){
-        printf("Bisa gerak bang!\n");
         updatePeta(target, targetPoin, currentArea, peta);
+    }else{
+        unableMoveMsg();
     }
 }
 
 boolean verifyGerak(char target){
     switch(target){
         case '*' :
-            printf("Nabrak tembok bang!\n");
-            return false;
         case 'W' :
-            printf("Nabrak wahana bang!\n");
-            return false;
-        case 'P' :
-            printf("Nabrak P bang!\n");
+        case 'A' :
             return false;
     }
     return true;
@@ -79,29 +81,20 @@ void printCurrentArea(Peta *peta){
     int rows = sizeof((*peta).areas[area]) / sizeof((*peta).areas[area][0]);
     // printf("Jumlah baris : %d\n",rows);
     for(int i = 0; i<rows; i++){
-        printf("%s", (*peta).areas[area][i]);
+        int length = strlen((*peta).areas[area][i]);
+        for(int j = 0; j<length; j++){
+            if(i==(*peta).coords.Y && j==(*peta).coords.X){
+                printf("P");
+            }else{
+                printf("%c", (*peta).areas[area][i][j]);
+            }
+        }
+        // printf("%s", (*peta).areas[area][i]);
     }
     printf("\n");
 }
 
-void removeP(Peta *peta){
-    int area = (*peta).currentArea;
-    int x = (*peta).coords.X;
-    int y = (*peta).coords.Y;
-    printf("MENGHILANGKAN P di %d (%d,%d)\n",area,x,y);
-    (*peta).areas[area][y][x] = '-';
-}
-
-void addP(Peta *peta){
-    int area = (*peta).currentArea;
-    int x = (*peta).coords.X;
-    int y = (*peta).coords.Y;
-    printf("MENAMBAHKAN P di %d (%d,%d)\n",area,x,y);
-    (*peta).areas[area][y][x] = 'P';
-}
-
 void updatePeta(char target, POINT P, int area, Peta *peta){
-    removeP(peta);
     if(target=='^' || target=='V' || target=='<' || target=='>'){
         printf("PINDAH SUB MAP BANG!\n");
         switch(area){
@@ -145,5 +138,11 @@ void updatePeta(char target, POINT P, int area, Peta *peta){
     }
     (*peta).currentArea = area;
     (*peta).coords = P;
-    addP(peta);
+}
+
+boolean isInOffice(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X;
+    int y = (*peta).coords.Y;
+    return (*peta).areas[area][y][x] == 'O';
 }
