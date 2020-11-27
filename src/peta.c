@@ -1,7 +1,8 @@
 #include "peta.h"
-#include "point.c"
+#include "point.h"
 #include "string.h"
 #include "stdio.h"
+#include "system.h"
 
 Peta bacaPeta(){
     FILE * fPointer = fopen("../data/map.txt","r");
@@ -56,21 +57,17 @@ void handleGerak(char opsi, Peta * peta){
     char target = (*peta).areas[currentArea][Y][X];
     boolean bisaGerak = verifyGerak(target);
     if(bisaGerak){
-        printf("Bisa gerak bang!\n");
         updatePeta(target, targetPoin, currentArea, peta);
+    }else{
+        unableMoveMsg();
     }
 }
 
 boolean verifyGerak(char target){
     switch(target){
         case '*' :
-            printf("Nabrak tembok bang!\n");
-            return false;
         case 'W' :
-            printf("Nabrak wahana bang!\n");
-            return false;
         case 'A' :
-            printf("Nabrak A bang!\n");
             return false;
     }
     return true;

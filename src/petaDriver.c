@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h> 
+#include <conio.h>
 
 void main(){
     Peta p = bacaPeta();
@@ -9,7 +10,8 @@ void main(){
     while(input!='Q'){
         printCurrentArea(&p);
         printf("Silahkan mau gerak kemana : WASD,O,Q\n");
-        scanf("%c",&input);
+        input = _getch();
+        // scanf("%c",&input);
         input = toupper(input);
         if(input == 'W' || input =='A' || input=='S' || input=='D'){
             handleGerak(input, &p);
