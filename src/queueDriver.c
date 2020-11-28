@@ -1,9 +1,9 @@
 /* Driver PrioQueueChar */
 
 #include "prioqueuechar.c"
-#include "customString.c"
-#include "MatriksOfString.c"
-#include "PrepCommand.c"
+// #include "customString.c"
+// #include "MatriksOfString.c"
+// #include "PrepCommand.c"
 #include <stdio.h>
 
 int main(){

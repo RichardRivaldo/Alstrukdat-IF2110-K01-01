@@ -13,13 +13,13 @@
 #include "point.h"
 #include "bintree.h"
 
-// #include "MatriksOfString.c"
-// #include "mesinkar.c"
-// #include "mesinkata.c"
-// #include "stackt.c"
-// #include "customString.c"
-// #include "point.c"
-// #include "bintree.c"
+#include "MatriksOfString.c"
+#include "mesinkar.c"
+#include "mesinkata.c"
+#include "stackt.c"
+#include "customString.c"
+#include "point.c"
+#include "bintree.c"
 
 //gcc PrepCommand.c MatriksOfString.c mesinkar.c mesinkata.c stackt.c customString.c point.c bintree.c
 
@@ -661,22 +661,22 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
 }
 
 
-int main(){
-    //Inisialisasi main
-    for (int i = 0; i < barisMatriksWahana; ++i)
-    {
-        PlokasiWahana[i] = MakePOINT(-1,-1);
-    }
-    // KAMUS
-    MatriksOfString MWahana;
-    MatriksOfString MMaterial;
-    CreateEmpty(&S);
-    // ALGORITMA
-    LoadFileWahana(&MWahana, 8, 12);
-    LoadFileMaterial(&MMaterial, 5, 2);
-    IsiPohonUpgrade(MWahana,&pohonUpgrade);
-    while (true){
-        inputPrepPhase(MWahana, MMaterial);
-    }
-    return 0;
-}
+// int main(){
+//     //Inisialisasi main
+//     for (int i = 0; i < barisMatriksWahana; ++i)
+//     {
+//         PlokasiWahana[i] = MakePOINT(-1,-1);
+//     }
+//     // KAMUS
+//     MatriksOfString MWahana;
+//     MatriksOfString MMaterial;
+//     CreateEmpty(&S);
+//     // ALGORITMA
+//     LoadFileWahana(&MWahana, 8, 12);
+//     LoadFileMaterial(&MMaterial, 5, 2);
+//     IsiPohonUpgrade(MWahana,&pohonUpgrade);
+//     while (true){
+//         inputPrepPhase(MWahana, MMaterial);
+//     }
+//     return 0;
+// }

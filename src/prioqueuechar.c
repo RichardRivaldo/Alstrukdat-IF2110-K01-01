@@ -1,12 +1,12 @@
 #include "prioqueuechar.h"
 #include "MatriksOfString.h"
-#include "MatriksOfString.c"
 #include "customString.h"
-#include "peta.c"
-#include "peta.h"
+// #include "peta.c"
+// #include "peta.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "point.h"
+#include "PrepCommand.c"
 
 boolean IsEmptyQ (PrioQueueChar Q){
     /* Mengirim true jika Q kosong: lihat definisi di atas */
@@ -175,8 +175,8 @@ void Serve(PrioQueueChar *Q, MatriksOfString M){
             found = true;
             for(int baris = 0; baris < 8; baris++){
                 if(StringTrueCompare(255, whnSelected, M.Mem[baris][0])){
-                    if(M.Mem[baris][1] < 1){
-                        if(M.Mem[baris][9] == 1){
+                    if(StringToInt(lengthStr,M.Mem[baris][1]) < 1){
+                        if(StringToInt(lengthStr,M.Mem[baris][9]) == 1){
                             while(X.wahana[i][0] != '\0'){
                                 StringCopy(100, X.wahana[i], X.wahana[i+1]);
                                 i++;
