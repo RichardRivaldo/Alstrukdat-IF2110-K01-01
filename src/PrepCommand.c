@@ -474,6 +474,70 @@ void upgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, i
     Push(act, X);
 }
 
+void ShowUpgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/,BinTree pohonUpgrade[5],
+            POINT PlokasiWahana[8],POINT PKoordinat /*Koordinat player*/, int PMat[5], char namaWahana[lengthStr]){
+    // KAMUS
+    BinTree P;
+    str input;
+    // ALGORITMA
+    for (i = 0; i < 5; ++i)
+    {
+        if (SearchTree(pohonUpgrade[i],namaWahana))
+        {
+            P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
+        }
+    }
+    while (true){
+        if (StringTrueCompare(lengthStr,Nama(P),namaWahana)){
+            break;
+        }
+        else{
+            if (SearchTree(Left(P), namaWahana)){
+                P = Left(P);
+            }
+            else{
+                P = Right(P);
+            }
+        }
+    }
+    if (Left(P) != NULL && Right(P) != NULL){
+        printf("Wahana ini telah mencapai level tertinggi.\n");
+    }
+    else{
+        printf("Ingin melakukan upgrade apa?\n");
+        printf("List:\n");
+        if (Left(P) != NULL){
+            printf("    - %s\n", Nama(Left(P)));
+        }
+        if (Right(P) != NULL){
+            printf("    - %s\n", Nama(Right(P)));
+        }
+        printf("\nInput berupa: <Nama Gedung>\n");
+        printf("Masukkan Input: ");
+        STARTKATA();
+        printf("\n");
+        StringCopy(100, input, pita);
+        upgrade(wahana,act,PMoney,PTime,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,input);
+    }
+}
+
+void PrintHistory(MatriksOfString wahana,BinTree pohonUpgrade,char namaWahana[lengthStr]){//pakai fungsi SearchTree di array upgrade
+    // KAMUS
+    // ALGORITMA
+    if (StringTrueCompare(lengthStr, Nama(pohonUpgrade), namaWahana)){
+        printf("%s.\n", Nama(pohonUpgrade));
+    }
+    else{
+        printf("%s -> ", Nama(pohonUpgrade));
+        if (SearchTree(Left(pohonUpgrade), namaWahana)){
+            PrintHistory(wahana, Left(pohonUpgrade), namaWahana);
+        }
+        else{
+            PrintHistory(wahana, Right(pohonUpgrade), namaWahana);
+        }
+    }
+}
+
 void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
     // ALGORITMA
     printf("Masukan Perintah: ");
@@ -483,7 +547,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
         ShowBuild(MWahana);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
-        printf("upgrade.\n");
+        ShowUpgrade(Mwahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,namaWahana);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
         ShowBuy(MMaterial);
