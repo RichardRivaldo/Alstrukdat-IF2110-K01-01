@@ -150,15 +150,12 @@ void stackToLokasi(Stack S, POINT lokasiWahana[barisMatriksWahana])
 	{
 		lokasiWahana[i] = MakePOINT(-1,-1);
 	}
-	while (!IsEmptyStack(Stemp))
+	Pop(&Stemp,&x);
+	for (i = 0; i < barisMatriksWahana; ++i)
 	{
-		Pop(&Stemp,&x);
-		for (i = 0; i < barisMatriksWahana; ++i)
+		if (NEQ(x.Wah[i],MakePOINT(-1,-1)))
 		{
-			if (NEQ(x.Wah[i],MakePOINT(-1,-1)))
-			{
-				lokasiWahana[i] = x.Wah[i];
-			}
+			lokasiWahana[i] = x.Wah[i];
 		}
 	}
 }

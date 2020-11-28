@@ -393,6 +393,87 @@ void ShowBuy(MatriksOfString mat){
     }
 }
 
+void upgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/,BinTree pohonUpgrade[5],
+            POINT PlokasiWahana[8],POINT PKoordinat /*Koordinat player*/, int PMat[5], char namaWahana[lengthStr])
+{
+    //KAMUS
+    int i,j,idx,idx2;
+    int jumlah;
+    int harga;
+    Aksi X;
+
+    int requiredMoney;
+    int requiredTime;
+    int availableMaterials[5];
+    boolean enoughMaterial = true;
+    int requiredWahanaMaterials[5];
+    POINT lokasiWahana[5];
+    boolean locationIsTaken = false;
+
+    BinTree P;
+    //ALGORITMA
+    requiredTime = stackToRequiredTime(*act); //Hitung total waktu yang dibutuhkan dari stack Aksi
+    requiredMoney = stackToRequiredMoney(*act); //Hitung total uang yang dibutuhkan dari stack Aksi
+    stackToMaterial(*act,availableMaterials); //Hitung materials yang udah ada di stack
+    stackToLokasi(*act,lokasiWahana);//Cari posisi dari wahana dari stack
+
+    for (j = 0; j < 8; ++j)
+    {
+        if (NEQ(PlokasiWahana[j],MakePOINT(-1,-1)))
+        {
+            lokasiWahana[j] = PlokasiWahana[j];
+        }
+
+        if (EQ(lokasiWahana[j], PKoordinat))
+        {
+            locationIsTaken = true;
+        }
+    }
+
+    idx = 0;idx2 = 0;
+    for (i = 0; i < 5; ++i)
+    {
+        if (SearchTree(pohonUpgrade[i],namaWahana))
+        {
+            P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
+
+        }
+    }
+
+    for (i = 0; i < 8; ++i)
+    {
+        if (StringTrueCompare(lengthStr, wahana.Mem[i][0], namaWahana))
+        {
+            idx = i;/*Cari index dari nama upgrade di matriks*/
+            
+        }
+    }
+
+    upgradeInfo U;
+    U = FindTreeNode(P,namaWahana); /*Cari nama wahana yang ingin di upgrade ke nama upgrade*/
+    for (i = 0; i < wahana.NBrsEff; ++i)
+    {
+        if (StringTrueCompare(lengthStr, wahana.Mem[i][0], U.wahanasblm))
+        {
+            idx2 = i; /*Cari index dari nama wahana yang ingin di upgrade*/
+        }
+    }
+
+    POINT PTemp;
+    PTemp = lokasiWahana[idx];
+    lokasiWahana[idx] = lokasiWahana[idx2];
+    lokasiWahana[idx2] = PTemp;
+
+    CreateEmptyAksi(&X);
+    X.Money = StringToInt(lengthStr,wahana.Mem[idx][4]);
+    X.Time = StringToInt(lengthStr,wahana.Mem[idx][5]);
+    for (j = 0; j < wahana.NBrsEff; ++j)
+    {
+        X.Wah[j] = lokasiWahana[j];
+    }
+    Push(act, X);
+}
+
 void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
     // ALGORITMA
     printf("Masukan Perintah: ");
@@ -420,6 +501,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
         printf("Command ini belum tersedia! Silakan input command lain.\n");
     }
 }
+
 
 // int main(){
 //     // KAMUS
