@@ -8,31 +8,68 @@ Peta bacaPeta(){
     FILE * fPointer = fopen("../data/map.txt","r");
     Peta peta;
     int q = 0, r=0;
+    int rowCount = 0, columnCount = 0;
+    char curr;
     char line[255];
     memset(line,0,255); //ngosongin linenya
     // printf("Map 1\n");
     while(!feof(fPointer)){
         fgets(line, 255, fPointer);
+        // curr = fgetc(fPointer);
         if(line[0]=='/'){
+            peta.submap[q] = CopySubmap(rowCount, columnCount, peta.areas[q]);    
             q++;
             r=0;
-            // printf("\nMap %d\n",(q+1));
+            rowCount = 0;
         }else{
-            for(int i = 0; i<255; i++){
-                
-                if(line[i]=='P'){
+            rowCount++;
+            columnCount = 0;
+            for(int c = 0; c<255; c++){
+                if(line[c]!=NULL){
+                    columnCount++;
+                }
+                if(line[c]=='P'){
                     peta.currentArea = q;
-                    peta.coords = MakePOINT(i,r);
-                    peta.areas[q][r][i] = '-';
+                    peta.coords = MakePOINT(c,r);
+                    peta.areas[q][r][c] = '-';
                 }else{
-                    peta.areas[q][r][i] = line[i];
+                    peta.areas[q][r][c] = line[c];
                 }
             }
             // printf("%s\n", peta.areas[q][r]);
             r++;
         }
     }
+    // MATRIKS MTarget;
+    // CopySubmap(peta.areas[0], &MTarget);
+    // printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\n");
+    // printf("%d\n", rowCount);
+    // printf("%d\n", columnCount);
     return peta;
+}
+
+MATRIKS CopySubmap (indeks r, indeks c, char submap[r][c]){
+    MATRIKS MTarget;
+    MakeMATRIKS(r, c, &MTarget);
+    printf("%d %d\n", r, c);
+    printf("BBBBBBBBBBBBBBB\n");
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; i++){
+            printf("%c", submap[i][j]);
+            // Elmt(MTarget, i, j) = submap[i][j];
+        }
+        printf("\n");
+    }
+    printf("mau return\n");
+    return MTarget;
+    // r = sizeof(submap)/sizeof(submap[0]);
+    // printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+    // printf("%d", sizeof(submap));
+    // printf("\n\n");
+    // printf("%d", sizeof(submap[0]));
+    // printf("\n\n");
+    // printf("%d\n", r);
+    // int c = sizeof((*submap)[0])/sizeof((*submap)[0][0]);
 }
 
 void handleGerak(char opsi, Peta * peta){
@@ -74,24 +111,26 @@ boolean verifyGerak(char target){
 }
 
 void printCurrentArea(Peta *peta){
-    printf("Player anda berada pada map ke %d dengan titik ", (*peta).currentArea+1);
-    TulisPOINT((*peta).coords);
-    printf("\n");
-    int area = (*peta).currentArea;
-    int rows = sizeof((*peta).areas[area]) / sizeof((*peta).areas[area][0]);
-    // printf("Jumlah baris : %d\n",rows);
-    for(int i = 0; i<rows; i++){
-        int length = strlen((*peta).areas[area][i]);
-        for(int j = 0; j<length; j++){
-            if(i==(*peta).coords.Y && j==(*peta).coords.X){
-                printf("P");
-            }else{
-                printf("%c", (*peta).areas[area][i][j]);
-            }
-        }
-        // printf("%s", (*peta).areas[area][i]);
-    }
-    printf("\n");
+    printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    TulisMATRIKS((*peta).submap[(*peta).currentArea]);
+    // printf("Player anda berada pada map ke %d dengan titik ", (*peta).currentArea+1);
+    // TulisPOINT((*peta).coords);
+    // printf("\n");
+    // int area = (*peta).currentArea;
+    // int rows = sizeof((*peta).areas[area]) / sizeof((*peta).areas[area][0]);
+    // // printf("Jumlah baris : %d\n",rows);
+    // for(int i = 0; i<rows; i++){
+    //     int length = strlen((*peta).areas[area][i]);
+    //     for(int j = 0; j<length; j++){
+    //         if(i==(*peta).coords.Y && j==(*peta).coords.X){
+    //             printf("P");
+    //         }else{
+    //             printf("%c", (*peta).areas[area][i][j]);
+    //         }
+    //     }
+    //     // printf("%s", (*peta).areas[area][i]);
+    // }
+    // printf("\n");
 }
 
 void updatePeta(char target, POINT P, int area, Peta *peta){

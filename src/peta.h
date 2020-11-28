@@ -6,10 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "matriks.h"
 
 typedef struct{
     char areas[4][255][255];
     int currentArea;
+    MATRIKS submap[4];
     POINT coords;
 } Peta;
 
@@ -21,6 +23,8 @@ typedef struct{
 
 // baca peta dari file
 Peta bacaPeta();
+
+MATRIKS CopySubmap (indeks r, indeks c, char submap[r][c]);
 
 // handle W/A/S/D
 void handleGerak(char opsi, Peta * P);
