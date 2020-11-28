@@ -15,7 +15,7 @@ void CreateEmpty (Stack *S)
 	Top(*S) = Nil;
 }
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty (Stack S)
+boolean IsEmptyStack (Stack S)
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 {
 	return (Top(S) == Nil ? true : false);
@@ -67,12 +67,12 @@ Stack CopyStack(Stack S)
 	//ALGORITMA
 	CreateEmpty(&SRet);
 	CreateEmpty(&STemp);
-	while(!IsEmpty(S))
+	while(!IsEmptyStack(S))
 	{
 		Pop(&S,&X);
 		Push(&STemp,X);
 	}
-	while(!IsEmpty(STemp))
+	while(!IsEmptyStack(STemp))
 	{
 		Pop(&STemp,&X);
 		Push(&SRet,X);
@@ -91,7 +91,7 @@ int stackToRequiredTime(Stack S)
 	//ALGORIMTA
 	Stemp = CopyStack(S);
 	requiredTime = 0;
-	while (!IsEmpty(Stemp))
+	while (!IsEmptyStack(Stemp))
 	{
 		Pop(&Stemp,&x);
 		requiredTime += x.Time;
@@ -108,7 +108,7 @@ int stackToRequiredMoney(Stack S)
 	//ALGORIMTA
 	Stemp = CopyStack(S);
 	requiredMoney = 0;
-	while (!IsEmpty(Stemp))
+	while (!IsEmptyStack(Stemp))
 	{
 		Pop(&Stemp,&x);
 		requiredMoney += x.Money;
@@ -128,7 +128,7 @@ void stackToMaterial(Stack S, int material[5])
 	{
 		material[i] = 0;
 	}
-	while (!IsEmpty(Stemp))
+	while (!IsEmptyStack(Stemp))
 	{
 		Pop(&Stemp,&x);
 		for (i = 0; i < 5; ++i)
@@ -150,7 +150,7 @@ void stackToLokasi(Stack S, POINT lokasiWahana[barisMatriksWahana])
 	{
 		lokasiWahana[i] = MakePOINT(-1,-1);
 	}
-	while (!IsEmpty(Stemp))
+	while (!IsEmptyStack(Stemp))
 	{
 		Pop(&Stemp,&x);
 		for (i = 0; i < barisMatriksWahana; ++i)
