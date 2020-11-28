@@ -10,13 +10,14 @@
 
 #define Nil -1
 #define MaxEl 10
+#define barisMatriksWahana 8
 /* Nil adalah stack dengan elemen kosong . */
 typedef struct 
 {
 	int Money;
 	int Time; //Dalam Detik, digunakan jam.h untuk menampilkan jam nanti
 	int Mat[5]; //Isinya [Semen,Baja,Sekrup,Kayu,Primogem]
-	POINT Wah[8];//Isinya koordinat untuk wahana [Rumah Kaca, Bianglala,ARungJeram, Roller Coaster, Impact]. <-1,-1> = Kosong;
+	POINT Wah[barisMatriksWahana];//Isinya koordinat untuk wahana [Rumah Kaca, Bianglala,ARungJeram, Roller Coaster, Impact]. <-1,-1> = Kosong;
 } Aksi;
 
 
@@ -49,7 +50,7 @@ void CreateEmpty (Stack *S);
 /* Ciri stack kosong : TOP bernilai Nil */
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-boolean IsEmpty (Stack S);
+boolean IsEmptyStack (Stack S);
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 boolean IsFull (Stack S);
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */
@@ -78,7 +79,7 @@ int stackToRequiredMoney(Stack S);
 void stackToMaterial(Stack S, int material[5]);
 //Menjumlahkan semua material di stack
 
-void stackToLokasi(Stack S, POINT lokasiWahana[8]);
+void stackToLokasi(Stack S, POINT lokasiWahana[barisMatriksWahana]);
 
 void CreateEmptyAksi(Aksi *X);
 //Membuat Aksi dengan Money = 0, Time = 0, Mat =[0,0,0,0,0], Wah = [<-1,-1>*5]

@@ -1,7 +1,9 @@
 /* Driver PrioQueueChar */
 
-#include "prioqueuechar.h"
-#include "customString.h"
+#include "prioqueuechar.c"
+#include "customString.c"
+#include "MatriksOfString.c"
+#include "PrepCommand.c"
 #include <stdio.h>
 
 int main(){
@@ -9,15 +11,18 @@ int main(){
     /* Deklarasi Variabel */
     PrioQueueChar Q;
     Pengunjung A, B, X;
+    MatriksOfString M;
+    MakeMatriksStr(8, 12, &M);
+    LoadFileWahana(&M, 8, 12);
 
     /* Assign nilai variabel B */
     Prio(A) = 10; Sabar(A) = 4;
-    StringCopy(100, A.wahana[0], "Wangky");
-    StringCopy(100, A.wahana[1], "Coaster");
+    StringCopy(100, A.wahana[0], "Rumah Kaca");
+    StringCopy(100, A.wahana[1], "Bianglala");
 
     /* Assign nilai variabel A */
     Prio(B) = 6; Sabar(B) = 5;
-    StringCopy(100, B.wahana[0], "RollerCoaster");
+    StringCopy(100, B.wahana[0], "Roller Coaster");
 
     /* Inisiasi Queue */
     MakeEmpty(&Q, 5);
@@ -41,12 +46,12 @@ int main(){
     printf("%d ", X.prio);
     printf("%d\n", X.kesabaran); */
     /* Fungsi Serve Queue */
-    Serve(&Q);
+    Serve(&Q, M);
 
     /* Cek isi Queue */
     PrintPrioQueueChar(Q);
 
-    Serve(&Q);
+    Serve(&Q, M);
     PrintPrioQueueChar(Q);
 
     /* Tes Dequeue 2
@@ -61,7 +66,7 @@ int main(){
     Prepare(&Q);
 
     /* Cek isi Queue */
-    if(IsEmpty(Q)){
+    if(IsEmptyQ(Q)){
         printf("Prepare success\n");
     }
     else{
