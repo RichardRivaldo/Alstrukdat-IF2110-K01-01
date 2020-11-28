@@ -1,62 +1,436 @@
+// gcc PrepCommand.c mesinkar.c mesinkata.c MatriksOfString.c stackt.c
 #include <stdio.h>
-#include "boolean.h"
 #include <stdlib.h>
 #include <math.h>
-#include "stackt.h"
-#include "jam.h"
-#include "point.h"
 #include <string.h>
-#include "matriks.h"
+// Library buatan sendiri:
+#include "boolean.h"
+#include "MatriksOfString.h"
 #include "mesinkar.h"
-#include "mesinkata.c"
-#include <string.h>
+#include "mesinkata.h"
+#include "stackt.h"
+#include "customString.h"
+#include "point.h"
+#include "bintree.h"
 
-void build(){
-    FILE * fPointer = fopen("../data/wahana.txt", "r");
+#include "MatriksOfString.c"
+#include "mesinkar.c"
+#include "mesinkata.c"
+#include "stackt.c"
+#include "customString.c"
+#include "point.c"
+
+Stack S;
+int PMat[5];
+int Money = 10000;
+int Time = 43200;
+POINT PKoordinat;
+POINT PlokasiWahana[5] = {MakePOINT(-1,-1),MakePOINT(-1,-1),MakePOINT(3,3),MakePOINT(-1,-1),MakePOINT(-1,-1)};
+BinTree pohonUpgrade[5];
+
+void LoadCabangPohonUpgrade(MatriksOfString wahana, BinTree pohonUpgrade[5])
+{
+ int i,j;
+ upgradeInfo U;
+ boolean found;
+ for (i = 0; i < NBrsEff(wahana); ++i)
+ {
+  
+  if (StringTrueCompare(lengthStr, wahana.Mem[i][10], "base") == 0)
+  {
+   found = false;
+   U = CreateUpgradeInfo(wahana.Mem[i][0],wahana.Mem[i][10]);
+
+   for (j = 0; j < 5 && found == false; ++j)
+   {
+    if (SearchTree(pohonUpgrade[j],wahana.Mem[i][10]))
+    {
+     AddCabang(&pohonUpgrade[j],wahana.Mem[i][10],U);
+     found = true;
+    }
+   }
+  }
+ }
 }
 
-void buy(MATRIKS mat, Stack * act, int *Money, int *Time){
+void IsiPohonUpgrade(MatriksOfString M, BinTree (*P)[5]){
+    // KAMUS
+    int j = 0;
+    // AGLROTMA
+    for (int i = 0; i < M.NBrsEff; i++)
+    {
+        if (StringCompare(lengthStr, M.Mem[i][10], "base")){
+            (*P)[j] = AlokNode(CreateUpgradeInfo(M.Mem[i][0], M.Mem[i][10]));
+            j++;
+        }
+    }
+    LoadCabangPohonUpgrade(M,*P);
+}
+
+void IsiPohonUpgrade(BinTree (*P)[5], MatriksOfString M){
+    // KAMUS
+    int j = 0;
+    // AGLROTMA
+    for (int i = 0; i < M.NBrsEff; i++)
+    {
+        if (StringCompare(lengthStr, M.Mem[i][10], "base")){
+            (*P)[j] = AlokNode(CreateUpgradeInfo(M.Mem[i][0], M.Mem[i][10]));
+            j++;
+        }
+    }
+}
+
+void removeKomaMaterialWahana(int panjang,int output[5], char input[panjang])
+{
+ //KAMUS
+ int incrOutput = 0;
+ int j = 0;
+ char num[8];
+ //ALGORIMTA
+ for (int i = 0; i < panjang; i++)
+    {
+        
+        if (input[i] == '\0')
+        {
+         break;
+        }
+        if (input[i] != ',')
+        {
+         MakeEmptyString(8,num);
+         j = 0;
+         while (input[i] != ',' && input[i] != '\0')
+         {
+          num[j] = input[i];
+          i++;
+          j++;
+         }
+         output[incrOutput] = StringToInt(lengthStr,num);
+         incrOutput++;
+        }
+    }
+}
+
+void LoadFileWahana(MatriksOfString * MatriksWahana, int brs, int klm){
+    // KAMUS
+    FILE * fpointer;
+    char singleLine[1000];
+    int baris, kolom, i, j;
+
+    // ALGORITMA
+    MakeMatriksStr(brs, klm, MatriksWahana);
+    if ((fpointer = fopen("../data/wahana.txt", "r")) == NULL) {
+        printf("Error! opening file");
+        exit(1);
+    }
+    fgets(singleLine, 1000, fpointer);
+    baris = 0;
+    kolom = 0;
+    while (!feof(fpointer)){
+        i = 0;
+        j = 0;
+        while (singleLine[i] != '\n'){
+            if (singleLine[i] == '-'){
+                kolom = kolom + 1;
+                j = 0;
+            }
+            else{
+                ((*MatriksWahana).Mem[baris][kolom])[j] = singleLine[i];
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+        baris = baris + 1;
+        kolom = 0;
+        fgets(singleLine, 1000, fpointer);
+    }
+    fclose(fpointer);
+}
+
+void LoadFileMaterial(MatriksOfString * MatriksMaterial, int brs, int klm){
+    // KAMUS
+    FILE * fpointer;
+    char singleLine[1000];
+    int baris, kolom, i, j;
+
+    // ALGORITMA
+    MakeMatriksStr(brs, klm, MatriksMaterial);
+    if ((fpointer = fopen("../data/material.txt", "r")) == NULL) {
+        printf("Error! opening file");
+        exit(1);
+    }
+    fgets(singleLine, 1000, fpointer);
+    baris = 0;
+    kolom = 0;
+    while (!feof(fpointer)){
+        i = 0;
+        j = 0;
+        while (singleLine[i] != '\n'){
+            if (singleLine[i] == '-'){
+                kolom = kolom + 1;
+                j = 0;
+            }
+            else{
+                ((*MatriksMaterial).Mem[baris][kolom])[j] = singleLine[i];
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+        baris = baris + 1;
+        kolom = 0;
+        fgets(singleLine, 1000, fpointer);
+    }
+    fclose(fpointer);
+}
+
+void ShowHelp(){
+	// Algoritma
+    printf("Daftar Command:\n");
+    printf("    - build\n");
+    printf("    - upgrade\n");
+    printf("    - buy\n");
+    printf("    - execute\n");
+    printf("    - undo\n");
+    printf("    - main\n");
+    printf("\n");
+}
+
+void build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/,
+			POINT PlokasiWahana[5],POINT PKoordinat /*Koordinat player*/, int PMat[5], char namaWahana[lengthStr])
+{
 	//KAMUS
 	int i,j;
 	int jumlah;
 	int harga;
-	char cjumlah[];
-	char namaMat[];
 	Aksi X;
-	//ALGORITMA
-	i = 0;
-	STARTKATA();
-	strcpy(cjumlah, CKata);
-	ADVKATA();
-	strcpy(namaMat, CKata);
 
-	while(strcmp(mat.Mem[i][0], namaMat) != 0 && i <= GetLastIdxBrs(M))
+	int requiredMoney;
+	int requiredTime;
+	int availableMaterials[5];
+	boolean enoughMaterial = true;
+	int requiredWahanaMaterials[5];
+	POINT lokasiWahana[5];
+	boolean locationIsTaken = false;
+	//ALGORITMA
+	
+	requiredTime = stackToRequiredTime(*act); //Hitung total waktu yang dibutuhkan dari stack Aksi
+	requiredMoney = stackToRequiredMoney(*act); //Hitung total uang yang dibutuhkan dari stack Aksi
+	stackToMaterial(*act,availableMaterials); //Hitung materials yang udah ada di stack
+	stackToLokasi(*act,lokasiWahana);//Cari posisi dari wahana dari stack
+
+	for (j = 0; j < 5; ++j)
+	{
+		if (NEQ(PlokasiWahana[j],MakePOINT(-1,-1)))
+		{
+			lokasiWahana[j] = PlokasiWahana[j];
+		}
+
+		if (EQ(lokasiWahana[j], PKoordinat))
+		{
+			locationIsTaken = true;
+		}
+	}
+
+	/*BELUM ADA HANDLER LOKASI DIBANGUN*/
+
+	i = 0;
+	while(StringCompare(lengthStr, wahana.Mem[i][0], namaWahana) == 0 && i < wahana.NBrsEff)
 	{
 		i++;
 	}
-	if (i > GetLastIdxBrs(M))
+	if (i >= wahana.NBrsEff || namaWahana[0] == '\0')
 	{
-		printf("Error, silahkan input ulang\n");
+		printf("Error, tidak ada wahana dengan nama tersebut\n");
+	}
+	else if (NEQ(lokasiWahana[i],MakePOINT(-1,-1))) 
+	{
+		printf("Error, wahana sudah dibangun\n");
+	}
+	else if (locationIsTaken)
+	{
+		printf("Error, sudah ada gedung di sini\n");
 	}
 	else
 	{
-		jumlah = atoi(cjumlah);
-		harga = atoi(mat.Mem[i][1]);
-		if (*Money >= jumlah*harga)
+		harga = StringToInt(lengthStr,wahana.Mem[i][4]);
+		requiredMoney = requiredMoney + harga;
+		requiredTime = StringToInt(lengthStr,wahana.Mem[i][5])+requiredTime;
+		removeKomaMaterialWahana(lengthStr, requiredWahanaMaterials, wahana.Mem[i][6]); //Hitung material yang diperlukan wahana
+		for (j = 0; j < 5; ++j)
 		{
-			*Money = *Money - jumlah*harga
-			X.Money = -1*jumlah*harga;
-			X.Time = -5;
-			for (j = 0; j < 5; ++j)
+			availableMaterials[j] = availableMaterials[j] + PMat[j] - requiredWahanaMaterials[j];
+			if (availableMaterials[j] < 0)
 			{
-				X.Mat[j] = 0;
-				if (i == j)
+				enoughMaterial = false;
+			}
+		}
+		if (enoughMaterial)
+		{
+			if (PMoney >= requiredMoney)
+			{
+				if (PTime >= requiredTime)
 				{
-					X.Mat[j] = jumlah;
+					CreateEmptyAksi(&X);
+					X.Money = harga;
+					X.Time = StringToInt(lengthStr,wahana.Mem[i][5]);
+					for (j = 0; j < 5; ++j)
+					{
+						X.Mat[j] = requiredWahanaMaterials[j]*-1;
+					}
+					X.Wah[i] = PKoordinat;
+					Push(act, X);
+					printf("%s telah dibangun\n\n", wahana.Mem[i][0]);
+				}
+				else
+				{
+					printf("Error, waktu tidak cukup\n");
 				}
 			}
-
-			Push(act, X);
+			else
+			{
+				printf("Error, uang tidak mencukupi\n");
+			}
+		}
+		else
+		{
+			printf("Error, material tidak mencukupi\n");
 		}
 	}
 }
+
+
+void ShowBuild(MatriksOfString M){
+    // fungsi dipanggil saat ada perintah "build"
+    // untuk menampilkan pesan dan list wahana
+    char namaWahana[lengthStr];
+	// Algoritma
+    printf("Daftar Gedung:\n");
+    for (int i = 0; i < M.NBrsEff; i++)
+    {
+        if (StringCompare(lengthStr, M.Mem[i][10], "base")){
+            printf("    - $%s %s\n", M.Mem[i][4], M.Mem[i][0]);
+        }
+    }
+    printf("\nInput berupa: <Nama Gedung>\n");
+    printf("Masukkan Input: ");
+    STARTKATA();
+    printf("\n");
+    StringCopy(100, namaWahana, pita);
+    build(M, &S, Money, Time, PlokasiWahana, PKoordinat, PMat, namaWahana);
+}
+
+void buy(MatriksOfString mat, Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/, char cjumlah[lengthStr], char namaMat[lengthStr]){
+    //KAMUS
+    int i,j;
+    int jumlah;
+    int harga;
+    Aksi X;
+
+    int requiredMoney;
+    int requiredTime;
+    //ALGORITMA
+ 
+    requiredTime = stackToRequiredTime(*act); //Hitung total waktu yang dibutuhkan dari stack Aksi
+    requiredMoney = stackToRequiredMoney(*act); //Hitung total uang yang dibutuhkan dari stack Aksi
+
+    // STARTKATA();//Input berupa: jumlah nama_bahan, harus divalidasi
+    // strcpy(cjumlah, CKata.TabKata); //1000 Primogem <-- contoh pembelian bahan primogem dengan jumlah 1000
+    // ADVKATA();
+    // strcpy(namaMat, CKata.TabKata);
+    i = 0;
+ 
+    while(StringCompare(lengthStr, mat.Mem[i][0], namaMat) == 0 && i < mat.NBrsEff){
+        i++;
+    }
+    if (i >= mat.NBrsEff || namaMat[0] == '\0'){
+        printf("Error, tidak ada bahan dengan nama tersebut\n");
+    }
+    else{
+        jumlah = StringToInt(lengthStr,cjumlah);
+        harga = StringToInt(lengthStr,mat.Mem[i][1]);
+        requiredMoney = requiredMoney + jumlah*harga;
+        requiredTime = 1800+requiredTime; 
+        if (PMoney >= requiredMoney){
+            if (PTime >= requiredTime){
+                CreateEmptyAksi(&X);
+                X.Money = jumlah*harga;
+                X.Time = 1800;
+                X.Mat[i] = jumlah;
+
+                Push(act, X);
+                printf("%d %s telah dibeli\n\n", jumlah, mat.Mem[i][0]);
+            }
+            else{
+                printf("Error, waktu tidak cukup\n");
+            }
+        }
+        else{
+            printf("Error, uang tidak mencukupi\n");
+        }
+    }
+}
+
+void ShowBuy(MatriksOfString mat){
+    //KAMUS
+    int i;
+    char cjumlah[lengthStr], namaMat[lengthStr];
+    //ALGORITMA
+    printf("Daftar Item:\n");
+    for (i = 0; i < mat.NBrsEff; i++)
+    {
+        printf("    - $%s %s\n", mat.Mem[i][1],mat.Mem[i][0]);
+    }
+    printf("\nInput berupa: <Jumlah> <Nama Bahan>\n");
+    printf("Masukkan Input: ");
+    STARTKATA();
+    printf("\n");
+    if (!EndKata){
+        StringCopy(lengthStr, cjumlah, CKata.TabKata);
+        ADVKATA();
+        if (!EndKata){
+            StringCopy(lengthStr, namaMat, CKata.TabKata);
+            buy(mat, &S, Money, Time, cjumlah, namaMat);
+        }
+    }
+}
+
+void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
+    // ALGORITMA
+    printf("Masukan Perintah: ");
+    STARTKATA();
+    printf("\n");
+    if (StringCompare(lengthStr, CKata.TabKata, "build")){
+        ShowBuild(MWahana);
+    }
+    else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
+        printf("upgrade.\n");
+    }
+    else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
+        ShowBuy(MMaterial);
+    }
+    else if (StringCompare(lengthStr, CKata.TabKata, "undo")){
+        printf("undo.\n");
+    }
+    else if (StringCompare(lengthStr, CKata.TabKata, "execute")){
+        printf("execute.\n");
+    }
+    else if (StringCompare(lengthStr, CKata.TabKata, "help")){
+        ShowHelp();
+    }
+    else{
+        printf("Command ini belum tersedia! Silakan input command lain.\n");
+    }
+}
+
+// int main(){
+//     // KAMUS
+//     MatriksOfString MWahana;
+//     MatriksOfString MMaterial;
+//     CreateEmpty(&S);
+//     // ALGORITMA
+//     LoadFileWahana(&MWahana, 7, 12);
+//     LoadFileMaterial(&MMaterial, 5, 2);
+//     while (true){
+//         inputPrepPhase(MWahana, MMaterial);
+//     }
+//     return 0;
+// }
