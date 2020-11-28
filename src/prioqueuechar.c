@@ -189,13 +189,14 @@ void Serve(PrioQueueChar *Q, MatriksOfString M){
                             }
                         }
                         else{
-                            printf("The ride you want to  use is broken\n");
+                            printf("The ride you want to use is broken\n");
                             Enqueue(Q, X);
                         }
                     }
                 }
             }
         }
+        i+=1;
     }
     if(!found){
         printf("Error 404: Not Found\n");
@@ -218,7 +219,6 @@ void Repair(Wahana* wahana);
     /* Mengembalikan state wahana
     wahana.state = true;
 }
-
 
 void Detail(Peta * peta){
     /* Mengecek detail wahana yang berada disekitar P
