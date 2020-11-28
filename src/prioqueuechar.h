@@ -8,6 +8,7 @@
 
 #include "boolean.h"
 #include "wahana.h"
+#include "MatriksOfString.h"
 
 #define Nil -1
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
@@ -39,15 +40,15 @@ typedef struct {
 #define InfoHead(Q) (Q).T[(Q).HEAD]
 #define InfoTail(Q) (Q).T[(Q).TAIL]
 #define MaxElQ(Q)   (Q).MaxElQ
-#define Elmt(Q,i)   (Q).T[(i)]
+#define ElmtQ(Q,i)   (Q).T[(i)]
 
 /* ********* Prototype ********* */
-boolean IsEmpty (PrioQueueChar Q);
+boolean IsEmptyQ (PrioQueueChar Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
-boolean IsFull (PrioQueueChar Q);
+boolean IsFullQ (PrioQueueChar Q);
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
-int NBElmt (PrioQueueChar Q);
+int NBElmtQ (PrioQueueChar Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 
 /* *** Kreator *** */
@@ -100,7 +101,7 @@ void RandomizeWahana (Pengunjung X);
 void SistemQueue(PrioQueueChar Q);
     /* Sistem Queue yang akan digunakan dalam main phase */
 
-void Serve(PrioQueueChar *Q);
+void Serve(PrioQueueChar *Q, MatriksOfString M);
     /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
 
 void ChanceRusak(Wahana* wahana);
