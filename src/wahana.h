@@ -15,6 +15,7 @@ typedef struct{
     POINT point;
     int kapasitas;
     char deskripsi[255];
+    int state;
 } Wahana;
 
 extern Wahana CWahana;
@@ -27,6 +28,7 @@ extern Wahana CWahana;
 #define point(W) (W).point
 #define kapasitas(W) (W).kapasitas
 #define deskripsi(W) (W).deskripsi
+#define state(W) (W).state
 
 /* Mengubah array of char menjadi integer */
 int convertToInt(char data[]);

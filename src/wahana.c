@@ -95,4 +95,5 @@ void cetakDetailWahana(Wahana* wahana){
     printf("\n");
     printf("KAPASITAS WAHANA : %d\n",(*wahana).kapasitas);
     printf("DESKRIPSI WAHANA : %s\n",(*wahana).deskripsi);
+    printf("STATE WAHANA : %d\n",(*wahana).state);
 }
