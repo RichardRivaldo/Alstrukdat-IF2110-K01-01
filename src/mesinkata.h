@@ -7,12 +7,12 @@
 #include "boolean.h"
 #include "mesinkar.h"
 
-#define NMax 50
+#define NMax 100
 #define BLANK ' '
 
 typedef struct {
 	char TabKata[NMax]; /* container penyimpan kata, indeks yang dipakai [0..NMax-1] */
-    int Length;
+   int Length;
 } Kata;
 
 /* State Mesin Kata */

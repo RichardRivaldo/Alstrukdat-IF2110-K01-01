@@ -2,6 +2,8 @@
 #include "boolean.h"
 #include "mesinkar.h"
 #include "mesinkata.h"
+#include "MatriksOfString.h"
+#include "customString.h"
 
 boolean EndKata;
 Kata CKata;
@@ -26,7 +28,7 @@ void STARTKATA()
     // ALGORITMA
     START();
     IgnoreBlank();
-    if (CC == MARK) {
+    if (EOP) {
         EndKata = true;
     }
     else{
@@ -44,7 +46,7 @@ void ADVKATA()
 {
     // ALGORITMA
     IgnoreBlank();
-    if (CC == MARK) {
+    if (EOP) {
         EndKata = true;
     }
     else {
@@ -63,6 +65,7 @@ void SalinKata()
     int i;
     // ALGORITMA
     i = 0; /* inisialisasi */
+    MakeEmptyString(100, CKata.TabKata);
     while ((CC != MARK) && (CC != BLANK) && (i < NMax)) {
         CKata.TabKata[i] = CC;
         ADV();

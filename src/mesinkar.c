@@ -6,9 +6,9 @@
 
 char CC;
 boolean EOP;
+int huruf;
 
-static FILE * pita;
-static int retval;
+char pita[100];
 
 void START() {
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
@@ -18,8 +18,10 @@ void START() {
           Jika CC = MARK maka EOP akan menyala (true) */
 
 	/* Algoritma */
-	pita = stdin;
-	ADV();
+	fgets(pita, 100, stdin);
+       huruf = 0;
+       EOP = false;
+       ADV();
 }
 
 void ADV() {
@@ -31,9 +33,9 @@ void ADV() {
 		  Jika  CC = MARK maka EOP akan menyala (true) */
 
 	/* Algoritma */
-	retval = fscanf(pita,"%c",&CC);
+       CC = pita[huruf];
 	EOP = (CC == MARK);
-	if (EOP) {
-       fclose(pita);
- 	}
+       if (!EOP){
+              huruf++;
+       }
 }
