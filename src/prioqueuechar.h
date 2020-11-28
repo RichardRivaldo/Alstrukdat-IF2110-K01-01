@@ -7,11 +7,8 @@
 #define prioqueuechar_H
 
 #include "boolean.h"
-<<<<<<< HEAD
-=======
 #include "wahana.h"
 #include "MatriksOfString.h"
->>>>>>> 70f4ed76f8530d0a7d55f6b8605b9461701c8089
 
 #define Nil -1
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
@@ -42,13 +39,10 @@ typedef struct {
 #define Tail(Q)     (Q).TAIL
 #define InfoHead(Q) (Q).T[(Q).HEAD]
 #define InfoTail(Q) (Q).T[(Q).TAIL]
-<<<<<<< HEAD
 #define MaxEl(Q)    (Q).MaxEl
 #define Elmt(Q,i)   (Q).T[(i)]
-=======
 #define MaxElQ(Q)   (Q).MaxElQ
 #define ElmtQ(Q,i)   (Q).T[(i)]
->>>>>>> 70f4ed76f8530d0a7d55f6b8605b9461701c8089
 
 /* ********* Prototype ********* */
 boolean IsEmptyQ (PrioQueueChar Q);
