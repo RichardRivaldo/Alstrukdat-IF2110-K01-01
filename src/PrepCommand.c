@@ -63,7 +63,7 @@ void IsiPohonUpgrade(MatriksOfString M, BinTree (*P)[5]){
     // AGLROTMA
     for (int i = 0; i < M.NBrsEff; i++)
     {
-        if (StringCompare(lengthStr, M.Mem[i][10], "base")){
+        if (StringTrueCompare(lengthStr, M.Mem[i][10], "base")){
             (*P)[j] = AlokNode(CreateUpgradeInfo(M.Mem[i][0], M.Mem[i][10]));
             j++;
         }
@@ -186,106 +186,113 @@ void ShowHelp(){
 }
 
 void build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/,
-			POINT PlokasiWahana[5],POINT PKoordinat /*Koordinat player*/, int PMat[5], char namaWahana[lengthStr])
+            POINT PlokasiWahana[8],POINT PKoordinat /*Koordinat player*/, int PMat[5], char namaWahana[lengthStr])
 {
-	//KAMUS
-	int i,j;
-	int jumlah;
-	int harga;
-	Aksi X;
+    //KAMUS
+    int i,j;
+    int jumlah;
+    int harga;
+    Aksi X;
 
-	int requiredMoney;
-	int requiredTime;
-	int availableMaterials[5];
-	boolean enoughMaterial = true;
-	int requiredWahanaMaterials[5];
-	POINT lokasiWahana[5];
-	boolean locationIsTaken = false;
-	//ALGORITMA
-	
-	requiredTime = stackToRequiredTime(*act); //Hitung total waktu yang dibutuhkan dari stack Aksi
-	requiredMoney = stackToRequiredMoney(*act); //Hitung total uang yang dibutuhkan dari stack Aksi
-	stackToMaterial(*act,availableMaterials); //Hitung materials yang udah ada di stack
-	stackToLokasi(*act,lokasiWahana);//Cari posisi dari wahana dari stack
+    int requiredMoney;
+    int requiredTime;
+    int availableMaterials[5];
+    boolean enoughMaterial = true;
+    int requiredWahanaMaterials[5];
+    POINT lokasiWahana[8];
+    boolean locationIsTaken = false;
+    //ALGORITMA
+    requiredTime = stackToRequiredTime(*act); //Hitung total waktu yang dibutuhkan dari stack Aksi
+    requiredMoney = stackToRequiredMoney(*act); //Hitung total uang yang dibutuhkan dari stack Aksi
+    stackToMaterial(*act,availableMaterials); //Hitung materials yang udah ada di stack
+    stackToLokasi(*act,lokasiWahana);//Cari posisi dari wahana dari stack
 
-	for (j = 0; j < 5; ++j)
-	{
-		if (NEQ(PlokasiWahana[j],MakePOINT(-1,-1)))
-		{
-			lokasiWahana[j] = PlokasiWahana[j];
-		}
+    for (j = 0; j < 8; ++j)
+    {
+        if (NEQ(PlokasiWahana[j],MakePOINT(-1,-1)))
+        {
+            lokasiWahana[j] = PlokasiWahana[j];
+        }
 
-		if (EQ(lokasiWahana[j], PKoordinat))
-		{
-			locationIsTaken = true;
-		}
-	}
+        if (EQ(lokasiWahana[j], PKoordinat))
+        {
+            locationIsTaken = true;
+        }
+    }
 
-	/*BELUM ADA HANDLER LOKASI DIBANGUN*/
+    /*BELUM ADA HANDLER LOKASI DIBANGUN*/
 
-	i = 0;
-	while(StringCompare(lengthStr, wahana.Mem[i][0], namaWahana) == 0 && i < wahana.NBrsEff)
-	{
-		i++;
-	}
-	if (i >= wahana.NBrsEff || namaWahana[0] == '\0')
-	{
-		printf("Error, tidak ada wahana dengan nama tersebut\n");
-	}
-	else if (NEQ(lokasiWahana[i],MakePOINT(-1,-1))) 
-	{
-		printf("Error, wahana sudah dibangun\n");
-	}
-	else if (locationIsTaken)
-	{
-		printf("Error, sudah ada gedung di sini\n");
-	}
-	else
-	{
-		harga = StringToInt(lengthStr,wahana.Mem[i][4]);
-		requiredMoney = requiredMoney + harga;
-		requiredTime = StringToInt(lengthStr,wahana.Mem[i][5])+requiredTime;
-		removeKomaMaterialWahana(lengthStr, requiredWahanaMaterials, wahana.Mem[i][6]); //Hitung material yang diperlukan wahana
-		for (j = 0; j < 5; ++j)
-		{
-			availableMaterials[j] = availableMaterials[j] + PMat[j] - requiredWahanaMaterials[j];
-			if (availableMaterials[j] < 0)
-			{
-				enoughMaterial = false;
-			}
-		}
-		if (enoughMaterial)
-		{
-			if (PMoney >= requiredMoney)
-			{
-				if (PTime >= requiredTime)
-				{
-					CreateEmptyAksi(&X);
-					X.Money = harga;
-					X.Time = StringToInt(lengthStr,wahana.Mem[i][5]);
-					for (j = 0; j < 5; ++j)
-					{
-						X.Mat[j] = requiredWahanaMaterials[j]*-1;
-					}
-					X.Wah[i] = PKoordinat;
-					Push(act, X);
-					printf("%s telah dibangun\n\n", wahana.Mem[i][0]);
-				}
-				else
-				{
-					printf("Error, waktu tidak cukup\n");
-				}
-			}
-			else
-			{
-				printf("Error, uang tidak mencukupi\n");
-			}
-		}
-		else
-		{
-			printf("Error, material tidak mencukupi\n");
-		}
-	}
+    i = 0;
+    while(StringCompare(lengthStr, wahana.Mem[i][0], namaWahana) == 0 && i < wahana.NBrsEff)
+    {
+        i++;
+    }
+    if (i >= wahana.NBrsEff || namaWahana[0] == '\0')
+    {
+        printf("Error, tidak ada wahana dengan nama tersebut\n");
+    }
+    else if (StringTrueCompare(lengthStr, wahana.Mem[i][10], "base") == 0)
+    {
+        printf("Error, bukan wahana dasar\n");
+    }
+    else if (NEQ(lokasiWahana[i],MakePOINT(-1,-1))) 
+    {
+        printf("Error, wahana sudah dibangun\n");
+    }
+    else if (locationIsTaken)
+    {
+        printf("Error, sudah ada gedung di sini\n");
+    }
+    else
+    {
+        harga = StringToInt(lengthStr,wahana.Mem[i][4]);
+        requiredMoney = requiredMoney + harga;
+        requiredTime = StringToInt(lengthStr,wahana.Mem[i][5])+requiredTime;
+        removeKomaMaterialWahana(lengthStr, requiredWahanaMaterials, wahana.Mem[i][6]); //Hitung material yang diperlukan wahana
+        for (j = 0; j < 5; ++j)
+        {
+            availableMaterials[j] = availableMaterials[j] + PMat[j] - requiredWahanaMaterials[j];
+            if (availableMaterials[j] < 0)
+            {
+                enoughMaterial = false;
+            }
+        }
+        if (enoughMaterial)
+        {
+            if (PMoney >= requiredMoney)
+            {
+                if (PTime >= requiredTime)
+                {
+                    CreateEmptyAksi(&X);
+                    X.Money = harga;
+                    X.Time = StringToInt(lengthStr,wahana.Mem[i][5]);
+                    for (j = 0; j < 5; ++j)
+                    {
+                        X.Mat[j] = requiredWahanaMaterials[j]*-1;
+                    }
+                    for (j = 0; j < wahana.NBrsEff; ++j)
+                    {
+                        X.Wah[j] = lokasiWahana[j];
+                    }
+                    X.Wah[i] = PKoordinat;
+                    Push(act, X);
+                    printf("%s telah dibangun\n\n", wahana.Mem[i][0]);
+                }
+                else
+                {
+                    printf("Error, waktu tidak cukup\n");
+                }
+            }
+            else
+            {
+                printf("Error, uang tidak mencukupi\n");
+            }
+        }
+        else
+        {
+            printf("Error, material tidak mencukupi\n");
+        }
+    }
 }
 
 
@@ -530,6 +537,7 @@ void ShowUpgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*
             P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
         }
     }
+    PrintTree(P,2);
     while (true){
         if (StringTrueCompare(lengthStr,Nama(P),namaWahana)){
             break;
@@ -543,7 +551,7 @@ void ShowUpgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*
             }
         }
     }
-    if (Left(P) != NULL && Right(P) != NULL){
+    if (Left(P) == NULL && Right(P) == NULL){
         printf("Wahana ini telah mencapai level tertinggi.\n");
     }
     else{
@@ -580,6 +588,46 @@ void PrintHistory(MatriksOfString wahana,BinTree pohonUpgrade,char namaWahana[le
         }
     }
 }
+void Undo(Stack *S){
+    // KAMUS
+    Aksi X;
+    // ALGORITMA
+    if (!IsEmptyStack(*S)){
+        Pop(S, &X);
+    }
+}
+
+void Execute(Stack *S, int Money, int PMat[5], POINT PlokasiWahana[8]){
+    // KAMUS
+    Aksi X;
+    boolean firsttime = true;
+    // ALGORITMA
+    while (!IsEmptyStack(*S)){
+        Pop(S, &X);
+        Money = Money - X.Money;
+        for (int i = 0; i < 5; i++)
+        {
+            PMat[i] = PMat[i] + X.Mat[i];
+        }
+        if (firsttime){
+            for (int i = 0; i < 8; i++)
+            {
+                PlokasiWahana[i] = X.Wah[i];
+            }
+        }
+        firsttime = false;
+    }
+}
+
+void CallMain(Stack *S){
+    // KAMUS
+    Aksi X;
+    // ALGORITMA
+    if (!IsEmptyStack(*S)){
+        Pop(S, &X);
+        CallMain(S);
+    }
+}
 
 void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
     // ALGORITMA
@@ -596,10 +644,13 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
         ShowBuy(MMaterial);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "undo")){
-        printf("undo.\n");
+        Undo(&S);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "execute")){
-        printf("execute.\n");
+        Execute(&S,Money,PMat,PlokasiWahana);
+    }
+    else if (StringCompare(lengthStr, CKata.TabKata, "main")){
+        CallMain(&S);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "help")){
         ShowHelp();
@@ -611,19 +662,21 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
 
 
 int main(){
+    //Inisialisasi main
     for (int i = 0; i < barisMatriksWahana; ++i)
     {
         PlokasiWahana[i] = MakePOINT(-1,-1);
     }
-//     // KAMUS
-//     MatriksOfString MWahana;
-//     MatriksOfString MMaterial;
-//     CreateEmpty(&S);
-//     // ALGORITMA
-//     LoadFileWahana(&MWahana, 7, 12);
-//     LoadFileMaterial(&MMaterial, 5, 2);
-//     while (true){
-//         inputPrepPhase(MWahana, MMaterial);
-//     }
+    // KAMUS
+    MatriksOfString MWahana;
+    MatriksOfString MMaterial;
+    CreateEmpty(&S);
+    // ALGORITMA
+    LoadFileWahana(&MWahana, 8, 12);
+    LoadFileMaterial(&MMaterial, 5, 2);
+    IsiPohonUpgrade(MWahana,&pohonUpgrade);
+    while (true){
+        inputPrepPhase(MWahana, MMaterial);
+    }
     return 0;
 }

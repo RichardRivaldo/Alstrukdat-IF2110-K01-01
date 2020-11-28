@@ -12,7 +12,12 @@ void CreateEmpty (Stack *S)
 /* Ciri stack kosong : TOP bernilai Nil */
 
 {
+	//KAMUS
+	Aksi X;
+	//ALGORIMTA
 	Top(*S) = Nil;
+	CreateEmptyAksi(&X);
+	Push(S,X);
 }
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack (Stack S)
