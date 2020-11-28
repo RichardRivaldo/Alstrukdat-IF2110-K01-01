@@ -168,13 +168,14 @@ void Serve(PrioQueueChar *Q){
     while(X.wahana[i][0] != '\0' && !found){
         if(StringCompare(255, whnSelected, X.wahana[i])){
             found = true;
-        }
-        else{
-            i++;
+            while(X.wahana[i][0] != '\0'){
+                StringCopy(100, X.wahana[i], X.wahana[i+1]);
+                i++;
+            }
         }
     }
     if(found){
-        if(X.wahana[i][0] != '\0'){
+        if(X.wahana[0][0] != '\0'){
             if(X.prio - 2 < 1){
                 X.prio = 1;
             }
@@ -183,6 +184,10 @@ void Serve(PrioQueueChar *Q){
             }
             Enqueue(Q, X);
         }
+    }
+    else{
+        printf("Error 404: Not Found\n");
+        Enqueue(Q, X);
     }
 }
 
@@ -196,14 +201,14 @@ void ChanceRusak(Wahana* wahana){
 }
 
 /*** Kurang Waktu ***/
-void Repair(Wahana* wahana){
+void Repair(Wahana* wahana);
     /* Mengembalikan state wahana */
     wahana.state = true;
 }
 
 
 void Detail(Peta * peta){
-    /* Mengecek detail wahana yang berada disekitar P */
+    /* Mengecek detail wahana yang berada disekitar P
     int currentArea = (*peta).currentArea;
     Wahana wahana;
     /* Ngecek sekitar player */
