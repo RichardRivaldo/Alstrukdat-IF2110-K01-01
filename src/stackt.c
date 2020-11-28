@@ -138,7 +138,7 @@ void stackToMaterial(Stack S, int material[5])
 	}
 }
 
-void stackToLokasi(Stack S, POINT lokasiWahana[8])
+void stackToLokasi(Stack S, POINT lokasiWahana[barisMatriksWahana])
 {
 	//KAMUS
 	Stack Stemp;
@@ -146,14 +146,14 @@ void stackToLokasi(Stack S, POINT lokasiWahana[8])
 	int i;
 	//ALGORIMTA
 	Stemp = CopyStack(S);
-	for (i = 0; i < 8; ++i)
+	for (i = 0; i < barisMatriksWahana; ++i)
 	{
 		lokasiWahana[i] = MakePOINT(-1,-1);
 	}
 	while (!IsEmpty(Stemp))
 	{
 		Pop(&Stemp,&x);
-		for (i = 0; i < 8; ++i)
+		for (i = 0; i < barisMatriksWahana; ++i)
 		{
 			if (NEQ(x.Wah[i],MakePOINT(-1,-1)))
 			{
@@ -174,7 +174,7 @@ void CreateEmptyAksi(Aksi *X)
 	{
 		(*X).Mat[i] = 0;
 	}
-	for (i = 0; i < 5; ++i)
+	for (i = 0; i < barisMatriksWahana; ++i)
 	{
 		(*X).Wah[i] = MakePOINT(-1,-1);
 	}
