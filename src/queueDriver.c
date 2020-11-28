@@ -15,15 +15,29 @@ int main(){
     MakeMatriksStr(8, 12, &M);
     LoadFileWahana(&M, 8, 12);
 
+    char Whn[255];
+
     /* Assign nilai variabel B */
     Prio(A) = 10; Sabar(A) = 4;
-    StringCopy(100, A.wahana[0], "Rumah Kaca");
-    StringCopy(100, A.wahana[1], "Bianglala");
+    StringCopy(255, A.wahana[0], "Rumah Kaca");
+    StringCopy(255, A.wahana[1], "Bianglala");
 
     /* Assign nilai variabel A */
-    Prio(B) = 6; Sabar(B) = 5;
-    StringCopy(100, B.wahana[0], "Roller Coaster");
+    Prio(B) = 11; Sabar(B) = 5;
+    StringCopy(255, B.wahana[0], "Bianglala");
 
+    /* 
+    for(int baris = 0; baris < 8; baris++){
+        printf("%s\n", M.Mem[baris][0]);
+        if(StringTrueCompare(255, B.wahana[0], M.Mem[baris][0])){
+            printf("True");
+        }
+        else{
+            printf("False");
+        }
+    }
+    */
+    
     /* Inisiasi Queue */
     MakeEmpty(&Q, 5);
 
@@ -46,12 +60,10 @@ int main(){
     printf("%d ", X.prio);
     printf("%d\n", X.kesabaran); */
     /* Fungsi Serve Queue */
-    Serve(&Q, M);
+    scanf("%s", Whn);
+    Serve(&Q, M, Whn);
 
     /* Cek isi Queue */
-    PrintPrioQueueChar(Q);
-
-    Serve(&Q, M);
     PrintPrioQueueChar(Q);
 
     /* Tes Dequeue 2
