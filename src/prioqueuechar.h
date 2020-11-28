@@ -26,7 +26,7 @@ typedef struct {
     Pengunjung * T;   /* tabel penyimpan elemen */
     address HEAD;  /* alamat penghapusan */
     address TAIL;  /* alamat penambahan */
-    int MaxEl;     /* Max elemen queue */
+    int MaxElQ;     /* Max elemen queue */
 } PrioQueueChar;
 /* Definisi PrioQueueChar kosong: HEAD=Nil; TAIL=Nil. */
 
@@ -41,7 +41,7 @@ typedef struct {
 #define InfoTail(Q) (Q).T[(Q).TAIL]
 #define MaxElQ(Q)   (Q).MaxElQ
 #define ElmtQ(Q,i)   (Q).T[(i)]
-`
+
 /* ********* Prototype ********* */
 boolean IsEmptyQ (PrioQueueChar Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */

@@ -1,6 +1,9 @@
 #include "prioqueuechar.h"
 #include "MatriksOfString.h"
+#include "MatriksOfString.c"
 #include "customString.h"
+#include "peta.c"
+#include "peta.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -203,31 +206,32 @@ void Serve(PrioQueueChar *Q, MatriksOfString M){
         Enqueue(Q, X);
     }
 }
-/*
+
+
 void ChanceRusak(Wahana* wahana){
-    /* Probabilitas Wahana rusak (25%)
+    /* Probabilitas Wahana rusak (25%) */
     int i = rand() % 4;
 
     if (i == 1){
-        (*wahana).state = false;
+        (*wahana).state = 0;
     }
-} */
+} 
 
 /*** Kurang Waktu ***/
 /*
-void Repair(Wahana* wahana);
-    /* Mengembalikan state wahana
-    wahana.state = true;
-}
-
+void Repair(Wahana* wahana){
+    /* Mengembalikan state wahana 
+    *wahana.state = true;
+} */
+/*
 void Detail(Peta * peta){
-    /* Mengecek detail wahana yang berada disekitar P
+    /* Mengecek detail wahana yang berada disekitar P 
     int currentArea = (*peta).currentArea;
     Wahana wahana;
     /* Ngecek sekitar player */
-    /* Daftar kan wahana yang ada di sekitar player
+    /* Daftar kan wahana yang ada di sekitar player 
     cetakDetailWahana(wahana);
-}  */
+} */
 
 /*** Tunggu ada detail wahana ***/
 /*
