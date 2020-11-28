@@ -9,7 +9,7 @@
 #include "point.h"
 
 #define Nil -1
-#define MaxEl 10
+#define MaxElStack 20
 #define barisMatriksWahana 8
 /* Nil adalah stack dengan elemen kosong . */
 typedef struct 
@@ -24,7 +24,7 @@ typedef struct
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct { 
-  Aksi T[MaxEl]; /* tabel penyimpan elemen */
+  Aksi T[MaxElStack]; /* tabel penyimpan elemen */
   int TOP;  /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
