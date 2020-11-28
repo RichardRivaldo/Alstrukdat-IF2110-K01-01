@@ -39,11 +39,9 @@ typedef struct {
 #define Tail(Q)     (Q).TAIL
 #define InfoHead(Q) (Q).T[(Q).HEAD]
 #define InfoTail(Q) (Q).T[(Q).TAIL]
-#define MaxEl(Q)    (Q).MaxEl
-#define Elmt(Q,i)   (Q).T[(i)]
 #define MaxElQ(Q)   (Q).MaxElQ
 #define ElmtQ(Q,i)   (Q).T[(i)]
-
+`
 /* ********* Prototype ********* */
 boolean IsEmptyQ (PrioQueueChar Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
