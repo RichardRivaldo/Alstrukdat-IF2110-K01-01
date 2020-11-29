@@ -31,13 +31,15 @@ void SistemQueue(PrioQueueChar *Q, Wahana listWahana[]){
         }
         Enqueue(Q, Y);
     }
+    printf("SELESAI INITIALIING\n");
 }
 
 void Serve(PrioQueueChar *Q, Wahana ListWahana[], char Whn[255]){
     /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
 
     Pengunjung X;
-    int i = 0, j;
+    int i = 0;
+    int j = -1;
     boolean found = false;
 
     Dequeue(Q, &X);

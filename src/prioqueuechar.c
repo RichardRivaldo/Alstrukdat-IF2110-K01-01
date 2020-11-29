@@ -65,11 +65,6 @@ void Enqueue (PrioQueueChar * Q, Pengunjung X){
     }
     else{
         int idx = Tail(*Q), threshold = NBElmtQ(*Q);
-        // printf("INI DARI QUEUEE :%s\n", X.wahana[0]);
-        // printf("INI DARI QUEUEE :%s\n", X.wahana[1]);
-        // printf("INI DARI QUEUEE :%s\n", X.wahana[2]);
-        // printf("INI DARI QUEUEE :%s\n", X.wahana[3]);
-        // printf("INI DARI QUEUEE :%s\n", X.wahana[4]);
 
         while((Prio(X) < Prio((*Q).T[idx])) && (threshold > 0)){
             (*Q).T[(idx % MaxElQ(*Q)) + 1] = (*Q).T[idx];

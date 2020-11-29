@@ -333,9 +333,7 @@ void updateListWahana(Wahana listWahana[8], MatriksOfString MWahana, Lokasi Plok
 		listWahana[i].status = StringToInt(lengthStr, MWahana.Mem[i][9]);
 		StringCopy(lengthStr, listWahana[i].deskripsi, MWahana.Mem[i][11]);
 		listWahana[i].lokasi = PlokasiWahana[i];
-		// printf("INI QTY ALL : %d\n", qtyAll(listWahana[i]));
-		setQtyAll(&listWahana[i]);
-		// printf("INI QTY ALL : %d\n", qtyAll(listWahana[i]));
+		listWahana[i].qtyAll= qtyAll(listWahana[i]) + qty(listWahana[i]);
 		listWahana[i].incomeAll= incomeAll(listWahana[i]) + income(listWahana[i]);
 		listWahana[i].qty = 0;
 		listWahana[i].income = 0;

@@ -121,8 +121,11 @@ void main(){
 			//update listWahana
 			resetPeta(&p, PlokasiWahana);
 			updateListWahana(listWahana, MWahana, PlokasiWahana);
+			printf("BERHASIL UPDATE LIST WAHANA\n");
 			MakeEmpty(&Q, 5);
+			printf("BERHASIL MAKE EMPTY\n");
 			SistemQueue(&Q, listWahana);
+			printf("BERHASIL SISTEM QUEUE\n");
 			printf("INI HASIL PRIO QUEUE\n");
 			PrintPrioQueueChar(Q);
 			//main phase
