@@ -40,6 +40,13 @@ void main(){
 						case 'M': displayMap(p);break;
 						case 'O': handleEnteringOffice(p, &isInOffice);break;
 						case 'G': handleEnteringMainPhase(&isPreparationPhase, &isMainPhase);break;
+						case 'X': 
+							if(checkWahanaSurrounding(&p)){
+								printf("ADA WAHANA");
+							}else{
+								printf("TIDAK ADA WAHANA DISEKITARMU");
+							}
+							;break;
 						case 'Q': exitGame(&quit);break;
 					}
 				} 
