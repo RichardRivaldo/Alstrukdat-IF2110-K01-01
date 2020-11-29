@@ -2,6 +2,7 @@
 #include "point.c"
 #include "lokasi.c"
 #include "PrepCommand.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h> 
@@ -39,7 +40,7 @@ void main(){
 		//initial setup
 		boolean isPreparationPhase = true;
 		boolean isMainPhase = false;
-		boolean isInOffice = false;
+		boolean isInOffice = false;	
 		boolean quit = false;
  
 		MatriksOfString MWahana;
