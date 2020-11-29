@@ -93,7 +93,7 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
     if(NBElmtQ(*Q) == 1){
         Prio(*X) = Prio(InfoHead(*Q));
         for(int i = 0; i < 5; i++){
-            StringCopy(100, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            StringCopy(lengthStr, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = Nil; Tail(*Q) = Nil;
@@ -101,7 +101,7 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
     else{
         Prio(*X) = Prio(InfoHead(*Q));
         for(int i = 0; i < 5; i++){
-            StringCopy(100, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            StringCopy(lengthStr, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = (Head(*Q) % MaxElQ(*Q)) + 1;
@@ -159,49 +159,55 @@ void SistemQueue(PrioQueueChar Q){
     MakeEmpty(&Q, 20);
 }
 
-void Serve(PrioQueueChar *Q, MatriksOfString M){
+void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
     /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
 
-    char whnSelected[255];
     Pengunjung X;
-    int i = 0;
+    int i = 0, j;
     boolean found = false;
-
-    scanf("%s", &whnSelected);
 
     Dequeue(Q, &X);
     while(X.wahana[i][0] != '\0' && !found){
-        if(StringTrueCompare(255, whnSelected, X.wahana[i])){
+        char cekWahana[255]; 
+        StringCopy(255, cekWahana, X.wahana[i]);
+        if(StringTrueCompare(255, cekWahana, Whn)){
+            j = i;
             found = true;
-            for(int baris = 0; baris < 8; baris++){
-                if(StringTrueCompare(255, whnSelected, M.Mem[baris][0])){
-                    if(StringToInt(lengthStr,M.Mem[baris][1]) < 1){
-                        if(StringToInt(lengthStr,M.Mem[baris][9]) == 1){
-                            while(X.wahana[i][0] != '\0'){
-                                StringCopy(100, X.wahana[i], X.wahana[i+1]);
-                                i++;
-                            }
-                            if(X.wahana[0][0] != '\0'){
-                                if(X.prio - 2 < 1){
-                                    X.prio = 1;
-                                }
-                                else{
-                                    X.prio -= 3;
-                                }
-                                Enqueue(Q, X);
-                            }
+        }
+        else{
+            i++;
+        }
+    }
+
+    if(found){
+        for(int baris = 0; baris < 8; baris++){
+            char nama[255]; StringCopy(255, nama, M.Mem[baris][0]);
+            if(StringTrueCompare(255, Whn, nama)){
+                if(StringToInt(lengthStr, M.Mem[baris][1]) < 1){
+                    if(StringToInt(lengthStr, M.Mem[baris][9]) == 1){
+                        while(X.wahana[j + 1][0] != '\0'){
+                            StringCopy(255, X.wahana[j], X.wahana[j+1]);
+                            j++;
                         }
-                        else{
-                            printf("The ride you want to use is broken\n");
+                        if(X.wahana[0][0] != '\0'){
+                            if(X.prio - 2 < 1){
+                                X.prio = 1;
+                            }
+                            else{
+                                X.prio -= 3;
+                            }
                             Enqueue(Q, X);
                         }
+                    }
+                    else{
+                        printf("The ride you want to use is broken\n");
+                        Enqueue(Q, X);
                     }
                 }
             }
         }
-        i+=1;
-    }
-    if(!found){
+    } 
+    else{
         printf("Error 404: Not Found\n");
         Enqueue(Q, X);
     }
