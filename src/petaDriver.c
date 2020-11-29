@@ -1,4 +1,7 @@
 #include "peta.c"
+#include "point.c"
+#include "matriks.c"
+#include "system.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h> 
@@ -6,6 +9,8 @@
 
 void main(){
     Peta p = bacaPeta();
+    printf("PEMAIN ANDA SEKARANG ADA DI %d\n", p.currentArea);
+    // TulisMATRIKS(p.submap[p.currentArea]);
     char input;
     while(input!='Q'){
         printCurrentArea(&p);

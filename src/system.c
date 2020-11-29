@@ -13,7 +13,6 @@ int startupPanel(int choice, boolean picked){
 			}else{
 				return 0;
 			}
-			return;
 		}
     switch(choice){
 			case 0:
@@ -61,7 +60,10 @@ int startupPanel(int choice, boolean picked){
 			picked=true;
 		}
 
-		if(choice!=0 && choice!=1){
+		if(choice < 0){
+			choice = 1;
+		}
+		else if(choice > 1){
 			choice = 0;
 		}
 		startupPanel(choice, picked);

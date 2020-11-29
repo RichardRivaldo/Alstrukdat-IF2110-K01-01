@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "matriks.h"
+#include "matriksold.h"
 #include "boolean.h"
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */              
@@ -55,6 +55,11 @@ boolean IsIdxEff (MATRIKS M, indeks i, indeks j)
     else{
         return false;
     }
+}
+ElType GetElmtDiagonal (MATRIKS M, indeks i)
+/* Mengirimkan elemen M(i,i) */
+{
+    return (M.Mem[i][i]);
 }
 
 /* ********** Assignment  MATRIKS ********** */
@@ -112,13 +117,19 @@ void TulisMATRIKS (MATRIKS M)
     // KAMUS
     int i, j;
     // ALGORITMA
-    for (i = 0; i < 10; ++i){
-        for (j = 0; j < 20; ++j)
+    for (i = BrsMin; i < ((M).NBrsEff - 1); ++i)
+    {
+        for (j = KolMin; j < ((M).NKolEff - 1); ++j)
         {
-            printf("%c", (M).Mem[i][j]);
+            printf("%d ", (M).Mem[i][j]);
         }
-        printf("\n");
+        printf("%d\n", (M).Mem[i][j]);
     }
+    for (j = KolMin; j < ((M).NKolEff - 1); ++j)
+    {
+        printf("%d ", (M).Mem[i][j]);
+    }
+    printf("%d", (M).Mem[i][j]);
 }
 
 /* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */                                  
@@ -213,6 +224,38 @@ void PKaliKons (MATRIKS * M, ElType K)
     }
 }
 
+/* ********** KELOMPOK OPERASI RELASIONAL TERHADAP MATRIKS ********** */
+boolean EQ (MATRIKS M1, MATRIKS M2)
+/* Mengirimkan true jika M1 = M2, yaitu NBElmt(M1) = NBElmt(M2) dan */
+/* untuk setiap i,j yang merupakan indeks baris dan kolom M1(i,j) = M2(i,j) */
+/* Juga merupakan strong EQ karena GetFirstIdxBrs(M1) = GetFirstIdxBrs(M2) 
+   dan GetLastIdxKol(M1) = GetLastIdxKol(M2) */
+{
+    // KAMUS
+    int i, j;
+    boolean eq = true;
+    // ALGORITMA
+    if ((M1.NBrsEff != M2.NBrsEff) || (M1.NKolEff != M2.NKolEff)){
+        return false;
+    }
+    else{
+        for (i = BrsMin; (i < (M1).NBrsEff) && (eq == true) ; ++i)
+        {
+            for (j = KolMin; (j < (M2).NKolEff) && (eq == true); ++j)
+            {
+                if ((M1).Mem[i][j] != (M2).Mem[i][j]){
+                    eq = false;
+                }
+            }   
+        }
+        return eq;
+    }
+}
+boolean NEQ (MATRIKS M1, MATRIKS M2)
+/* Mengirimkan true jika M1 tidak sama dengan M2 */
+{
+    return !(EQ(M1, M2));
+}
 boolean EQSize (MATRIKS M1, MATRIKS M2)
 /* Mengirimkan true jika ukuran efektif matriks M1 sama dengan ukuran efektif M2 */
 /* yaitu GetBrsEff(M1) = GetNBrsEff (M2) dan GetNKolEff (M1) = GetNKolEff (M2) */
