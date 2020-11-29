@@ -39,7 +39,7 @@ char getCharInput();
 void handleEnteringOffice(Peta p, boolean * target);
 
 // menampilkan pesan bahwa pemain sudah memasukki main phase
-void handleEnteringMainPhase(boolean *prep, boolean *main);
+void handleEnteringMainPhase(boolean *prep, boolean *main, Stack * S);
 
 //bangun wahana di W/A/S/D dari posisi user
 void bangunWahana(Peta * peta, MatriksOfString MWahana);

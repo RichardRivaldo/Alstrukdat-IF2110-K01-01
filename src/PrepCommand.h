@@ -54,7 +54,7 @@ void PrintHistory(MatriksOfString wahana,BinTree pohonUpgrade,char namaWahana[le
 
 void Undo(Stack *S);
 
-void Execute(Stack *S, int * Money, int * PMat[5], Lokasi * PlokasiWahana[8]);
+void Execute(Stack *S, int * Money, int PMat[5], Lokasi PlokasiWahana[8]);
 
 void CallMain(Stack *S);
 

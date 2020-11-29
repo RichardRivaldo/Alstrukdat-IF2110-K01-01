@@ -35,7 +35,6 @@ void main(){
 		printf("See you later!");
 		return;
 	}else if(start==1){
-		printf("MASUK KE GAME\n");
 
 		//initial setup
 		boolean isPreparationPhase = true;
@@ -48,7 +47,7 @@ void main(){
 
 		loadingInitialFile(&MWahana, &MMaterial);
 
-		printMatriksWahana(MWahana);
+		// printMatriksWahana(MWahana);
 
 		Peta p = bacaPeta();
 		// printf("berhasil masuk sini");
@@ -67,7 +66,7 @@ void main(){
 					switch(input){
 						case 'M': displayMap(p);break;
 						case 'O': handleEnteringOffice(p, &isInOffice);break;
-						case 'G': handleEnteringMainPhase(&isPreparationPhase, &isMainPhase);break;
+						case 'G': handleEnteringMainPhase(&isPreparationPhase, &isMainPhase, &S);break;
 						case 'B': bangunWahana(&p, MWahana); break;
 						case 'P': ShowBuy(MMaterial); break;
 						case 'U': {
@@ -83,6 +82,12 @@ void main(){
 								tidakAdaWahanaMsg();
 							}
 						}
+						break;
+						case 'Z':Undo(&S); break;
+						case 'E':{
+							Execute(&S, &Money, PMat, PlokasiWahana);
+							handleEnteringMainPhase(&isPreparationPhase, &isMainPhase, &S);
+							}
 						break;
 						case 'Q': exitGame(&quit);break;
 					}

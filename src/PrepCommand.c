@@ -608,7 +608,7 @@ void Undo(Stack *S){
     }
 }
 
-void Execute(Stack *S, int * Money, int * PMat[5], Lokasi * PlokasiWahana[8]){
+void Execute(Stack *S, int * Money, int PMat[5], Lokasi PlokasiWahana[8]){
     // KAMUS
     Aksi X;
     boolean firsttime = true;
@@ -618,12 +618,12 @@ void Execute(Stack *S, int * Money, int * PMat[5], Lokasi * PlokasiWahana[8]){
         *Money = *Money - X.Money;
         for (int i = 0; i < 5; i++)
         {
-            (*PMat)[i] = (*PMat)[i] + X.Mat[i];
+            (PMat)[i] = (PMat)[i] + X.Mat[i];
         }
         if (firsttime){
             for (int i = 0; i < 8; i++)
             {
-                (*PlokasiWahana)[i] = X.Wah[i];
+                (PlokasiWahana)[i] = X.Wah[i];
             }
         }
         firsttime = false;

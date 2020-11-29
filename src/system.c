@@ -254,7 +254,8 @@ void bangunWahana(Peta * peta, MatriksOfString MWahana){
     
 }
 
-void handleEnteringMainPhase(boolean *prep, boolean *main){
+void handleEnteringMainPhase(boolean *prep, boolean *main, Stack * S){
+	CallMain(S);
 	printf("--------------------------------------------------\n");
 	printf("-            What A Nice Preparation!            -\n");
 	printf("-     Now entering the real deal! Get Ready!     -\n");
