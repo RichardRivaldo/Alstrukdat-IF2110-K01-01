@@ -10,7 +10,7 @@ int main ()
 	Stack S,S2;
 	Aksi X,Aksi1,Aksi2,Aksi3;
 	int mat[5];
-	POINT lokasiWahana[barisMatriksWahana];
+	Lokasi lokasiWahana[barisMatriksWahana];
 	//ALGORTIMA
 	InitializeStack(&S); /*Menggunakan CreateEmpty dan CreateEmptyAksi X*/
 	while(!IsEmptyStack(S))
@@ -25,7 +25,7 @@ int main ()
 		printf("\nPoint wahana : ");
 		for (int i = 0; i < barisMatriksWahana; ++i)
 		{
-			TulisPOINT(X.Wah[i]);
+			TulisPOINT(X.Wah[i].Koordinat);
 		}
 		printf("\n");
 	}
@@ -41,7 +41,7 @@ int main ()
 	Aksi3.Money = 3;
 	Aksi3.Time = 5;
 	Aksi2.Mat[3] = 50;
-	Aksi3.Wah[5] = MakePOINT(3,4);
+	Aksi3.Wah[5] = CreateLokasi(MakePOINT(3,4),0);
 	Push(&S, Aksi1);
 	Push(&S, Aksi2);
 	Push(&S, Aksi3);
@@ -56,7 +56,7 @@ int main ()
 	stackToLokasi(S2,lokasiWahana);
 	for (int i = 0; i < barisMatriksWahana; ++i)
 	{
-		TulisPOINT(X.Wah[i]);
+		TulisPOINT(X.Wah[i].Koordinat);
 	}
 	printf("\n");
 

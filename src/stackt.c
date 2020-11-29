@@ -154,7 +154,7 @@ void stackToMaterial(Stack S, int material[5])
 	}
 }
 
-void stackToLokasi(Stack S, POINT lokasiWahana[barisMatriksWahana])
+void stackToLokasi(Stack S, Lokasi lokasiWahana[barisMatriksWahana])
 {
 	//KAMUS
 	Stack Stemp;
@@ -164,12 +164,13 @@ void stackToLokasi(Stack S, POINT lokasiWahana[barisMatriksWahana])
 	Stemp = CopyStack(S);
 	for (i = 0; i < barisMatriksWahana; ++i)
 	{
-		lokasiWahana[i] = MakePOINT(-1,-1);
+		lokasiWahana[i].Koordinat = MakePOINT(-1,-1);
+		lokasiWahana[i].Submap = -1;
 	}
 	Pop(&Stemp,&x);
 	for (i = 0; i < barisMatriksWahana; ++i)
 	{
-		if (NEQ(x.Wah[i],MakePOINT(-1,-1)))
+		if (NEQ(x.Wah[i].Koordinat,MakePOINT(-1,-1)))
 		{
 			lokasiWahana[i] = x.Wah[i];
 		}
@@ -189,6 +190,14 @@ void CreateEmptyAksi(Aksi *X)
 	}
 	for (i = 0; i < barisMatriksWahana; ++i)
 	{
-		(*X).Wah[i] = MakePOINT(-1,-1);
+		(*X).Wah[i] = CreateLokasi(MakePOINT(-1,-1),-1);
 	}
+}
+
+Lokasi CreateLokasi(POINT Koordinat,int Submap)
+{
+	Lokasi L;
+	L.Koordinat = Koordinat;
+	L.Submap = Submap;
+	return L;
 }

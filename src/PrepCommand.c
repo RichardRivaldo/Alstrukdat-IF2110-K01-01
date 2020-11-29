@@ -438,6 +438,7 @@ void upgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, i
         }
     }
     idx = 0;idx2 = 0;
+
     for (i = 0; i < 5; ++i)
     {
         if (SearchTree(pohonUpgrade[i],namaWahana))
@@ -578,6 +579,7 @@ void ShowUpgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*
         STARTKATA();
         printf("\n");
         StringCopy(lengthStr, input, pita);
+        StringCutEnd(lengthStr,input,input);
         upgrade(wahana,act,PMoney,PTime,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,input);
     }
 }
@@ -693,12 +695,14 @@ int main(){
     IsiPohonUpgrade(MWahana,&pohonUpgrade);
     printMatriksWahana(MWahana);
 
-    for (int i = 0; i < 5; ++i)
-    {
-        if (SearchTree(pohonUpgrade[i],"Halilintar"))
-        {
-            P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
-        }
+    // for (int i = 0; i < 5; ++i)
+    // {
+    //     if (SearchTree(pohonUpgrade[i],"Halilintar"))
+    //     {
+    //         P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
+    //     }
+    // }
+
     // printMatriksWahana(MWahana);
     // for (int i = 0; i < 5; ++i)
     // {
@@ -715,6 +719,7 @@ int main(){
         //     TulisPOINT(S.T[S.TOP].Wah[i]);
         //     printf("\n");
         // }
+        printf("Money = %d\n",Money);
     }
     PrintHistory(MWahana,P,"Halilintar");
     // while (true){
