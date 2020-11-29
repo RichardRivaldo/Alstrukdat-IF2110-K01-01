@@ -137,6 +137,17 @@ void LoadFileWahana(MatriksOfString * MatriksWahana, int brs, int klm){
     fclose(fpointer);
 }
 
+void printMatriksWahana(MatriksOfString M){
+    for (int j = 0; j < 8; j++)
+    {
+        for (int i = 0; i < 12; i++)
+        {
+            printf("%s   ", M.Mem[j][i]);
+        }
+        printf("\n");
+    }
+}
+
 void LoadFileMaterial(MatriksOfString * MatriksMaterial, int brs, int klm){
     // KAMUS
     FILE * fpointer;
@@ -530,17 +541,13 @@ void ShowUpgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*
     BinTree P;
     str input;
     // ALGORITMA
-    printf("%s", namaWahana);
-    printf("%s", Nama(pohonUpgrade[5]));
     for (int i = 0; i < 5; ++i)
     {
         if (SearchTree(pohonUpgrade[i],namaWahana))
         {
-            printf("%d",i);
             P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
         }
     }
-    PrintTree(P,2);
     while (true){
         if (StringTrueCompare(lengthStr,Nama(P),namaWahana)){
             break;
@@ -641,7 +648,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
         ShowBuild(MWahana);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
-        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Rumah Kaca");
+        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Halilintar V2");
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
         ShowBuy(MMaterial);
@@ -677,14 +684,9 @@ int main(){
     // ALGORITMA
     LoadFileWahana(&MWahana, 8, 12);
     LoadFileMaterial(&MMaterial, 5, 2);
-    for (int i = 0; i < 8; i++)
-    {
-        printf("%s\n", MWahana.Mem[i][0]);
-    }
-    
     IsiPohonUpgrade(MWahana,&pohonUpgrade);
+    printMatriksWahana(MWahana);
     while (true){
-        PrintTree(pohonUpgrade[0], 2);
         inputPrepPhase(MWahana, MMaterial);
     }
     return 0;
