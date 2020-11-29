@@ -1,8 +1,9 @@
-Rumah Kaca-8-5-600-100-10800-5,2,5,5,0-1800-15-1-base-Wahana permainan Rumah Kaca.
-Rumah Kaca V2-10-8-700-120-9600-3,1,3,2,0-1500-15-1-Rumah Kaca-Wahana permainan Rumah Kaca V2.
+RumahKaca-8-5-600-100-10800-5,2,5,5,0-1800-15-1-base-Wahana permainan Rumah Kaca.
+RumahKacaV2-10-8-700-120-9600-3,1,3,2,0-1500-15-1-RumahKaca-Wahana permainan Rumah Kaca V2.
 Bianglala-10-6-1200-175-21600-5,5,10,0,0-7200-30-1-base-Wahana permainan Bianglala.
 Arung Jeram-4-12-1080-250-28800-20,0,0,10,0-12600-20-1-base-Wahana permainan Arung Jeram.
+Halilintar-6-10-900-390-36000-0,20,20,0,0-14400-25-1-base-Wahana permainan Roller Coaster.
+Halilintar V2-8-20-900-500-18000-0,10,10,0,0-7700-20-1-Halilintar-Wahana permainan Roller Coaster V2.
+Guntur-10-30-900-550-9000-0,5,5,0,0-3600-10-1-Halilintar-Wahana permainan Death Coaster.
 Impact-4-500-5400-10000-39600-0,0,0,0,5-0-0-1-base-Place where expurosion happen!
-Roller Coaster-6-10-900-390-36000-0,20,20,0,0-14400-25-1-base-Wahana permainan Roller Coaster.
-Roller Coaster V2-8-20-900-500-18000-0,10,10,0,0-7700-20-1-Roller Coaster-Wahana permainan Roller Coaster V2.
-Deadly Coaster-10-30-900-550-9000-0,5,5,0,0-3600-10-1-Roller Coaster-Wahana permainan Death Coaster.
+

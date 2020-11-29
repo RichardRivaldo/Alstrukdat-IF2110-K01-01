@@ -530,10 +530,13 @@ void ShowUpgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*
     BinTree P;
     str input;
     // ALGORITMA
+    printf("%s", namaWahana);
+    printf("%s", Nama(pohonUpgrade[5]));
     for (int i = 0; i < 5; ++i)
     {
         if (SearchTree(pohonUpgrade[i],namaWahana))
         {
+            printf("%d",i);
             P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
         }
     }
@@ -638,7 +641,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
         ShowBuild(MWahana);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
-        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Roller Coaster");
+        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Rumah Kaca");
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
         ShowBuy(MMaterial);
@@ -661,22 +664,28 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
 }
 
 
-// int main(){
-//     //Inisialisasi main
-//     for (int i = 0; i < barisMatriksWahana; ++i)
-//     {
-//         PlokasiWahana[i] = MakePOINT(-1,-1);
-//     }
-//     // KAMUS
-//     MatriksOfString MWahana;
-//     MatriksOfString MMaterial;
-//     CreateEmpty(&S);
-//     // ALGORITMA
-//     LoadFileWahana(&MWahana, 8, 12);
-//     LoadFileMaterial(&MMaterial, 5, 2);
-//     IsiPohonUpgrade(MWahana,&pohonUpgrade);
-//     while (true){
-//         inputPrepPhase(MWahana, MMaterial);
-//     }
-//     return 0;
-// }
+int main(){
+    //Inisialisasi main
+    for (int i = 0; i < barisMatriksWahana; ++i)
+    {
+        PlokasiWahana[i] = MakePOINT(-1,-1);
+    }
+    // KAMUS
+    MatriksOfString MWahana;
+    MatriksOfString MMaterial;
+    CreateEmpty(&S);
+    // ALGORITMA
+    LoadFileWahana(&MWahana, 8, 12);
+    LoadFileMaterial(&MMaterial, 5, 2);
+    for (int i = 0; i < 8; i++)
+    {
+        printf("%s\n", MWahana.Mem[i][0]);
+    }
+    
+    IsiPohonUpgrade(MWahana,&pohonUpgrade);
+    while (true){
+        PrintTree(pohonUpgrade[0], 2);
+        inputPrepPhase(MWahana, MMaterial);
+    }
+    return 0;
+}
