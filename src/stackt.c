@@ -2,6 +2,7 @@
 #include "boolean.h"
 #include "stackt.h"
 #include "point.h"
+#include "lokasi.h"
 //PROGRAM
 
 /* ************ Prototype ************ */
@@ -192,12 +193,4 @@ void CreateEmptyAksi(Aksi *X)
 	{
 		(*X).Wah[i] = CreateLokasi(MakePOINT(-1,-1),-1);
 	}
-}
-
-Lokasi CreateLokasi(POINT Koordinat,int Submap)
-{
-	Lokasi L;
-	L.Koordinat = Koordinat;
-	L.Submap = Submap;
-	return L;
 }

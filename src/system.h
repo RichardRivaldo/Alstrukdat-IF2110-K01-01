@@ -7,6 +7,9 @@
 #include "MatriksOfString.h"
 #include "customString.h"
 #include "PrepCommand.h"
+#include "point.h"
+#include "stackt.h"
+#include "lokasi.h"
 
 //loading initial file (data wahana sama data material)
 void loadingInitialFile(MatriksOfString * MWahana, MatriksOfString * MMaterial);
@@ -22,6 +25,9 @@ void preparationPhaseMsg();
 
 // pesan bahwa sudah ada pada main phase
 void mainPhaseMsg();
+
+//pesan kalau tidak ada wahana di sekitar
+void tidakAdaWahanaMsg();
 
 // pesan yang ditampilkan hanya jika player bergerak tidak bisa bergerak ke arah tersebut alias bertemu dengan wahana/antrian/tembok
 void unableMoveMsg();
@@ -40,6 +46,9 @@ void bangunWahana(Peta * peta, MatriksOfString MWahana);
 
 // fungsi yang berguna untuk mengecek move input yang digunakan pemain valid ato tidak
 boolean checkMovement(char input);
+
+//mapping dari lokasi ke nama wahana
+void PointToNama(MatriksOfString M, Stack S, Lokasi P,Lokasi PlokasiWahana[],str Nama);
 
 // menampilkan pesan bahwa pemain sudah keluar dari permainan
 void exitGame(boolean *quit);

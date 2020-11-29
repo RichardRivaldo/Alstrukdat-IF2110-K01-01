@@ -7,16 +7,12 @@
 
 #include "boolean.h"
 #include "point.h"
+#include "lokasi.h"
 
 #define Nil -1
 #define MaxElStack 20
 #define barisMatriksWahana 8
 /* Nil adalah stack dengan elemen kosong . */
-typedef struct 
-{
-	POINT Koordinat;
-	int Submap; 
-} Lokasi;
 
 typedef struct 
 {
@@ -95,6 +91,4 @@ void stackToLokasi(Stack S, Lokasi lokasiWahana[barisMatriksWahana]);
 void CreateEmptyAksi(Aksi *X);
 //Membuat Aksi dengan Money = 0, Time = 0, Mat =[0,0,0,0,0], Wah = [<-1,-1>*5]
 
-Lokasi CreateLokasi(POINT Koordinat,int Submap);
-//Membuat Lokasi dengan POINT Koordinat, dan int submap.
 #endif

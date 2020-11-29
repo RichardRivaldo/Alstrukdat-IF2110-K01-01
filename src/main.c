@@ -1,6 +1,7 @@
 #include "peta.c"
 #include "point.c"
-#include "PrepCommand.c"
+#include "lokasi.c"
+#include "PrepCommand.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h> 
@@ -68,6 +69,20 @@ void main(){
 						case 'G': handleEnteringMainPhase(&isPreparationPhase, &isMainPhase);break;
 						case 'B': bangunWahana(&p, MWahana); break;
 						case 'P': ShowBuy(MMaterial); break;
+						case 'U': {
+							Lokasi res;
+							res = checkWahanaSurrounding(&p);
+							if(res.Submap!=-1){
+								//point to nama
+								str nama;
+								PointToNama(MWahana,S, res, PlokasiWahana, nama);
+								printf("INI NAMA WAHANA DISEKITARMU : %s\n",nama);
+								ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,res,PMat,nama);
+							}else{
+								tidakAdaWahanaMsg();
+							}
+						}
+						break;
 						case 'Q': exitGame(&quit);break;
 					}
 				} 

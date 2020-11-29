@@ -7,6 +7,8 @@
 #include "MatriksOfString.h"
 #include "customString.h"
 #include "stackt.h"
+#include "PrepCommand.c"
+#include "lokasi.h"
 
 void loadingInitialFile(MatriksOfString * MWahana, MatriksOfString * MMaterial){
 	LoadFileWahana(MWahana, 8, 12);
@@ -156,6 +158,15 @@ void unableMoveMsg(){
 	printf("--------------------------------------------------\n");
 }
 
+void tidakAdaWahanaMsg(){
+	printf("--------------------------------------------------\n");
+	printf("-           Are you drunk? You're in             -\n");
+	printf("-               midst of nowhere!                -\n");
+	printf("-                                                -\n");
+	printf("-       Go near W to upgrade it's property!!     -\n");
+	printf("--------------------------------------------------\n");
+}
+
 char getCharInput(){
 	char input;
 	input = _getch();
@@ -256,6 +267,31 @@ void handleEnteringMainPhase(boolean *prep, boolean *main){
 boolean checkMovement(char input){
 	return input=='W' || input=='A' || input=='S' || input=='D';
 }
+
+void PointToNama(MatriksOfString M, Stack S,Lokasi P,Lokasi PlokasiWahana[barisMatriksWahana],str Nama)
+{
+	MakeEmptyString(lengthStr,Nama);
+	Lokasi lokasiWahana[barisMatriksWahana] ;
+
+	stackToLokasi(S,lokasiWahana);
+
+	for (int j = 0; j < 8; ++j)
+    {
+        if (NEQ(PlokasiWahana[j].Koordinat, MakePOINT(-1,-1))){
+            lokasiWahana[j] = PlokasiWahana[j];
+        }
+    }
+	int idx = 0;
+	for (int i = 0; i < barisMatriksWahana; ++i)
+	{
+		if (EQ(lokasiWahana[i].Koordinat,P.Koordinat) && (lokasiWahana[i].Submap == P.Submap))
+		{
+			idx = i;
+		}
+	}
+	StringCopy(lengthStr,Nama,M.Mem[idx][0]);
+}
+
 
 void exitGame(boolean *quit){
 	*quit = true;

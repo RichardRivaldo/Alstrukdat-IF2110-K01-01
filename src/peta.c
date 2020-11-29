@@ -3,6 +3,7 @@
 #include "string.h"
 #include "stdio.h"
 #include "system.h"
+#include "lokasi.h"
 
 Peta bacaPeta(){
     int q = 0, r=0;
@@ -224,7 +225,7 @@ boolean isInOffice(Peta * peta){
     return getCurrentPosition(peta) == 'O';
 }
 
-boolean checkWahanaSurrounding(Peta * peta){
+Lokasi checkWahanaSurrounding(Peta * peta){
     POINT targetPoin = (*peta).coords;  
     int y = targetPoin.Y;
     int x = targetPoin.X;
@@ -232,25 +233,38 @@ boolean checkWahanaSurrounding(Peta * peta){
     char current = Elmt((*peta).submap[currentArea], y, x);
     printf("Ini posisi kamu sekarang : %c", current);
 
+    Lokasi res;
+
     //cek atas
     char target = Elmt((*peta).submap[currentArea], y-1, x);
     if(target=='W'){
-        return true;
+        targetPoin.Y -= 1;
+        res = CreateLokasi(targetPoin,currentArea);
+        return res;
     }
     //cek kanan
     target = Elmt((*peta).submap[currentArea], y, x+1);
     if(target=='W'){
-        return true;
+        targetPoin.X += 1;
+        res = CreateLokasi(targetPoin,currentArea);
+        return res;
     }
     //cek bawah
     target = Elmt((*peta).submap[currentArea], y+1, x);
     if(target=='W'){
-        return true;
+        targetPoin.Y += 1;
+        res = CreateLokasi(targetPoin,currentArea);
+        return res;
     }
     //cek kiri
     target = Elmt((*peta).submap[currentArea], y, x-1);
     if(target=='W'){
-        return true;
+        targetPoin.X -= 1;
+        res = CreateLokasi(targetPoin,currentArea);
+        return res;
     }
-    return false;
+    POINT null;
+    null.X = -1; null.Y = -1;
+    res = CreateLokasi(null,-1);
+    return res;
 }

@@ -35,10 +35,10 @@ void printMatriksWahana(MatriksOfString M);
 
 void LoadFileMaterial(MatriksOfString * MatriksMaterial, int brs, int klm);
 
-void build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/,
+boolean build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/,
             Lokasi PlokasiWahana[8],Lokasi PKoordinat /*Koordinat bangunan*/, int PMat[5], char namaWahana[lengthStr]);
 
-void ShowBuild(MatriksOfString M, Lokasi lokasi);
+boolean ShowBuild(MatriksOfString M, Lokasi lokasi);
 
 void buy(MatriksOfString mat, Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/, char cjumlah[lengthStr], char namaMat[lengthStr]);
 

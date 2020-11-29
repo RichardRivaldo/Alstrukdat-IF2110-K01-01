@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "matriks.h"
+#include "lokasi.h"
 
 typedef struct{
     int currentArea;
@@ -62,6 +63,6 @@ void bangunKiri(Peta * peta);
 //check apakah posisi sekarang di office
 boolean isInOffice(Peta * peta);
 
-boolean checkWahanaSurrounding(Peta * peta);
+Lokasi checkWahanaSurrounding(Peta * peta);
 
 #endif
