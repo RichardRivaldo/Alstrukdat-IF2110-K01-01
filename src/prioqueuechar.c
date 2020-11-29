@@ -218,11 +218,11 @@ void ChanceRusak(Wahana* wahana){
 } 
 
 /*** Kurang Waktu ***/
-/*
+
 void Repair(Wahana* wahana){
-    /* Mengembalikan state wahana 
-    *wahana.state = true;
-} */
+    /* Mengembalikan state wahana */
+    (*wahana).state = 1;
+} 
 /*
 void Detail(Peta * peta){
     /* Mengecek detail wahana yang berada disekitar P 
