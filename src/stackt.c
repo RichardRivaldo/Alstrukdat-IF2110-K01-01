@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "boolean.h"
 #include "stackt.h"
+#include "point.h"
 //PROGRAM
 
 /* ************ Prototype ************ */
@@ -13,9 +14,19 @@ void CreateEmpty (Stack *S)
 
 {
 	//KAMUS
-	Aksi X;
+
 	//ALGORIMTA
 	Top(*S) = Nil;
+}
+
+void InitializeStack (Stack *S)
+/*Fungsi untuk main stack aksi*/
+{
+
+	//KAMUS
+	Aksi X;
+	//ALGORTIMA
+	CreateEmpty(S);
 	CreateEmptyAksi(&X);
 	Push(S,X);
 }
