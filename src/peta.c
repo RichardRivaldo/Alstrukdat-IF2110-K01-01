@@ -10,14 +10,14 @@ Peta bacaPeta(){
     FILE * fPointer = fopen("../data/map.txt","r");
     Peta peta;
 
-    fgets(line, 255, fPointer); //baca jumlah row pada satu submap
-    int rowCount = convertStringToInt(line);
+    fgets(line, 255, fPointer); 
+    int rowCount = convertStringToInt(line); //baca jumlah row pada satu submap
     peta.sizeR = rowCount;
-
-    fgets(line, 255, fPointer); //baca jumlah column pada satu submap
-    int colCount = convertStringToInt(line);
+    printf("%d\n", rowCount);
+    fgets(line, 255, fPointer); 
+    int colCount = convertStringToInt(line); //baca jumlah column pada satu submap
     peta.sizeC = colCount;
-
+    printf("%d\n", colCount);
     fgets(line, 255, fPointer); //menghilangkan slash pertama
 
     while(!feof(fPointer)){
@@ -42,8 +42,13 @@ Peta bacaPeta(){
 }
 
 int convertStringToInt(char line[]){ //buat ngubah hasil baca peta(array of char)
-    int res = atoi(line);
+    int res =0;
+    for( int i = 0; line[i] != '\0' && line[i] >= '0' && line[i] <= '9'; ++i) {
+        res = (line[i] - '0') + res*10;
+    }
     return res;
+    // int res = atoi(line);
+    // return res;
 }
 
 void handleGerak(char opsi, Peta * peta){
@@ -152,9 +157,125 @@ void updatePeta(char target, POINT P, int area, Peta *peta){
     (*peta).coords = P;
 }
 
-boolean isInOffice(Peta * peta){
+char getCurrentPosition(Peta * peta){
     int area = (*peta).currentArea;
     int x = (*peta).coords.X;
     int y = (*peta).coords.Y;
-    return Elmt((*peta).submap[area],y,x) == 'O';
+    return Elmt((*peta).submap[area],y,x);
+}
+
+char getAtas(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X;
+    int y = (*peta).coords.Y-1;
+    return Elmt((*peta).submap[area],y,x);
+}
+
+char getBawah(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X;
+    int y = (*peta).coords.Y+1;
+    return Elmt((*peta).submap[area],y,x);
+}
+
+char getKiri(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X-1;
+    int y = (*peta).coords.Y;
+    return Elmt((*peta).submap[area],y,x);
+}
+
+void bangunWahana(Peta * peta, char posisi){
+    switch(posisi){
+        case 'W':
+            if(getAtas(peta)=='-'){
+                bangunAtas(peta);
+            }
+            break;
+        case 'A':
+            if(getKanan(peta)=='-'){
+                bangunKanan(peta);
+            }
+            break;
+        case 'S':
+            if(getBawah(peta)=='-'){
+                bangunBawah(peta);
+            }
+            break;
+        case 'D':
+            if(getKiri(peta)=='-'){
+                bangunKiri(peta);
+            }
+            break;
+    }
+}
+
+void bangunAtas(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X;
+    int y = (*peta).coords.Y-1;
+    Elmt((*peta).submap[area], y, x) = 'W';
+}
+
+void bangunBawah(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X;
+    int y = (*peta).coords.Y+1;
+    Elmt((*peta).submap[area], y, x) = 'W';
+}
+
+void bangunKanan(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X+1;
+    int y = (*peta).coords.Y;
+    Elmt((*peta).submap[area], y, x) = 'W';
+}
+
+void bangunKiri(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X-1;
+    int y = (*peta).coords.Y;
+    Elmt((*peta).submap[area], y, x) = 'W';
+}
+
+char getKanan(Peta * peta){
+    int area = (*peta).currentArea;
+    int x = (*peta).coords.X+1;
+    int y = (*peta).coords.Y;
+    return Elmt((*peta).submap[area],y,x);
+}
+
+boolean isInOffice(Peta * peta){
+    return getCurrentPosition(peta) == 'O';
+}
+
+boolean checkWahanaSurrounding(Peta * peta){
+    POINT targetPoin = (*peta).coords;  
+    int y = targetPoin.Y;
+    int x = targetPoin.X;
+    int currentArea = (*peta).currentArea;
+    char current = Elmt((*peta).submap[currentArea], y, x);
+    printf("Ini posisi kamu sekarang : %c", current);
+
+    //cek atas
+    char target = Elmt((*peta).submap[currentArea], y-1, x);
+    if(target=='W'){
+        return true;
+    }
+    //cek kanan
+    target = Elmt((*peta).submap[currentArea], y, x+1);
+    if(target=='W'){
+        return true;
+    }
+    //cek bawah
+    target = Elmt((*peta).submap[currentArea], y+1, x);
+    if(target=='W'){
+        return true;
+    }
+    //cek kiri
+    target = Elmt((*peta).submap[currentArea], y, x-1);
+    if(target=='W'){
+        return true;
+    }
+    return false;
 }
