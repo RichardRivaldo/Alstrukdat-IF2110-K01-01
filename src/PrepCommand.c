@@ -680,7 +680,7 @@ int main(){
     // KAMUS
     MatriksOfString MWahana;
     MatriksOfString MMaterial;
-    CreateEmpty(&S);
+    InitializeStack(&S);
     // ALGORITMA
     LoadFileWahana(&MWahana, 8, 12);
     LoadFileMaterial(&MMaterial, 5, 2);
