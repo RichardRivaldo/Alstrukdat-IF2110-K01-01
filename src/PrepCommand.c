@@ -13,20 +13,20 @@
 #include "point.h"
 #include "bintree.h"
 
-#include "MatriksOfString.c"
-#include "mesinkar.c"
-#include "mesinkata.c"
-#include "stackt.c"
-#include "customString.c"
-#include "point.c"
-#include "bintree.c"
+// #include "MatriksOfString.c"
+// #include "mesinkar.c"
+// #include "mesinkata.c"
+// #include "stackt.c"
+// #include "customString.c"
+// #include "point.c"
+// #include "bintree.c"
 
 //gcc PrepCommand.c MatriksOfString.c mesinkar.c mesinkata.c stackt.c customString.c point.c bintree.c
 
 Stack S;
 int PMat[5];
 int Money = 10000;
-int Time = 43200;
+int Time = 86400;
 POINT PKoordinat;
 POINT PlokasiWahana[8];
 // = {MakePOINT(-1,-1),MakePOINT(-1,-1),MakePOINT(3,3),MakePOINT(-1,-1),MakePOINT(-1,-1)};
@@ -577,7 +577,7 @@ void ShowUpgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*
         printf("Masukkan Input: ");
         STARTKATA();
         printf("\n");
-        StringCopy(100, input, pita);
+        StringCopy(lengthStr, input, pita);
         upgrade(wahana,act,PMoney,PTime,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,input);
     }
 }
@@ -648,7 +648,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
         ShowBuild(MWahana);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
-        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Halilintar V2");
+        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Halilintar");
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
         ShowBuy(MMaterial);
@@ -670,7 +670,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
     }
 }
 
-/*
+
 int main(){
     //Inisialisasi main
     for (int i = 0; i < barisMatriksWahana; ++i)
@@ -681,13 +681,31 @@ int main(){
     MatriksOfString MWahana;
     MatriksOfString MMaterial;
     InitializeStack(&S);
+    // PKoordinat = MakePOINT(3,4);
     // ALGORITMA
     LoadFileWahana(&MWahana, 8, 12);
     LoadFileMaterial(&MMaterial, 5, 2);
+    // for (int i = 0; i < 5; ++i)
+    // {
+    //     PMat[i] = 50;
+    // }
     IsiPohonUpgrade(MWahana,&pohonUpgrade);
-    printMatriksWahana(MWahana);
+    // printMatriksWahana(MWahana);
+    // for (int i = 0; i < 5; ++i)
+    // {
+    //     PrintTree(pohonUpgrade[i],2);
+    // }
+
+
     while (true){
         inputPrepPhase(MWahana, MMaterial);
+        // for (int i = 0; i < 8; ++i)
+        // {
+        //     TulisPOINT(PlokasiWahana[i]);
+        //     printf(" ");
+        //     TulisPOINT(S.T[S.TOP].Wah[i]);
+        //     printf("\n");
+        // }
     }
     return 0;
-} */
+} 
