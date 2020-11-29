@@ -67,4 +67,6 @@ boolean nearA(Peta * peta);
 
 Lokasi checkWahanaSurrounding(Peta * peta);
 
+void resetPeta(Peta * peta, Lokasi lokasiWahana[]);
+
 #endif

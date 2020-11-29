@@ -15,7 +15,8 @@ JAM timeMain;
 void SistemQueue(PrioQueueChar *Q, Wahana listWahana[]){
     /* Sistem Queue yang akan digunakan dalam main phase */
     printf("INITIALIZING QUEUE SYSTEM...\n");
-    MakeEmpty(Q, 5);
+    // MakeEmpty(Q, 5);
+    // printf("BRHASIL MAKE EMPTY\n");
     Pengunjung Y;
     for(int i = 0; i < 5; i++){
         Y.kesabaran = 20;
@@ -59,12 +60,13 @@ void Serve(PrioQueueChar *Q, Wahana ListWahana[], char Whn[255]){
             if(StringTrueCompare(255, Whn, nama)){
                 if(IsNotFull(W)){
                     if(IsNotBroken(W)){
-                        ListWahana[baris].kapasitas--;
                         printf("SUKSES SERVE\n");
+                        ListWahana[baris].kapasitas--;
                         ListWahana[baris].qty++;
                         ListWahana[baris].income += ListWahana[baris].profit;
                         ListWahana[baris].qtyAll++;
                         ListWahana[baris].incomeAll += W.profit;
+                        ChanceRusak(ListWahana, nama);
                         while(X.wahana[j][0] != '\0'){
                             StringCopy(255, X.wahana[j], X.wahana[j+1]);
                             j++;
@@ -127,6 +129,7 @@ void ChanceRusak(Wahana ListWahana[], char Whn[255]){
     if (i == 1){
         for(int j = 0; j < 8; j++){
             if(StringTrueCompare(255, ListWahana[j].nama, Whn)){
+                printf("WAHANA %S RUSAK!!!\n", Whn);
                 ListWahana[j].status = 0;
             }
         }
@@ -139,7 +142,13 @@ void Repair(Wahana ListWahana[], char Whn[255]){
     /* Mengembalikan state wahana */
     for(int j = 0; j < 8; j++){
         if(StringTrueCompare(255, ListWahana[j].nama, Whn)){
-            ListWahana[j].status = 1;
+            if(ListWahana[j].status==0){
+                 printf("WAHANA %s SEDANG DIPERBAIKI!!!\n", Whn);
+                ListWahana[j].status = 1;
+            }else{
+                printf("WAHANA %s DALAM KEADAAN BAIK-BAIK SAJA\n", Whn);
+            }
+           
         }
     }
 } 
@@ -197,6 +206,7 @@ void Prepare(PrioQueueChar *Q){
     while(!IsEmptyQ(*Q)){
         Dequeue(Q, &temp);
     }
+    // DeAlokasi(Q);
     /* Call Prep Phase */
 }
 

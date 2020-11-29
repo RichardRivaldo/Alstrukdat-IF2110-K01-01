@@ -11,6 +11,7 @@
 #include "stackt.h"
 #include "lokasi.h"
 #include "wahana.h"
+#include "prioqueuechar.h"
 
 //loading initial file (data wahana sama data material)
 void loadingInitialFile(MatriksOfString * MWahana, MatriksOfString * MMaterial);
@@ -30,6 +31,9 @@ void mainPhaseMsg();
 //pesan kalau tidak ada wahana di sekitar
 void tidakAdaWahanaMsg();
 
+//tampilkan inventory user
+void ShowGudang(int PMat[5]);
+
 // pesan yang ditampilkan hanya jika player bergerak tidak bisa bergerak ke arah tersebut alias bertemu dengan wahana/antrian/tembok
 void unableMoveMsg();
 
@@ -47,6 +51,9 @@ void handleEnteringOffice(Peta p, boolean * target);
 
 // menampilkan pesan bahwa pemain sudah memasukki main phase
 void handleEnteringMainPhase(boolean *prep, boolean *main, Stack * S);
+
+//handle ganti hari
+void handleFinishDay(boolean *prep, boolean *main, PrioQueueChar * Q);
 
 //bangun wahana di W/A/S/D dari posisi user
 void bangunWahana(Peta * peta, MatriksOfString MWahana);

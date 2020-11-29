@@ -272,3 +272,27 @@ Lokasi checkWahanaSurrounding(Peta * peta){
     res = CreateLokasi(null,-1);
     return res;
 }
+
+void resetPeta(Peta * peta, Lokasi lokasiWahana[]){
+    printf("UPDATING PETA....\n");
+    //reset W
+    for(int i = 0; i<4; i++){
+        for(int r = 0; r<(*peta).sizeR; r++){
+            for(int c = 0; c<(*peta).sizeC; c++){
+                if(Elmt((*peta).submap[i], r, c) == 'W'){
+                    Elmt((*peta).submap[i], r, c) = '-';
+                }
+            }
+        }
+    }
+
+    //nambahin W
+    for(int i = 0; i<8; i++){
+        if(lokasiWahana[i].Submap != -1){
+            int targetSub = lokasiWahana[i].Submap;
+            int X = lokasiWahana[i].Koordinat.X;
+            int Y = lokasiWahana[i].Koordinat.Y;
+            Elmt((*peta).submap[targetSub], Y, X) = 'W';
+        }
+    }
+}

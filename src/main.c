@@ -48,7 +48,7 @@ void main(){
 		boolean quit = false;
  
 		MatriksOfString MWahana;
-    MatriksOfString MMaterial;
+    	MatriksOfString MMaterial;
 
 		PrioQueueChar Q;
 		Wahana listWahana[8];
@@ -76,10 +76,19 @@ void main(){
 				}else{
 					switch(input){
 						case 'M': displayMap(p);break;
-						case 'O': handleEnteringOffice(p, &isInOffice);break;
+						case 'O': {
+							handleEnteringOffice(p, &isInOffice);
+							if(isInOffice){
+								for(int i = 0; i<8; i++){
+									displayWahana(listWahana[i]);
+								}
+							}
+						}
+						break;
 						case 'G': handleEnteringMainPhase(&isPreparationPhase, &isMainPhase, &S);break;
 						case 'B': bangunWahana(&p, MWahana); break;
 						case 'P': ShowBuy(MMaterial); break;
+						case 'I': ShowGudang(PMat); break;
 						case 'U': {
 							Lokasi res;
 							res = checkWahanaSurrounding(&p);
@@ -94,9 +103,13 @@ void main(){
 							}
 						}
 						break;
-						case 'Z':Undo(&S); break;
+						case 'Z':{
+							Undo(&S);
+							resetPeta(&p, PlokasiWahana);
+						}; break;
 						case 'E':{
 							Execute(&S, &Money, PMat, PlokasiWahana);
+							resetPeta(&p, PlokasiWahana);
 							handleEnteringMainPhase(&isPreparationPhase, &isMainPhase, &S);
 							}
 						break;
@@ -106,7 +119,9 @@ void main(){
 			}
 
 			//update listWahana
+			resetPeta(&p, PlokasiWahana);
 			updateListWahana(listWahana, MWahana, PlokasiWahana);
+			MakeEmpty(&Q, 5);
 			SistemQueue(&Q, listWahana);
 			printf("INI HASIL PRIO QUEUE\n");
 			PrintPrioQueueChar(Q);
@@ -120,7 +135,15 @@ void main(){
 				}else{
 					switch(input){
 						case 'M': displayMap(p);break;
-						case 'O': handleEnteringOffice(p, &isInOffice);break;
+						case 'O': {
+							handleEnteringOffice(p, &isInOffice);
+							if(isInOffice){
+								for(int i = 0; i<8; i++){
+									displayWahana(listWahana[i]);
+								}
+							}
+						}
+						break;
 						case 'L': {
 								if(nearA(&p)){
 									char nama[255];
@@ -131,12 +154,27 @@ void main(){
 										wahana404();
 									}else{
 										Serve(&Q, listWahana, nama);
+										PrintPrioQueueChar(Q);
 									}
 								}else{
 									unableServeMsg();
 								}
 							}
 							break;
+						case 'R':{
+							Lokasi res;
+							res = checkWahanaSurrounding(&p);
+							if(res.Submap!=-1){
+								//point to nama
+								str nama;
+								PointToNama(MWahana,S, res, PlokasiWahana, nama);
+								printf("INI NAMA WAHANA DISEKITARMU : %s\n",nama);
+								Repair(listWahana, nama);
+							}else{
+								tidakAdaWahanaMsg();
+							}
+						}
+						break;
 						case 'I':{
 							Lokasi res;
 							res = checkWahanaSurrounding(&p);
@@ -152,12 +190,16 @@ void main(){
 							}
 						}
 						break;
+						case 'P':
+							handleFinishDay(&isPreparationPhase, &isMainPhase, &Q);
+						;break;
 						case 'Q': exitGame(&quit); isMainPhase=false;break;
 					}
 				}
 				// isMainPhase=false;
 			}
 			// quit = true;
+			Prepare(&Q);
 		}
 	}
 }

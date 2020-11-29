@@ -43,6 +43,7 @@ void MakeEmpty (PrioQueueChar * Q, int Max){
     else{
         MaxElQ(*Q) = 0;
     }
+    printf("SUKSKES MAKE EMPTY\n");
 }
 
 void DeAlokasi(PrioQueueChar * Q){

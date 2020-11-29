@@ -306,12 +306,32 @@ boolean ShowBuild(MatriksOfString M, Lokasi target){
     // fungsi dipanggil saat ada perintah "build"
     // untuk menampilkan pesan dan list wahana
     char namaWahana[lengthStr];
+    int requiredWahanaMaterials[5];
 	// Algoritma
     printf("Daftar Gedung:\n");
     for (int i = 0; i < M.NBrsEff; i++)
     {
         if (StringCompare(lengthStr, M.Mem[i][10], "base")){
             printf("    - $%s %s\n", M.Mem[i][4], M.Mem[i][0]);
+            printf("        Capacity & Profit : %s & %s\n", M.Mem[i][1], M.Mem[i][2]);
+            printf("        Build Time : %s\n", M.Mem[i][5]);
+            printf("        Build Resource(s) :\n");
+            removeKomaMaterialWahana(lengthStr, requiredWahanaMaterials, M.Mem[i][6]);
+            if (requiredWahanaMaterials[0] != 0){
+                printf("            Semen : %d\n", requiredWahanaMaterials[0]);
+            }
+            if (requiredWahanaMaterials[1] != 0){
+                printf("            Baja : %d\n", requiredWahanaMaterials[1]);
+            }
+            if (requiredWahanaMaterials[2] != 0){
+                printf("            Sekrup : %d\n", requiredWahanaMaterials[2]);
+            }
+            if (requiredWahanaMaterials[3] != 0){
+                printf("            Kayu : %d\n", requiredWahanaMaterials[3]);
+            }
+            if (requiredWahanaMaterials[4] != 0){
+                printf("            Primogem : %d\n", requiredWahanaMaterials[4]);
+            }
         }
     }
     printf("\nInput berupa: <Nama Gedung>\n");

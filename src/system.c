@@ -10,6 +10,7 @@
 #include "PrepCommand.c"
 #include "lokasi.h"
 #include "wahana.h"
+#include "prioqueuechar.h"
 
 void loadingInitialFile(MatriksOfString * MWahana, MatriksOfString * MMaterial){
 	LoadFileWahana(MWahana, 8, 12);
@@ -120,12 +121,12 @@ void preparationPhaseMsg(){
 	printf("- M       : Shows Map                            -\n");
 	printf("- O       : Entering office                      -\n");
 	printf("- G       : Start Main Phase                     -\n");
+	printf("- I       : Isi Gudang                           -\n");
 	printf("- B       : Build                                -\n");
 	printf("- P       : Purchase                             -\n");
 	printf("- U       : Upgrade                              -\n");
 	printf("- E       : Execute                              -\n");
 	printf("- Z       : Undo                                 -\n");
-	printf("- X       : Cek Wahana                           -\n");
 	printf("-                                                -\n");
 	printf("- Q       : Quit game                            -\n");
 	printf("-                                                -\n");
@@ -138,7 +139,7 @@ void mainPhaseMsg(){
 	printf("--------------------MAIN PHASE--------------------\n");
 	printf("--------------------------------------------------\n");
 	printf("-                                                -\n");
-	printf("- You are currently on preparation phase, here   -\n");
+	printf("- You are currently on main phase, here          -\n");
 	printf("- are several commands available for this phase  -\n");
 	printf("-                                                -\n");
 	printf("- W,A,S,D : Movement                             -\n");
@@ -183,6 +184,16 @@ void tidakAdaWahanaMsg(){
 	printf("-                                                -\n");
 	printf("-       Go near W to upgrade it's property!!     -\n");
 	printf("--------------------------------------------------\n");
+}
+
+void ShowGudang(int PMat[5]){
+    // ALGORITMA
+    printf("Materialmu di gudang :\n");
+	printf("    Semen : %d\n", PMat[0]);
+	printf("    Baja : %d\n", PMat[1]);
+	printf("    Sekrup : %d\n", PMat[2]);
+	printf("    Kayu : %d\n", PMat[3]);
+	printf("    Primogem : %d\n", PMat[4]);
 }
 
 char getCharInput(){
@@ -283,6 +294,16 @@ void handleEnteringMainPhase(boolean *prep, boolean *main, Stack * S){
 	*main = true;
 }
 
+void handleFinishDay(boolean *prep, boolean *main, PrioQueueChar * Q){
+	printf("--------------------------------------------------\n");
+	printf("-               Huh! What a hustle!              -\n");
+	printf("-           Get ready for the next day!!         -\n");
+	printf("--------------------------------------------------\n");
+	printf("\n");
+	*prep = true;
+	*main = false;
+}
+
 void initializeListWahana(Wahana listWahana[8], MatriksOfString MWahana, Lokasi PlokasiWahana[barisMatriksWahana]){
 	for(int i = 0; i<8; i++){
 		Wahana target;
@@ -304,22 +325,20 @@ void initializeListWahana(Wahana listWahana[8], MatriksOfString MWahana, Lokasi 
 
 void updateListWahana(Wahana listWahana[8], MatriksOfString MWahana, Lokasi PlokasiWahana[barisMatriksWahana]){
 	for(int i = 0; i<8; i++){
-		Wahana target;
-		StringCopy(lengthStr, target.nama, MWahana.Mem[i][0]);
-		target.kapasitas = StringToInt(lengthStr,MWahana.Mem[i][1]);
-		target.profit = StringToInt(lengthStr,MWahana.Mem[i][2]);
-		target.durasi = StringToInt(lengthStr, MWahana.Mem[i][3])/60;
-		target.reparationTime = StringToInt(lengthStr, MWahana.Mem[i][4]);
-		target.status = StringToInt(lengthStr, MWahana.Mem[i][9]);
-		StringCopy(lengthStr, target.deskripsi, MWahana.Mem[i][11]);
-		target.lokasi = PlokasiWahana[i];
-		printf("INI QTY ALL : %d\n", qtyAll(target));
-		setQtyAll(&target);
-		printf("INI QTY ALL : %d\n", qtyAll(target));
-		target.incomeAll= incomeAll(target) + income(target);
-		target.qty = 0;
-		target.income = 0;
-		listWahana[i] = target;
+		StringCopy(lengthStr, listWahana[i].nama, MWahana.Mem[i][0]);
+		listWahana[i].kapasitas = StringToInt(lengthStr,MWahana.Mem[i][1]);
+		listWahana[i].profit = StringToInt(lengthStr,MWahana.Mem[i][2]);
+		listWahana[i].durasi = StringToInt(lengthStr, MWahana.Mem[i][3])/60;
+		listWahana[i].reparationTime = StringToInt(lengthStr, MWahana.Mem[i][4]);
+		listWahana[i].status = StringToInt(lengthStr, MWahana.Mem[i][9]);
+		StringCopy(lengthStr, listWahana[i].deskripsi, MWahana.Mem[i][11]);
+		listWahana[i].lokasi = PlokasiWahana[i];
+		// printf("INI QTY ALL : %d\n", qtyAll(listWahana[i]));
+		setQtyAll(&listWahana[i]);
+		// printf("INI QTY ALL : %d\n", qtyAll(listWahana[i]));
+		listWahana[i].incomeAll= incomeAll(listWahana[i]) + income(listWahana[i]);
+		listWahana[i].qty = 0;
+		listWahana[i].income = 0;
 	}
 }
 
