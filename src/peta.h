@@ -14,6 +14,7 @@ typedef struct{
     int sizeC;
     MATRIKS submap[4];
     POINT coords;
+    //get current position Elmt(submap[currentArea],coords.Y, coords.X) --> CHAR
 } Peta;
 
 #define areas(P) (P).areas
@@ -40,7 +41,29 @@ void printCurrentArea(Peta *P);
 //update peta
 void updatePeta(char target, POINT P, int area, Peta *peta);
 
+char getCurrentPosition(Peta * peta);
+
+char getAtas(Peta * peta);
+
+char getBawah(Peta * peta);
+
+char getKiri(Peta * peta);
+
+char getKanan(Peta * peta);
+
+void bangunWahana(Peta * peta, char posisi);
+
+void bangunAtas(Peta * peta);
+
+void bangunBawah(Peta * peta);
+
+void bangunKanan(Peta * peta);
+
+void bangunKiri(Peta * peta);
+
 //check apakah posisi sekarang di office
 boolean isInOffice(Peta * peta);
+
+boolean checkWahanaSurrounding(Peta * peta);
 
 #endif

@@ -100,6 +100,12 @@ void preparationPhaseMsg(){
 	printf("- M       : Shows Map                            -\n");
 	printf("- O       : Entering office                      -\n");
 	printf("- G       : Start Main Phase                     -\n");
+	printf("- B       : Build                                -\n");
+	printf("- P       : Purchase                             -\n");
+	printf("- U       : Upgrade                              -\n");
+	printf("- E       : Execute                              -\n");
+	printf("- Z       : Undo                                 -\n");
+	printf("- X       : Cek Wahana                           -\n");
 	printf("-                                                -\n");
 	printf("- Q       : Quit game                            -\n");
 	printf("-                                                -\n");

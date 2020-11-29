@@ -79,3 +79,38 @@ int StringToInt(int panjang,char input[panjang])
     }
     return sum;
 }
+
+void StringConcat(int panjang,char output[panjang], char input1[panjang], char input2[panjang])
+{
+    int idx = 0;
+    for (int i = 0; i < panjang; i++,idx++)
+    {
+        if (input1[i] == '\0')
+        {
+            break;
+        }
+        (output)[i] = input1[i];
+    }
+
+    for (int i = 0; i < panjang; ++i,idx++)
+    {
+        output[idx] = input2[i];
+        if (input2[i] == '\0')
+        {
+            break;
+        }
+    }
+}
+
+void StringCutEnd(int panjang,char output[panjang], char input[panjang])
+{
+    for (int i = 0; i < panjang; i++)
+    {
+        (output)[i] = input[i];
+        if (input[i+1] == '\0')
+        {
+            input[i] = '\0';
+            break;
+        }
+    }
+}
