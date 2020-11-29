@@ -670,7 +670,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
     }
 }
 
-
+/*
 int main(){
     //Inisialisasi main
     for (int i = 0; i < barisMatriksWahana; ++i)
@@ -690,4 +690,4 @@ int main(){
         inputPrepPhase(MWahana, MMaterial);
     }
     return 0;
-}
+} */
