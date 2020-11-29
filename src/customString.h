@@ -28,4 +28,15 @@ void StringCopy(int panjang,char output[panjang], char input[panjang]);
 /** Copy string *dari input ke output*/
 
 int StringToInt(int panjang,char input[panjang]);
+/* Prekondisi: Panjang melebihi panjang input sebenarnya, contoh: input = 5 huruf,panjang bisa 100 huruf*/
+/*Ubah String jadi integer, semua yg bukan angka akan di ignore*/
+
+void StringConcat(int panjang,char output[panjang], char input1[panjang], char input2[panjang]);
+/* Prekondisi: Panjang melebihi panjang input dan output sebenarnya, contoh: input = 5 huruf,panjang bisa 100 huruf*/
+/**Concat String 1 dan String 2 ke output*/
+
+void StringCutEnd(int panjang,char output[panjang], char input[panjang]);
+/* Prekondisi: Panjang melebihi panjang input dan output sebenarnya, contoh: input = 5 huruf,panjang bisa 100 huruf*/
+/*Cut char akhir string, di simpan ke output*/
+/*Dipakai di upgrade, mesinkata juga menerima \n sebagai bagian dari input*/
 #endif
