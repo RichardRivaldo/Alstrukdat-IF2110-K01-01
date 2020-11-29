@@ -216,11 +216,11 @@ void bangunWahana(Peta * peta, MatriksOfString MWahana){
 		case 'W':
 			target.Y--;break;
 		case 'A':
-			target.X++;break;
+			target.X--;break;
 		case 'S':
 			target.Y++;break;
 		case 'D':
-			target.X--;break;
+			target.X++;break;
 		default:break;
 	}
 
