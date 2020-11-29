@@ -1,9 +1,11 @@
 #include "prioqueuechar.h"
 #include "MatriksOfString.h"
 #include "customString.h"
+// #include "peta.c"
+// #include "peta.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "PrepCommand.c"
 
 boolean IsEmptyQ (PrioQueueChar Q){
     /* Mengirim true jika Q kosong: lihat definisi di atas */
@@ -90,7 +92,7 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
     if(NBElmtQ(*Q) == 1){
         Prio(*X) = Prio(InfoHead(*Q));
         for(int i = 0; i < 5; i++){
-            StringCopy(100, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            StringCopy(lengthStr, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = Nil; Tail(*Q) = Nil;
@@ -98,7 +100,7 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
     else{
         Prio(*X) = Prio(InfoHead(*Q));
         for(int i = 0; i < 5; i++){
-            StringCopy(100, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            StringCopy(lengthStr, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = (Head(*Q) % MaxElQ(*Q)) + 1;
@@ -153,89 +155,158 @@ void RandomizePrio (Pengunjung X){
 
 void SistemQueue(PrioQueueChar Q){
     /* Sistem Queue yang akan digunakan dalam main phase */
-    MakeEmpty(&Q, 20);
+    MakeEmpty(&Q, 5);
+    for(int i = 0; i < 5; i++){
+        Pengunjung X;
+        X.kesabaran = 20;
+        RandomizePrio(X);
+        int jumlahWahana = (rand() % 5) + 1;
+        for(int j = 1; j < jumlahWahana; j++){
+            int randomWahana = (rand() % 8);
+        }
+    }
 }
 
-void Serve(PrioQueueChar *Q, MatriksOfString M){
+void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
     /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
 
-    char whnSelected[255];
     Pengunjung X;
-    int i = 0;
+    int i = 0, j;
     boolean found = false;
-
-    scanf("%s", &whnSelected);
 
     Dequeue(Q, &X);
     while(X.wahana[i][0] != '\0' && !found){
-        if(StringTrueCompare(255, whnSelected, X.wahana[i])){
+        char cekWahana[255]; 
+        StringCopy(255, cekWahana, X.wahana[i]);
+        if(StringTrueCompare(255, cekWahana, Whn)){
+            j = i;
             found = true;
-            for(int baris = 0; baris < 8; baris++){
-                if(StringTrueCompare(255, whnSelected, M.Mem[baris][0])){
-                    if(M.Mem[baris][1] < 1){
-                        if(M.Mem[baris][9] == 1){
-                            while(X.wahana[i][0] != '\0'){
-                                StringCopy(100, X.wahana[i], X.wahana[i+1]);
-                                i++;
-                            }
-                            if(X.wahana[0][0] != '\0'){
-                                if(X.prio - 2 < 1){
-                                    X.prio = 1;
-                                }
-                                else{
-                                    X.prio -= 3;
-                                }
-                                Enqueue(Q, X);
-                            }
+        }
+        else{
+            i++;
+        }
+    }
+
+    if(found){
+        for(int baris = 0; baris < 8; baris++){
+            char nama[255]; StringCopy(255, nama, M.Mem[baris][0]);
+            if(StringTrueCompare(255, Whn, nama)){
+                if(StringToInt(lengthStr, M.Mem[baris][1]) > 1){
+                    if(StringToInt(lengthStr, M.Mem[baris][9]) == 1){
+                        while(X.wahana[j][0] != '\0'){
+                            StringCopy(255, X.wahana[j], X.wahana[j+1]);
+                            j++;
                         }
-                        else{
-                            printf("The ride you want to use is broken\n");
+                        if(X.wahana[0][0] != '\0'){
+                            if(X.prio - 2 < 1){
+                                X.prio = 1;
+                            }
+                            else{
+                                X.prio -= 3;
+                            }
                             Enqueue(Q, X);
                         }
                     }
+                    else{
+                        printf("The ride you want to use is broken!\n");
+                        X.kesabaran -= 2;
+                        if(X.prio - 2 < 1){
+                            X.prio = 1;
+                        }
+                        else{
+                            X.prio -= 3;
+                        }
+                        if(X.kesabaran > 0){
+                            Enqueue(Q, X);
+                        }
+                        else{
+                            printf("The customer will now leave the Queue!\n");
+                        }
+                    }
+                }
+                else{
+                    printf("The ride you want to use is full!\n");
+                    X.kesabaran -= 2;
+                    if(X.prio - 2 < 1){
+                        X.prio = 1;
+                    }
+                    else{
+                        X.prio -= 3;
+                    }
+                    if(X.kesabaran > 0){
+                        Enqueue(Q, X);
+                    }
+                    else{
+                        printf("The customer will now leave the Queue!\n");
+                    }
+                    Enqueue(Q, X);
                 }
             }
         }
-        i+=1;
     }
-    if(!found){
+    else{
         printf("Error 404: Not Found\n");
         Enqueue(Q, X);
     }
 }
-/*
-void ChanceRusak(Wahana* wahana){
-    /* Probabilitas Wahana rusak (25%)
+
+
+void ChanceRusak(MatriksOfString M, char Whn[255]){
+    /* Probabilitas Wahana rusak (25%) */
+    
     int i = rand() % 4;
-
     if (i == 1){
-        (*wahana).state = false;
+        for(int j = 0; j < 8; j++){
+            if(StringTrueCompare(255, M.Mem[j][0], Whn)){
+                StringCopy(255, M.Mem[j][9], "0");
+            }
+        }
     }
-} */
-
-/*** Kurang Waktu ***/
-/*
-void Repair(Wahana* wahana);
-    /* Mengembalikan state wahana
-    wahana.state = true;
 }
 
-void Detail(Peta * peta){
-    /* Mengecek detail wahana yang berada disekitar P
-    int currentArea = (*peta).currentArea;
-    Wahana wahana;
-    /* Ngecek sekitar player */
-    /* Daftar kan wahana yang ada di sekitar player
-    cetakDetailWahana(wahana);
-}  */
 
-/*** Tunggu ada detail wahana ***/
+/*** Kurang Waktu ***/
+void Repair(MatriksOfString M, char Whn[255]){
+    /* Mengembalikan state wahana */
+    for(int j = 0; j < 8; j++){
+        if(StringTrueCompare(255, M.Mem[j][0], Whn)){
+            StringCopy(255, M.Mem[j][9], "1");
+        }
+    }
+} 
+
+void cetakDetailWahana(Wahana* wahana){
+    printf("ID WAHANA : %d\n",(*wahana).id);
+    printf("NAMA WAHANA : %s\n",(*wahana).nama);
+    printf("TIPE WAHANA : %s\n",(*wahana).tipe);
+    printf("HARGA WAHANA : %d\n",(*wahana).harga);
+    printf("POINT WAHANA : ");
+    TulisPOINT((*wahana).point);
+    printf("\n");
+    printf("KAPASITAS WAHANA : %d\n",(*wahana).kapasitas);
+    printf("DESKRIPSI WAHANA : %s\n",(*wahana).deskripsi);
+    printf("STATE WAHANA : %d\n",(*wahana).state);
+}
+
+void Detail(MatriksOfString M, char Whn[255]){
+    /* Mengecek detail wahana yang berada disekitar P  */
+    /* Daftar kan wahana yang ada di sekitar player  */
+    Wahana wahana;
+    for (int i = 0; i < 8; i++){
+        if(StringTrueCompare(255, M.Mem[i][0], Whn)){
+            StringCopy(255, wahana.nama, Whn);
+            cetakDetailWahana(&wahana);
+        }
+    }
+}
+
 /*
-void Office(){
-    /* Mengecek detail dan laporan Wahana
+void Office(){ 
+    /* Mengecek detail dan laporan Wahana 
     int i;
-        cetakDetailWahana(wahana[i]);
+    cetakDetailWahana(wahana[i]);
 } */
+
 
 void Prepare(PrioQueueChar *Q){
     printf("Starting Preparation Phase...\n");

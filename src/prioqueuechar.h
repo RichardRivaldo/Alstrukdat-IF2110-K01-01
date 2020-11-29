@@ -26,7 +26,7 @@ typedef struct {
     Pengunjung * T;   /* tabel penyimpan elemen */
     address HEAD;  /* alamat penghapusan */
     address TAIL;  /* alamat penambahan */
-    int MaxEl;     /* Max elemen queue */
+    int MaxElQ;     /* Max elemen queue */
 } PrioQueueChar;
 /* Definisi PrioQueueChar kosong: HEAD=Nil; TAIL=Nil. */
 
@@ -39,8 +39,6 @@ typedef struct {
 #define Tail(Q)     (Q).TAIL
 #define InfoHead(Q) (Q).T[(Q).HEAD]
 #define InfoTail(Q) (Q).T[(Q).TAIL]
-#define MaxEl(Q)    (Q).MaxEl
-#define Elmt(Q,i)   (Q).T[(i)]
 #define MaxElQ(Q)   (Q).MaxElQ
 #define ElmtQ(Q,i)   (Q).T[(i)]
 
@@ -103,13 +101,13 @@ void RandomizeWahana (Pengunjung X);
 void SistemQueue(PrioQueueChar Q);
     /* Sistem Queue yang akan digunakan dalam main phase */
 
-void Serve(PrioQueueChar *Q, MatriksOfString M);
+void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]);
     /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
 
-void ChanceRusak(Wahana* wahana);
-    /* Probabilitas Wahana rusak (30%) */
+void ChanceRusak(MatriksOfString M, char Whn[255]);
+    /* Probabilitas Wahana rusak (25%) */
 
-void Repair(Wahana* wahana);
+void Repair(MatriksOfString M, char Whn[255]);
     /* Mengembalikan state wahana */
 
 void Detail();

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "boolean.h"
 #include "stackt.h"
+#include "point.h"
 //PROGRAM
 
 /* ************ Prototype ************ */
@@ -12,7 +13,22 @@ void CreateEmpty (Stack *S)
 /* Ciri stack kosong : TOP bernilai Nil */
 
 {
+	//KAMUS
+
+	//ALGORITmA
 	Top(*S) = Nil;
+}
+
+void InitializeStack (Stack *S)
+/*Fungsi untuk main stack aksi*/
+{
+
+	//KAMUS
+	Aksi X;
+	//ALGORTIMA
+	CreateEmpty(S);
+	CreateEmptyAksi(&X);
+	Push(S,X);
 }
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack (Stack S)

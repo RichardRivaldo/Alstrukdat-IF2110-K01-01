@@ -49,6 +49,8 @@ void CreateEmpty (Stack *S);
 /* jadi indeksnya antara 0.. MaxEl */
 /* Ciri stack kosong : TOP bernilai Nil */
 
+void InitializeStack (Stack *S);
+/*Fungsi untuk main stack aksi*/
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack (Stack S);
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
