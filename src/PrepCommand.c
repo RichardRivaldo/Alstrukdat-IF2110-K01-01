@@ -648,7 +648,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
         ShowBuild(MWahana);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
-        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Halilintar V2");
+        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Halilintar");
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
         ShowBuy(MMaterial);
@@ -680,14 +680,24 @@ int main(){
     // KAMUS
     MatriksOfString MWahana;
     MatriksOfString MMaterial;
+    BinTree P;
     InitializeStack(&S);
     // ALGORITMA
     LoadFileWahana(&MWahana, 8, 12);
     LoadFileMaterial(&MMaterial, 5, 2);
     IsiPohonUpgrade(MWahana,&pohonUpgrade);
     printMatriksWahana(MWahana);
-    while (true){
-        inputPrepPhase(MWahana, MMaterial);
+
+    for (int i = 0; i < 5; ++i)
+    {
+        if (SearchTree(pohonUpgrade[i],"Halilintar"))
+        {
+            P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
+        }
     }
+    PrintHistory(MWahana,P,"Halilintar");
+    // while (true){
+    //     inputPrepPhase(MWahana, MMaterial);
+    // }
     return 0;
 }

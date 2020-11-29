@@ -15,7 +15,7 @@ void CreateEmpty (Stack *S)
 {
 	//KAMUS
 
-	//ALGORIMTA
+	//ALGORITmA
 	Top(*S) = Nil;
 }
 
