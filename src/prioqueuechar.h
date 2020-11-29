@@ -101,13 +101,13 @@ void RandomizeWahana (Pengunjung X);
 void SistemQueue(PrioQueueChar Q);
     /* Sistem Queue yang akan digunakan dalam main phase */
 
-void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[50]);
+void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]);
     /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
 
-void ChanceRusak(Wahana* wahana);
-    /* Probabilitas Wahana rusak (30%) */
+void ChanceRusak(MatriksOfString M, char Whn[255]);
+    /* Probabilitas Wahana rusak (25%) */
 
-void Repair(Wahana* wahana);
+void Repair(MatriksOfString M, char Whn[255]);
     /* Mengembalikan state wahana */
 
 void Detail();

@@ -229,23 +229,24 @@ void Repair(Wahana* wahana){
     /* Mengembalikan state wahana */
     (*wahana).state = 1;
 } 
-/*
-void Detail(Peta * peta){
-    /* Mengecek detail wahana yang berada disekitar P 
+
+void Detail(){
+    /* Mengecek detail wahana yang berada disekitar P */
     int currentArea = (*peta).currentArea;
     Wahana wahana;
     /* Ngecek sekitar player */
-    /* Daftar kan wahana yang ada di sekitar player 
-    cetakDetailWahana(wahana);
-} */
+    for (int i = 0; i < 8; i++){
+        cetakDetailWahana(wahana[i]);
+    }
+}
 
 /*** Tunggu ada detail wahana ***/
-/*
+
 void Office(){
-    /* Mengecek detail dan laporan Wahana
+    /* Mengecek detail dan laporan Wahana */
     int i;
-        cetakDetailWahana(wahana[i]);
-} */
+    
+} 
 
 void Prepare(PrioQueueChar *Q){
     printf("Starting Preparation Phase...\n");

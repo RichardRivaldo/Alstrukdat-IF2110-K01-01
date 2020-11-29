@@ -1,4 +1,5 @@
 /* Driver PrioQueueChar */
+/* Make PrepCommand Main into a comment first */
 
 #include "prioqueuechar.c"
 // #include "customString.c"
@@ -19,8 +20,8 @@ int main(){
 
     /* Assign nilai variabel B */
     Prio(A) = 10; Sabar(A) = 4;
-    StringCopy(255, A.wahana[0], "Rumah Kaca");
-    StringCopy(255, A.wahana[1], "Bianglala");
+    StringCopy(255, A.wahana[0], "HalilintarV2");
+    StringCopy(255, A.wahana[1], "Halilintar");
 
     /* Assign nilai variabel A */
     Prio(B) = 11; Sabar(B) = 5;
@@ -60,7 +61,7 @@ int main(){
     printf("%d ", X.prio);
     printf("%d\n", X.kesabaran); */
     /* Fungsi Serve Queue */
-    scanf("%s", Whn);
+    scanf("%s", &Whn);
     Serve(&Q, M, Whn);
 
     /* Cek isi Queue */
