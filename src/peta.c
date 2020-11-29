@@ -5,71 +5,45 @@
 #include "system.h"
 
 Peta bacaPeta(){
+    int q = 0, r=0;
+    char line[255];
     FILE * fPointer = fopen("../data/map.txt","r");
     Peta peta;
-    int q = 0, r=0;
-    int rowCount = 0, columnCount = 0;
-    char curr;
-    char line[255];
-    memset(line,0,255); //ngosongin linenya
-    // printf("Map 1\n");
+
+    fgets(line, 255, fPointer); //baca jumlah row pada satu submap
+    int rowCount = convertStringToInt(line);
+    peta.sizeR = rowCount;
+
+    fgets(line, 255, fPointer); //baca jumlah column pada satu submap
+    int colCount = convertStringToInt(line);
+    peta.sizeC = colCount;
+
+    fgets(line, 255, fPointer); //menghilangkan slash pertama
+
     while(!feof(fPointer)){
         fgets(line, 255, fPointer);
-        // curr = fgetc(fPointer);
-        if(line[0]=='/'){
-            peta.submap[q] = CopySubmap(rowCount, columnCount, peta.areas[q]);    
+        if(line[0]=='/'){   
             q++;
             r=0;
-            rowCount = 0;
         }else{
-            rowCount++;
-            columnCount = 0;
             for(int c = 0; c<255; c++){
-                if(line[c]!=NULL){
-                    columnCount++;
-                }
                 if(line[c]=='P'){
                     peta.currentArea = q;
                     peta.coords = MakePOINT(c,r);
-                    peta.areas[q][r][c] = '-';
+                    Elmt(peta.submap[q],r,c) = '-';
                 }else{
-                    peta.areas[q][r][c] = line[c];
+                    Elmt(peta.submap[q],r,c) = line[c];
                 }
             }
-            // printf("%s\n", peta.areas[q][r]);
             r++;
         }
     }
-    // MATRIKS MTarget;
-    // CopySubmap(peta.areas[0], &MTarget);
-    // printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n\n");
-    // printf("%d\n", rowCount);
-    // printf("%d\n", columnCount);
     return peta;
 }
 
-MATRIKS CopySubmap (indeks r, indeks c, char submap[r][c]){
-    MATRIKS MTarget;
-    MakeMATRIKS(r, c, &MTarget);
-    printf("%d %d\n", r, c);
-    printf("BBBBBBBBBBBBBBB\n");
-    for(int i = 0; i < r; i++){
-        for(int j = 0; j < c; i++){
-            printf("%c", submap[i][j]);
-            // Elmt(MTarget, i, j) = submap[i][j];
-        }
-        printf("\n");
-    }
-    printf("mau return\n");
-    return MTarget;
-    // r = sizeof(submap)/sizeof(submap[0]);
-    // printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
-    // printf("%d", sizeof(submap));
-    // printf("\n\n");
-    // printf("%d", sizeof(submap[0]));
-    // printf("\n\n");
-    // printf("%d\n", r);
-    // int c = sizeof((*submap)[0])/sizeof((*submap)[0][0]);
+int convertStringToInt(char line[]){ //buat ngubah hasil baca peta(array of char)
+    int res = atoi(line);
+    return res;
 }
 
 void handleGerak(char opsi, Peta * peta){
@@ -91,7 +65,7 @@ void handleGerak(char opsi, Peta * peta){
     }
     int Y = targetPoin.Y;
     int X = targetPoin.X;
-    char target = (*peta).areas[currentArea][Y][X];
+    char target = Elmt((*peta).submap[currentArea],Y,X);
     boolean bisaGerak = verifyGerak(target);
     if(bisaGerak){
         updatePeta(target, targetPoin, currentArea, peta);
@@ -111,26 +85,25 @@ boolean verifyGerak(char target){
 }
 
 void printCurrentArea(Peta *peta){
-    printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    TulisMATRIKS((*peta).submap[(*peta).currentArea]);
-    // printf("Player anda berada pada map ke %d dengan titik ", (*peta).currentArea+1);
-    // TulisPOINT((*peta).coords);
-    // printf("\n");
-    // int area = (*peta).currentArea;
+    printf("Player anda berada pada map ke %d dengan titik ", (*peta).currentArea+1);
+    TulisPOINT((*peta).coords);
+    printf("\n");
+    int area = (*peta).currentArea;
+    int rows = (*peta).sizeR;
     // int rows = sizeof((*peta).areas[area]) / sizeof((*peta).areas[area][0]);
-    // // printf("Jumlah baris : %d\n",rows);
-    // for(int i = 0; i<rows; i++){
-    //     int length = strlen((*peta).areas[area][i]);
-    //     for(int j = 0; j<length; j++){
-    //         if(i==(*peta).coords.Y && j==(*peta).coords.X){
-    //             printf("P");
-    //         }else{
-    //             printf("%c", (*peta).areas[area][i][j]);
-    //         }
-    //     }
-    //     // printf("%s", (*peta).areas[area][i]);
-    // }
-    // printf("\n");
+    // printf("Jumlah baris : %d\n",rows);
+    for(int i = 0; i<rows; i++){
+        for(int j = 0; j<(*peta).sizeC; j++){
+            if(i==(*peta).coords.Y && j==(*peta).coords.X){
+                printf("P");
+            }else{
+                printf("%c", Elmt((*peta).submap[area],i,j));
+            }
+        }
+        printf("\n");
+        // printf("%s", (*peta).areas[area][i]);
+    }
+    printf("\n");
 }
 
 void updatePeta(char target, POINT P, int area, Peta *peta){
@@ -183,5 +156,5 @@ boolean isInOffice(Peta * peta){
     int area = (*peta).currentArea;
     int x = (*peta).coords.X;
     int y = (*peta).coords.Y;
-    return (*peta).areas[area][y][x] == 'O';
+    return Elmt((*peta).submap[area],y,x) == 'O';
 }

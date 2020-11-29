@@ -23,7 +23,7 @@ void main(){
 		boolean isInOffice = false;
 		boolean quit = false;
 		Peta p = bacaPeta();
-		printf("berhasil masuk sini");
+		// printf("berhasil masuk sini");
 		displayMap(p);
 
 		//the whole game
