@@ -1,12 +1,30 @@
 #include "peta.c"
 #include "point.c"
-#include "system.c"
+#include "PrepCommand.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h> 
 #include <conio.h>
 #include "boolean.h"
 #include "matriks.c"
+#include "MatriksOfString.c"
+#include "customString.c"
+#include <string.h>
+#include "mesinkar.c"
+#include "mesinkata.c"
+#include "stackt.c"
+#include "bintree.c"
+
+//global variables
+Stack S;
+int PMat[5];
+int Money = 10000;
+int Time = 86400;
+Lokasi PKoordinat;
+Lokasi PlokasiWahana[8];
+BinTree pohonUpgrade[5];
+
+#include "system.c"
 
 void main(){
 	int start = startupPanel(0,false);
@@ -22,6 +40,14 @@ void main(){
 		boolean isMainPhase = false;
 		boolean isInOffice = false;
 		boolean quit = false;
+ 
+		MatriksOfString MWahana;
+    MatriksOfString MMaterial;
+
+		loadingInitialFile(&MWahana, &MMaterial);
+
+		printMatriksWahana(MWahana);
+
 		Peta p = bacaPeta();
 		// printf("berhasil masuk sini");
 		displayMap(p);
@@ -40,13 +66,8 @@ void main(){
 						case 'M': displayMap(p);break;
 						case 'O': handleEnteringOffice(p, &isInOffice);break;
 						case 'G': handleEnteringMainPhase(&isPreparationPhase, &isMainPhase);break;
-						case 'X': 
-							if(checkWahanaSurrounding(&p)){
-								printf("ADA WAHANA");
-							}else{
-								printf("TIDAK ADA WAHANA DISEKITARMU");
-							}
-							;break;
+						case 'B': bangunWahana(&p, MWahana); break;
+						case 'P': ShowBuy(MMaterial); break;
 						case 'Q': exitGame(&quit);break;
 					}
 				} 

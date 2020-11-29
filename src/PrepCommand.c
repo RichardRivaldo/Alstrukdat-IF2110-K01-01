@@ -12,6 +12,7 @@
 #include "customString.h"
 #include "point.h"
 #include "bintree.h"
+#include "PrepCommand.h"
 
 // #include "MatriksOfString.c"
 // #include "mesinkar.c"
@@ -23,14 +24,14 @@
 
 //gcc PrepCommand.c MatriksOfString.c mesinkar.c mesinkata.c stackt.c customString.c point.c bintree.c
 
-Stack S;
-int PMat[5];
-int Money = 10000;
-int Time = 86400;
-Lokasi PKoordinat;
-Lokasi PlokasiWahana[8];
-// = {MakePOINT(-1,-1),MakePOINT(-1,-1),MakePOINT(3,3),MakePOINT(-1,-1),MakePOINT(-1,-1)};
-BinTree pohonUpgrade[5];
+// Stack S;
+// int PMat[5];
+// int Money = 10000;
+// int Time = 86400;
+// Lokasi PKoordinat;
+// Lokasi PlokasiWahana[8];
+// // = {MakePOINT(-1,-1),MakePOINT(-1,-1),MakePOINT(3,3),MakePOINT(-1,-1),MakePOINT(-1,-1)};
+// BinTree pohonUpgrade[5];
 
 void LoadCabangPohonUpgrade(MatriksOfString wahana, BinTree pohonUpgrade[5])
 {
@@ -190,7 +191,7 @@ void ShowHelp(){
     printf("\n");
 }
 
-void build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/,
+boolean build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/,
             Lokasi PlokasiWahana[8],Lokasi PKoordinat /*Koordinat player*/, int PMat[5], char namaWahana[lengthStr])
 {
     //KAMUS
@@ -281,6 +282,7 @@ void build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int
                     X.Wah[i] = PKoordinat;
                     Push(act, X);
                     printf("%s telah dibangun\n\n", wahana.Mem[i][0]);
+                    return true;
                 }
                 else
                 {
@@ -297,10 +299,11 @@ void build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, int
             printf("Error, material tidak mencukupi\n");
         }
     }
+    return false;
 }
 
 
-void ShowBuild(MatriksOfString M){
+boolean ShowBuild(MatriksOfString M, Lokasi target){
     // fungsi dipanggil saat ada perintah "build"
     // untuk menampilkan pesan dan list wahana
     char namaWahana[lengthStr];
@@ -317,7 +320,11 @@ void ShowBuild(MatriksOfString M){
     STARTKATA();
     printf("\n");
     StringCopy(100, namaWahana, pita);
-    build(M, &S, Money, Time, PlokasiWahana, PKoordinat, PMat, namaWahana);
+    if(build(M, &S, Money, Time, PlokasiWahana, target, PMat, namaWahana)){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 void buy(MatriksOfString mat, Stack *act, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/, char cjumlah[lengthStr], char namaMat[lengthStr]){
@@ -634,89 +641,89 @@ void CallMain(Stack *S){
     }
 }
 
-void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
-    // ALGORITMA
-    printf("Masukan Perintah: ");
-    STARTKATA();
-    printf("\n");
-    if (StringCompare(lengthStr, CKata.TabKata, "build")){
-        ShowBuild(MWahana);
-    }
-    else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
-        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Halilintar");
-    }
-    else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
-        ShowBuy(MMaterial);
-    }
-    else if (StringCompare(lengthStr, CKata.TabKata, "undo")){
-        Undo(&S);
-    }
-    else if (StringCompare(lengthStr, CKata.TabKata, "execute")){
-        Execute(&S,&Money,&PMat,&PlokasiWahana);
-    }
-    else if (StringCompare(lengthStr, CKata.TabKata, "main")){
-        CallMain(&S);
-    }
-    else if (StringCompare(lengthStr, CKata.TabKata, "help")){
-        ShowHelp();
-    }
-    else{
-        printf("Command ini belum tersedia! Silakan input command lain.\n");
-    }
-}
+// void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
+//     // ALGORITMA
+//     printf("Masukan Perintah: ");
+//     STARTKATA();
+//     printf("\n");
+//     if (StringCompare(lengthStr, CKata.TabKata, "build")){
+//         ShowBuild(MWahana);
+//     }
+//     else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
+//         ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Halilintar");
+//     }
+//     else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
+//         ShowBuy(MMaterial);
+//     }
+//     else if (StringCompare(lengthStr, CKata.TabKata, "undo")){
+//         Undo(&S);
+//     }
+//     else if (StringCompare(lengthStr, CKata.TabKata, "execute")){
+//         Execute(&S,&Money,&PMat,&PlokasiWahana);
+//     }
+//     else if (StringCompare(lengthStr, CKata.TabKata, "main")){
+//         CallMain(&S);
+//     }
+//     else if (StringCompare(lengthStr, CKata.TabKata, "help")){
+//         ShowHelp();
+//     }
+//     else{
+//         printf("Command ini belum tersedia! Silakan input command lain.\n");
+//     }
+// }
 
 
-int main(){
-    //Inisialisasi main
-    for (int i = 0; i < barisMatriksWahana; ++i)
-    {
-        PlokasiWahana[i].Koordinat = MakePOINT(-1,-1);
-    }
-    // KAMUS
-    MatriksOfString MWahana;
-    MatriksOfString MMaterial;
-    BinTree P;
-    InitializeStack(&S);
-    // PKoordinat = MakePOINT(3,4);
-    // ALGORITMA
-    LoadFileWahana(&MWahana, 8, 12);
-    LoadFileMaterial(&MMaterial, 5, 2);
-    // for (int i = 0; i < 5; ++i)
-    // {
-    //     PMat[i] = 50;
-    // }
-    IsiPohonUpgrade(MWahana,&pohonUpgrade);
-    printMatriksWahana(MWahana);
+// int main(){
+//     //Inisialisasi main
+//     for (int i = 0; i < barisMatriksWahana; ++i)
+//     {
+//         PlokasiWahana[i].Koordinat = MakePOINT(-1,-1);
+//     }
+//     // KAMUS
+//     MatriksOfString MWahana;
+//     MatriksOfString MMaterial;
+//     BinTree P;
+//     InitializeStack(&S);
+//     // PKoordinat = MakePOINT(3,4);
+//     // ALGORITMA
+//     LoadFileWahana(&MWahana, 8, 12);
+//     LoadFileMaterial(&MMaterial, 5, 2);
+//     // for (int i = 0; i < 5; ++i)
+//     // {
+//     //     PMat[i] = 50;
+//     // }
+//     IsiPohonUpgrade(MWahana,&pohonUpgrade);
+//     printMatriksWahana(MWahana);
 
-    // for (int i = 0; i < 5; ++i)
-    // {
-    //     if (SearchTree(pohonUpgrade[i],"Halilintar"))
-    //     {
-    //         P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
-    //     }
-    // }
+//     // for (int i = 0; i < 5; ++i)
+//     // {
+//     //     if (SearchTree(pohonUpgrade[i],"Halilintar"))
+//     //     {
+//     //         P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
+//     //     }
+//     // }
 
-    // printMatriksWahana(MWahana);
-    // for (int i = 0; i < 5; ++i)
-    // {
-    //     PrintTree(pohonUpgrade[i],2);
-    // }
+//     // printMatriksWahana(MWahana);
+//     // for (int i = 0; i < 5; ++i)
+//     // {
+//     //     PrintTree(pohonUpgrade[i],2);
+//     // }
 
 
-    while (true){
-        inputPrepPhase(MWahana, MMaterial);
-        // for (int i = 0; i < 8; ++i)
-        // {
-        //     TulisPOINT(PlokasiWahana[i]);
-        //     printf(" ");
-        //     TulisPOINT(S.T[S.TOP].Wah[i]);
-        //     printf("\n");
-        // }
-        printf("Money = %d\n",Money);
-    }
-    PrintHistory(MWahana,P,"Halilintar");
-    // while (true){
-    //     inputPrepPhase(MWahana, MMaterial);
-    // }
-    return 0;
-} 
+//     while (true){
+//         inputPrepPhase(MWahana, MMaterial);
+//         // for (int i = 0; i < 8; ++i)
+//         // {
+//         //     TulisPOINT(PlokasiWahana[i]);
+//         //     printf(" ");
+//         //     TulisPOINT(S.T[S.TOP].Wah[i]);
+//         //     printf("\n");
+//         // }
+//         printf("Money = %d\n",Money);
+//     }
+//     PrintHistory(MWahana,P,"Halilintar");
+//     // while (true){
+//     //     inputPrepPhase(MWahana, MMaterial);
+//     // }
+//     return 0;
+// } 
