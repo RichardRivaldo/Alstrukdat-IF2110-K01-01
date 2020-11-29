@@ -156,7 +156,16 @@ void RandomizePrio (Pengunjung X){
 
 void SistemQueue(PrioQueueChar Q){
     /* Sistem Queue yang akan digunakan dalam main phase */
-    MakeEmpty(&Q, 20);
+    MakeEmpty(&Q, 5);
+    for(int i = 0; i < 5; i++){
+        Pengunjung X;
+        X.kesabaran = 20;
+        RandomizePrio(X);
+        int jumlahWahana = (rand() % 5) + 1;
+        for(int j = 1; j < jumlahWahana; j++){
+            int randomWahana = (rand() % 8);
+        }
+    }
 }
 
 void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
@@ -183,9 +192,9 @@ void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
         for(int baris = 0; baris < 8; baris++){
             char nama[255]; StringCopy(255, nama, M.Mem[baris][0]);
             if(StringTrueCompare(255, Whn, nama)){
-                if(StringToInt(lengthStr, M.Mem[baris][1]) < 1){
+                if(StringToInt(lengthStr, M.Mem[baris][1]) > 1){
                     if(StringToInt(lengthStr, M.Mem[baris][9]) == 1){
-                        while(X.wahana[j + 1][0] != '\0'){
+                        while(X.wahana[j][0] != '\0'){
                             StringCopy(255, X.wahana[j], X.wahana[j+1]);
                             j++;
                         }
@@ -200,13 +209,42 @@ void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
                         }
                     }
                     else{
-                        printf("The ride you want to use is broken\n");
+                        printf("The ride you want to use is broken!\n");
+                        X.kesabaran -= 2;
+                        if(X.prio - 2 < 1){
+                            X.prio = 1;
+                        }
+                        else{
+                            X.prio -= 3;
+                        }
+                        if(X.kesabaran > 0){
+                            Enqueue(Q, X);
+                        }
+                        else{
+                            printf("The customer will now leave the Queue!\n");
+                        }
+                    }
+                }
+                else{
+                    printf("The ride you want to use is full!\n");
+                    X.kesabaran -= 2;
+                    if(X.prio - 2 < 1){
+                        X.prio = 1;
+                    }
+                    else{
+                        X.prio -= 3;
+                    }
+                    if(X.kesabaran > 0){
                         Enqueue(Q, X);
                     }
+                    else{
+                        printf("The customer will now leave the Queue!\n");
+                    }
+                    Enqueue(Q, X);
                 }
             }
         }
-    } 
+    }
     else{
         printf("Error 404: Not Found\n");
         Enqueue(Q, X);
@@ -214,21 +252,30 @@ void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
 }
 
 
-void ChanceRusak(Wahana* wahana){
+void ChanceRusak(MatriksOfString M, char Whn[255]){
     /* Probabilitas Wahana rusak (25%) */
+    
     int i = rand() % 4;
-
     if (i == 1){
-        (*wahana).state = 0;
+        for(int j = 0; j < 8; j++){
+            if(StringTrueCompare(255, M.Mem[j][0], Whn)){
+                StringCopy(255, M.Mem[j][9], "0");
+            }
+        }
+    }
+}
+
+
+/*** Kurang Waktu ***/
+void Repair(MatriksOfString M, char Whn[255]){
+    /* Mengembalikan state wahana */
+    for(int j = 0; j < 8; j++){
+        if(StringTrueCompare(255, M.Mem[j][0], Whn)){
+            StringCopy(255, M.Mem[j][9], "1");
+        }
     }
 } 
 
-/*** Kurang Waktu ***/
-/*
-void Repair(Wahana* wahana){
-    /* Mengembalikan state wahana 
-    *wahana.state = true;
-} */
 /*
 void Detail(Peta * peta){
     /* Mengecek detail wahana yang berada disekitar P 
@@ -239,13 +286,14 @@ void Detail(Peta * peta){
     cetakDetailWahana(wahana);
 } */
 
-/*** Tunggu ada detail wahana ***/
 /*
-void Office(){
-    /* Mengecek detail dan laporan Wahana
+/*** Tunggu ada detail wahana ***/
+void Office();
+    /* Mengecek detail dan laporan Wahana 
     int i;
-        cetakDetailWahana(wahana[i]);
+    cetakDetailWahana(wahana[i]);
 } */
+
 
 void Prepare(PrioQueueChar *Q){
     printf("Starting Preparation Phase...\n");
