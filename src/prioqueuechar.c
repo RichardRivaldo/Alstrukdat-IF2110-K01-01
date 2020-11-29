@@ -1,11 +1,8 @@
 #include "prioqueuechar.h"
 #include "MatriksOfString.h"
 #include "customString.h"
-// #include "peta.c"
-// #include "peta.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "PrepCommand.c"
 
 boolean IsEmptyQ (PrioQueueChar Q){
     /* Mengirim true jika Q kosong: lihat definisi di atas */

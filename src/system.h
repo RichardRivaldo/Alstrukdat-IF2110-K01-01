@@ -4,6 +4,12 @@
 #include <ctype.h> 
 #include "boolean.h"
 #include "peta.h"
+#include "MatriksOfString.h"
+#include "customString.h"
+#include "PrepCommand.h"
+
+//loading initial file (data wahana sama data material)
+void loadingInitialFile(MatriksOfString * MWahana, MatriksOfString * MMaterial);
 
 // pada saat pertama kali di run akan menampilkan ini dan berisi pilihan start/quit
 int startupPanel(int choice, boolean picked);
@@ -28,6 +34,9 @@ void handleEnteringOffice(Peta p, boolean * target);
 
 // menampilkan pesan bahwa pemain sudah memasukki main phase
 void handleEnteringMainPhase(boolean *prep, boolean *main);
+
+//bangun wahana di W/A/S/D dari posisi user
+void bangunWahana(Peta * peta, MatriksOfString MWahana);
 
 // fungsi yang berguna untuk mengecek move input yang digunakan pemain valid ato tidak
 boolean checkMovement(char input);

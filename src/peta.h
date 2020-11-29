@@ -51,8 +51,6 @@ char getKiri(Peta * peta);
 
 char getKanan(Peta * peta);
 
-void bangunWahana(Peta * peta, char posisi);
-
 void bangunAtas(Peta * peta);
 
 void bangunBawah(Peta * peta);

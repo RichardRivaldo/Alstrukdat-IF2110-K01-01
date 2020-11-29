@@ -4,6 +4,23 @@
 #include <ctype.h> 
 #include "boolean.h"
 #include "peta.h"
+#include "MatriksOfString.h"
+#include "customString.h"
+#include "stackt.h"
+
+void loadingInitialFile(MatriksOfString * MWahana, MatriksOfString * MMaterial){
+	LoadFileWahana(MWahana, 8, 12);
+    LoadFileMaterial(MMaterial, 5, 2);
+	InitializeStack(&S);
+	IsiPohonUpgrade(*MWahana,&pohonUpgrade);
+
+	for (int i = 0; i < barisMatriksWahana; ++i){
+        PlokasiWahana[i].Koordinat = MakePOINT(-1,-1);
+		PlokasiWahana[i].Submap = -1;
+    }
+
+	printf("File loaded!\n");
+}
 
 int startupPanel(int choice, boolean picked){
 		if(picked){
@@ -160,6 +177,70 @@ void handleEnteringOffice(Peta p, boolean * target){
 		printf("\n");
 		*target = false;
 	}
+}
+
+void bangunWahana(Peta * peta, MatriksOfString MWahana){
+	char posisi;
+	printf("Silahkan pilih mau bangun di bagian mana?\n");
+	printf("W - Di atas posisi saat ini\n");
+	printf("A - Di kanan posisi saat ini\n");
+	printf("S - Di bawah posisi saat ini\n");
+	printf("D - Di kiri posisi saat ini\n");
+
+	posisi = getCharInput();
+
+	while(!checkMovement(posisi)){
+		printf("MASUKAN INPUT SALAH!\n");
+		printf("Silahkan pilih mau bangun di bagian mana?\n");
+		printf("W - Di atas posisi saat ini\n");
+		printf("A - Di kanan posisi saat ini\n");
+		printf("S - Di bawah posisi saat ini\n");
+		printf("D - Di kiri posisi saat ini\n");
+		posisi = getCharInput();
+	}
+
+	POINT target = (*peta).coords;
+
+	switch(posisi){
+		case 'W':
+			target.Y--;break;
+		case 'A':
+			target.X++;break;
+		case 'S':
+			target.Y++;break;
+		case 'D':
+			target.X--;break;
+		default:break;
+	}
+
+	Lokasi targetLokasi = CreateLokasi(target,(*peta).currentArea);
+
+	boolean res = ShowBuild(MWahana, targetLokasi);
+	if(res){
+		switch(posisi){
+			case 'W':
+				if(getAtas(peta)=='-'){
+					bangunAtas(peta);
+				}
+				break;
+			case 'A':
+				if(getKanan(peta)=='-'){
+					bangunKanan(peta);
+				}
+				break;
+			case 'S':
+				if(getBawah(peta)=='-'){
+					bangunBawah(peta);
+				}
+				break;
+			case 'D':
+				if(getKiri(peta)=='-'){
+					bangunKiri(peta);
+				}
+				break;
+    }
+	}
+    
 }
 
 void handleEnteringMainPhase(boolean *prep, boolean *main){

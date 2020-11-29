@@ -185,31 +185,6 @@ char getKiri(Peta * peta){
     return Elmt((*peta).submap[area],y,x);
 }
 
-void bangunWahana(Peta * peta, char posisi){
-    switch(posisi){
-        case 'W':
-            if(getAtas(peta)=='-'){
-                bangunAtas(peta);
-            }
-            break;
-        case 'A':
-            if(getKanan(peta)=='-'){
-                bangunKanan(peta);
-            }
-            break;
-        case 'S':
-            if(getBawah(peta)=='-'){
-                bangunBawah(peta);
-            }
-            break;
-        case 'D':
-            if(getKiri(peta)=='-'){
-                bangunKiri(peta);
-            }
-            break;
-    }
-}
-
 void bangunAtas(Peta * peta){
     int area = (*peta).currentArea;
     int x = (*peta).coords.X;
