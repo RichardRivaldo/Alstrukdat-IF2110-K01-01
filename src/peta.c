@@ -10,14 +10,14 @@ Peta bacaPeta(){
     FILE * fPointer = fopen("../data/map.txt","r");
     Peta peta;
 
-    fgets(line, 255, fPointer); //baca jumlah row pada satu submap
-    int rowCount = convertStringToInt(line);
+    fgets(line, 255, fPointer); 
+    int rowCount = convertStringToInt(line); //baca jumlah row pada satu submap
     peta.sizeR = rowCount;
-
-    fgets(line, 255, fPointer); //baca jumlah column pada satu submap
-    int colCount = convertStringToInt(line);
+    printf("%d\n", rowCount);
+    fgets(line, 255, fPointer); 
+    int colCount = convertStringToInt(line); //baca jumlah column pada satu submap
     peta.sizeC = colCount;
-
+    printf("%d\n", colCount);
     fgets(line, 255, fPointer); //menghilangkan slash pertama
 
     while(!feof(fPointer)){
@@ -42,8 +42,13 @@ Peta bacaPeta(){
 }
 
 int convertStringToInt(char line[]){ //buat ngubah hasil baca peta(array of char)
-    int res = atoi(line);
+    int res =0;
+    for( int i = 0; line[i] != '\0' && line[i] >= '0' && line[i] <= '9'; ++i) {
+        res = (line[i] - '0') + res*10;
+    }
     return res;
+    // int res = atoi(line);
+    // return res;
 }
 
 void handleGerak(char opsi, Peta * peta){
