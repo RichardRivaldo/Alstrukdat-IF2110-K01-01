@@ -302,8 +302,8 @@ boolean build(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*/, 
     return false;
 }
 
-
-boolean ShowBuild(MatriksOfString M, Lokasi target){
+boolean ShowBuild(MatriksOfString M, Lokasi target, Stack *S, int Money /*Player's Money*/, int Time /*Waktu yang ada*/,
+            Lokasi PlokasiWahana[8], int PMat[5]){
     // fungsi dipanggil saat ada perintah "build"
     // untuk menampilkan pesan dan list wahana
     char namaWahana[lengthStr];
@@ -320,7 +320,7 @@ boolean ShowBuild(MatriksOfString M, Lokasi target){
     STARTKATA();
     printf("\n");
     StringCopy(100, namaWahana, pita);
-    if(build(M, &S, Money, Time, PlokasiWahana, target, PMat, namaWahana)){
+    if(build(M, S, Money, Time, PlokasiWahana, target, PMat, namaWahana)){
         return true;
     }else{
         return false;
@@ -378,7 +378,7 @@ void buy(MatriksOfString mat, Stack *act, int PMoney /*Player's Money*/, int PTi
     }
 }
 
-void ShowBuy(MatriksOfString mat){
+void ShowBuy(MatriksOfString mat, Stack *S, int PMoney /*Player's Money*/, int PTime /*Waktu yang ada*/){
     //KAMUS
     int i;
     char cjumlah[lengthStr], namaMat[lengthStr];
@@ -397,7 +397,7 @@ void ShowBuy(MatriksOfString mat){
         ADVKATA();
         if (!EndKata){
             StringCopy(lengthStr, namaMat, CKata.TabKata);
-            buy(mat, &S, Money, Time, cjumlah, namaMat);
+            buy(mat, S, PMoney, PTime, cjumlah, namaMat);
         }
     }
 }
