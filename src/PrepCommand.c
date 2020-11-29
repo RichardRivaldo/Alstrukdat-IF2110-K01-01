@@ -137,6 +137,17 @@ void LoadFileWahana(MatriksOfString * MatriksWahana, int brs, int klm){
     fclose(fpointer);
 }
 
+void printMatriksWahana(MatriksOfString M){
+    for (int j = 0; j < 8; j++)
+    {
+        for (int i = 0; i < 12; i++)
+        {
+            printf("%s   ", M.Mem[j][i]);
+        }
+        printf("\n");
+    }
+}
+
 void LoadFileMaterial(MatriksOfString * MatriksMaterial, int brs, int klm){
     // KAMUS
     FILE * fpointer;
@@ -537,7 +548,6 @@ void ShowUpgrade(MatriksOfString wahana,Stack *act, int PMoney /*Player's Money*
             P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
         }
     }
-    PrintTree(P,2);
     while (true){
         if (StringTrueCompare(lengthStr,Nama(P),namaWahana)){
             break;
@@ -638,7 +648,7 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
         ShowBuild(MWahana);
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "upgrade")){
-        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Roller Coaster");
+        ShowUpgrade(MWahana,&S,Money,Time,pohonUpgrade,PlokasiWahana,PKoordinat,PMat,"Halilintar V2");
     }
     else if (StringCompare(lengthStr, CKata.TabKata, "buy")){
         ShowBuy(MMaterial);
@@ -661,22 +671,23 @@ void inputPrepPhase(MatriksOfString MWahana, MatriksOfString MMaterial){
 }
 
 
-// int main(){
-//     //Inisialisasi main
-//     for (int i = 0; i < barisMatriksWahana; ++i)
-//     {
-//         PlokasiWahana[i] = MakePOINT(-1,-1);
-//     }
-//     // KAMUS
-//     MatriksOfString MWahana;
-//     MatriksOfString MMaterial;
-//     CreateEmpty(&S);
-//     // ALGORITMA
-//     LoadFileWahana(&MWahana, 8, 12);
-//     LoadFileMaterial(&MMaterial, 5, 2);
-//     IsiPohonUpgrade(MWahana,&pohonUpgrade);
-//     while (true){
-//         inputPrepPhase(MWahana, MMaterial);
-//     }
-//     return 0;
-// }
+int main(){
+    //Inisialisasi main
+    for (int i = 0; i < barisMatriksWahana; ++i)
+    {
+        PlokasiWahana[i] = MakePOINT(-1,-1);
+    }
+    // KAMUS
+    MatriksOfString MWahana;
+    MatriksOfString MMaterial;
+    CreateEmpty(&S);
+    // ALGORITMA
+    LoadFileWahana(&MWahana, 8, 12);
+    LoadFileMaterial(&MMaterial, 5, 2);
+    IsiPohonUpgrade(MWahana,&pohonUpgrade);
+    printMatriksWahana(MWahana);
+    while (true){
+        inputPrepPhase(MWahana, MMaterial);
+    }
+    return 0;
+}
