@@ -120,14 +120,14 @@ void Serve(PrioQueueChar *Q, Wahana ListWahana[], char Whn[255]){
 }
 
 
-void ChanceRusak(MatriksOfString M, char Whn[255]){
+void ChanceRusak(Wahana ListWahana[], char Whn[255]){
     /* Probabilitas Wahana rusak (25%) */
     
     int i = rand() % 4;
     if (i == 1){
         for(int j = 0; j < 8; j++){
-            if(StringTrueCompare(255, M.Mem[j][0], Whn)){
-                StringCopy(255, M.Mem[j][9], "0");
+            if(StringTrueCompare(255, ListWahana[j].nama, Whn)){
+                ListWahana[j].status = 0;
             }
         }
     }
@@ -135,11 +135,11 @@ void ChanceRusak(MatriksOfString M, char Whn[255]){
 
 
 /*** Kurang Waktu ***/
-void Repair(MatriksOfString M, char Whn[255]){
+void Repair(Wahana ListWahana[], char Whn[255]){
     /* Mengembalikan state wahana */
     for(int j = 0; j < 8; j++){
-        if(StringTrueCompare(255, M.Mem[j][0], Whn)){
-            StringCopy(255, M.Mem[j][9], "1");
+        if(StringTrueCompare(255, ListWahana[j].nama, Whn)){
+            ListWahana[j].status = 1;
         }
     }
 } 
@@ -183,10 +183,10 @@ void Repair(MatriksOfString M, char Whn[255]){
 // }
 
 
-void Office(MatriksOfString M){ 
+void Office(Wahana ListWahana[]){ 
     /* Mengecek detail dan laporan Wahana */
     for(int i = 0; i < 8; i++){
-        // Detail(M, M.Mem[i][0]);
+        displayWahana(ListWahana[i]);
     }
 }
 
