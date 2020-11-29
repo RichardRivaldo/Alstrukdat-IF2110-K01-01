@@ -1,6 +1,7 @@
 /* Driver PrioQueueChar */
 /* Make PrepCommand Main into a comment first */
 
+#include "MainCommand.c"
 #include "prioqueuechar.c"
 #include <stdio.h>
 

@@ -13,13 +13,13 @@
 #include "point.h"
 #include "bintree.h"
 
-// #include "MatriksOfString.c"
-// #include "mesinkar.c"
-// #include "mesinkata.c"
-// #include "stackt.c"
-// #include "customString.c"
-// #include "point.c"
-// #include "bintree.c"
+#include "MatriksOfString.c"
+#include "mesinkar.c"
+#include "mesinkata.c"
+#include "stackt.c"
+#include "customString.c"
+#include "point.c"
+#include "bintree.c"
 
 //gcc PrepCommand.c MatriksOfString.c mesinkar.c mesinkata.c stackt.c customString.c point.c bintree.c
 
