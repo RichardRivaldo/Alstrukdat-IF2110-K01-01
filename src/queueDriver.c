@@ -1,5 +1,4 @@
 /* Driver PrioQueueChar */
-/* Make PrepCommand Main into a comment first */
 
 #include "prioqueuechar.c"
 #include <stdio.h>
@@ -9,38 +8,48 @@ int main(){
     /* Deklarasi Variabel */
     PrioQueueChar Q;
 
-    /* Matriks Wahana */
-    MatriksOfString M;
-    MakeMatriksStr(8, 12, &M);
-    LoadFileWahana(&M, 8, 12);
-    
-    /* Sistem Queue */
-    SistemQueue(&Q, M);
-    PrintPrioQueueChar(Q);
-
-    /* Input */
-    char Whn[255];
-
-    /* Fungsi Serve Queue */
-    scanf("%s", &Whn);
-    Serve(&Q, M, Whn);
-
-    /* Cek Isi Queue */
-    PrintPrioQueueChar(Q);
-
-    /* Fungsi Prepare */
-    Prepare(&Q);
+    /* MakeEmpty */
+    MakeEmpty(&Q, 2);
 
     /* Cek isi Queue */
     if(IsEmptyQ(Q)){
-        printf("Prepare success\n");
+        printf("Queue is empty\n");
     }
     else{
         printf("Queue not empty yet\n");
     }
 
-    /* Fungsi Office */
-    Office(M);
+    /* Deklarasi Pengunjung */
+    Pengunjung A, B, X;
+
+    /* Assign nilai Pengunjung A */
+    Prio(A) = 10; Sabar(A) = 4;
+    StringCopy(100, A.wahana[0], "Wangky");
+    StringCopy(100, A.wahana[1], "Coaster");
+
+    Enqueue(&Q, A);
+
+    printf("NBElmt = %d\n", NBElmtQ(Q));
+
+    /* Assign nilai variabel B */
+    Prio(B) = 6; Sabar(B) = 5;
+    StringCopy(100, B.wahana[0], "RollerCoaster");
+    Enqueue(&Q, B);
+
+    /* Cek Isi Queue */
+    PrintPrioQueueChar(Q);
+
+    /* Cek isi Queue */
+    if(IsFullQ(Q)){
+        printf("Queue is full\n");
+    }
+    else{
+        printf("Not full\n");
+    }
+
+    /* Cek Dequeue */
+    Dequeue(&Q, &X);
+    PrintPrioQueueChar(Q);
 
     return 0;
 }
