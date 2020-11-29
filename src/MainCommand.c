@@ -2,31 +2,37 @@
 #include <stdlib.h>
 #include <string.h>
 // Library buatan sendiri:
-#include "prioqueuechar.c"
-#include "PrepCommand.c"
+#include "prioqueuechar.h"
 #include "jam.h"
-#include "jam.c"
+#include "PrepCommand.h"
+#include "customString.h"
+#include "wahana.h"
+
 
 // Variabel global
 JAM timeMain;
 
-void SistemQueue(PrioQueueChar *Q, MatriksOfString M){
+void SistemQueue(PrioQueueChar *Q, Wahana listWahana[]){
     /* Sistem Queue yang akan digunakan dalam main phase */
+    printf("INITIALIZING QUEUE SYSTEM...\n");
     MakeEmpty(Q, 5);
     Pengunjung Y;
     for(int i = 0; i < 5; i++){
         Y.kesabaran = 20;
         Y.prio = (rand() % 100 + 1);
-        int jumlahWahana = (rand() % 5) + 1;
-        for(int j = 0; j < jumlahWahana; j++){
+        int jumlahWahana = (rand() % 5) + 1; //jumlah wahana yang X mau naikin
+        // printf("JUMLAH WAHANA ORANG KE - %d : %d\n",i+1, jumlahWahana);
+        for(int j = 0; j < 5; j++){
             int randomWahana = (rand() % 8);
-            StringCopy(255, Y.wahana[j], M.Mem[randomWahana][0]);
+            StringCopy(lengthStr, Y.wahana[j], listWahana[randomWahana].nama);
+            // printf("INI DARI SISTEM QUEUE: %s\n",Y.wahana[j]);
+            // StringCopy(lengthStr, Y.wahana[j], listWahana[randomWahana].nama);
         }
         Enqueue(Q, Y);
     }
 }
 
-void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
+void Serve(PrioQueueChar *Q, Wahana ListWahana[], char Whn[255]){
     /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
 
     Pengunjung X;
@@ -48,14 +54,17 @@ void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
 
     if(found){
         for(int baris = 0; baris < 8; baris++){
-            char nama[255]; StringCopy(255, nama, M.Mem[baris][0]);
+            Wahana W = ListWahana[baris];
+            char nama[255]; StringCopy(255, nama, W.nama);
             if(StringTrueCompare(255, Whn, nama)){
-                if(StringToInt(lengthStr, M.Mem[baris][1]) > 1){
-                    if(StringToInt(lengthStr, M.Mem[baris][9]) == 1){
-                        int Cpc = StringToInt(255, M.Mem[baris][1]) - 1;
-                        char NewCpc[255];
-                        sprintf(NewCpc, "%d", Cpc);
-                        StringCopy(255, M.Mem[baris][1], NewCpc);
+                if(IsNotFull(W)){
+                    if(IsNotBroken(W)){
+                        ListWahana[baris].kapasitas--;
+                        printf("SUKSES SERVE\n");
+                        ListWahana[baris].qty++;
+                        ListWahana[baris].income += ListWahana[baris].profit;
+                        ListWahana[baris].qtyAll++;
+                        ListWahana[baris].incomeAll += W.profit;
                         while(X.wahana[j][0] != '\0'){
                             StringCopy(255, X.wahana[j], X.wahana[j+1]);
                             j++;
@@ -136,48 +145,48 @@ void Repair(MatriksOfString M, char Whn[255]){
 } 
 
 
-void Detail(MatriksOfString M, char Whn[255]){
-    /* Mengecek detail wahana yang berada disekitar P  */
-    /* Daftar kan wahana yang ada di sekitar player  */
-    Wahana wahana;
-    BinTree P;
-    BinTree pohonUpgrade[5];
-    IsiPohonUpgrade(M, &pohonUpgrade);
+// void Detail(MatriksOfString M, char Whn[255]){
+//     /* Mengecek detail wahana yang berada disekitar P  */
+//     /* Daftar kan wahana yang ada di sekitar player  */
+//     Wahana wahana;
+//     BinTree P;
+//     BinTree pohonUpgrade[5];
+//     IsiPohonUpgrade(M, &pohonUpgrade);
 
-    StringCopy(255, wahana.nama, Whn);
-    for (int i = 0; i < 8; i++){
-        if(StringTrueCompare(255, M.Mem[i][0], Whn)){
-            printf("NAMA WAHANA      : %s\n", M.Mem[i][0]);
-            printf("HARGA WAHANA     : %d\n", StringToInt(255, M.Mem[i][2]));
-            printf("POINT WAHANA     : "); TulisPOINT(wahana.point); printf("\n");
-            printf("KAPASITAS WAHANA : %d\n", StringToInt(255, M.Mem[i][1]));
-            int Waktu = StringToInt(255, M.Mem[i][3]);
-            printf("DURASI WAHANA    : %d Menit\n", Waktu/60);
-            printf("DESKRIPSI WAHANA : %s\n", M.Mem[i][11]);
-            printf("STATE WAHANA     : %d\n", StringToInt(255, M.Mem[i][9]));
-            printf("Keterangan: 0 -> Wahana sedang rusak.\n");
-            printf("            1 -> Berfungsi dengan baik.\n");
+//     StringCopy(255, wahana.nama, Whn);
+//     for (int i = 0; i < 8; i++){
+//         if(StringTrueCompare(255, M.Mem[i][0], Whn)){
+//             printf("NAMA WAHANA      : %s\n", M.Mem[i][0]);
+//             printf("HARGA WAHANA     : %d\n", StringToInt(255, M.Mem[i][2]));
+//             printf("POINT WAHANA     : "); TulisPOINT(wahana.point); printf("\n");
+//             printf("KAPASITAS WAHANA : %d\n", StringToInt(255, M.Mem[i][1]));
+//             int Waktu = StringToInt(255, M.Mem[i][3]);
+//             printf("DURASI WAHANA    : %d Menit\n", Waktu/60);
+//             printf("DESKRIPSI WAHANA : %s\n", M.Mem[i][11]);
+//             printf("STATE WAHANA     : %d\n", StringToInt(255, M.Mem[i][9]));
+//             printf("Keterangan: 0 -> Wahana sedang rusak.\n");
+//             printf("            1 -> Berfungsi dengan baik.\n");
 
-            for (int i = 0; i < 5; ++i){
-                if (SearchTree(pohonUpgrade[i], Whn)){
-                    P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
-                }
-            }
-            printf("UPGRADE          : "), PrintHistory(M, P, Whn); printf("\n");
+//             for (int i = 0; i < 5; ++i){
+//                 if (SearchTree(pohonUpgrade[i], Whn)){
+//                     P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
+//                 }
+//             }
+//             printf("UPGRADE          : "), PrintHistory(M, P, Whn); printf("\n");
             
-            printf("Total Dinaiki    : %d\n", StringToInt(255, M.Mem[i][10]));
-            printf("Penghasilan      : %d\n", StringToInt(255, M.Mem[i][11]));
-            printf("Dinaiki Harian   : %d\n", StringToInt(255, M.Mem[i][12]));
-            printf("Total Penghasilan: %d\n\n", StringToInt(255, M.Mem[i][13]));
-        }
-    }
-}
+//             printf("Total Dinaiki    : %d\n", StringToInt(255, M.Mem[i][10]));
+//             printf("Penghasilan      : %d\n", StringToInt(255, M.Mem[i][11]));
+//             printf("Dinaiki Harian   : %d\n", StringToInt(255, M.Mem[i][12]));
+//             printf("Total Penghasilan: %d\n\n", StringToInt(255, M.Mem[i][13]));
+//         }
+//     }
+// }
 
 
 void Office(MatriksOfString M){ 
     /* Mengecek detail dan laporan Wahana */
     for(int i = 0; i < 8; i++){
-        Detail(M, M.Mem[i][0]);
+        // Detail(M, M.Mem[i][0]);
     }
 }
 
@@ -191,51 +200,51 @@ void Prepare(PrioQueueChar *Q){
     /* Call Prep Phase */
 }
 
-int main(){
+// int main(){
 
-    /* Deklarasi Variabel */
-    PrioQueueChar Q;
+//     /* Deklarasi Variabel */
+//     PrioQueueChar Q;
 
-    /* Deklarasi Jam */
-    timeMain = MakeJAM(9,0,0);
+//     /* Deklarasi Jam */
+//     timeMain = MakeJAM(9,0,0);
 
-    /* Waktu saat Main Phase */
-    while (JAMToDetik(timeMain) < 75600){
-        // Ntar fungsinya dimasukin disini ?
-    }
+//     /* Waktu saat Main Phase */
+//     while (JAMToDetik(timeMain) < 75600){
+//         // Ntar fungsinya dimasukin disini ?
+//     }
 
-    /* Matriks Wahana */
-    MatriksOfString M;
-    MakeMatriksStr(8, 12, &M);
-    LoadFileWahana(&M, 8, 12);
+//     /* Matriks Wahana */
+//     MatriksOfString M;
+//     MakeMatriksStr(8, 12, &M);
+//     LoadFileWahana(&M, 8, 12);
     
-    /* Sistem Queue */
-    SistemQueue(&Q, M);
-    PrintPrioQueueChar(Q);
+//     /* Sistem Queue */
+//     SistemQueue(&Q, M);
+//     PrintPrioQueueChar(Q);
 
-    /* Input */
-    char Whn[255];
+//     /* Input */
+//     char Whn[255];
 
-    /* Fungsi Serve Queue */
-    scanf("%s", &Whn);
-    Serve(&Q, M, Whn);
+//     /* Fungsi Serve Queue */
+//     scanf("%s", &Whn);
+//     Serve(&Q, M, Whn);
 
-    /* Cek Isi Queue */
-    PrintPrioQueueChar(Q);
+//     /* Cek Isi Queue */
+//     PrintPrioQueueChar(Q);
 
-    /* Fungsi Prepare */
-    Prepare(&Q);
+//     /* Fungsi Prepare */
+//     Prepare(&Q);
 
-    /* Cek isi Queue */
-    if(IsEmptyQ(Q)){
-        printf("Prepare success\n");
-    }
-    else{
-        printf("Queue not empty yet\n");
-    }
+//     /* Cek isi Queue */
+//     if(IsEmptyQ(Q)){
+//         printf("Prepare success\n");
+//     }
+//     else{
+//         printf("Queue not empty yet\n");
+//     }
 
-    /* Fungsi Office */
-    Office(M);
+//     /* Fungsi Office */
+//     Office(M);
 
-    return 0;
-}    
+//     return 0;
+// }    

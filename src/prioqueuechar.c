@@ -64,6 +64,11 @@ void Enqueue (PrioQueueChar * Q, Pengunjung X){
     }
     else{
         int idx = Tail(*Q), threshold = NBElmtQ(*Q);
+        // printf("INI DARI QUEUEE :%s\n", X.wahana[0]);
+        // printf("INI DARI QUEUEE :%s\n", X.wahana[1]);
+        // printf("INI DARI QUEUEE :%s\n", X.wahana[2]);
+        // printf("INI DARI QUEUEE :%s\n", X.wahana[3]);
+        // printf("INI DARI QUEUEE :%s\n", X.wahana[4]);
 
         while((Prio(X) < Prio((*Q).T[idx])) && (threshold > 0)){
             (*Q).T[(idx % MaxElQ(*Q)) + 1] = (*Q).T[idx];
@@ -88,16 +93,28 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
             Q mungkin kosong */
     if(NBElmtQ(*Q) == 1){
         Prio(*X) = Prio(InfoHead(*Q));
+        *X = InfoHead(*Q);
         for(int i = 0; i < 5; i++){
-            StringCopy(255, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            // printf("INI WAHANA DARI DEQUEUE: %s\n", (*X).wahana[i]);
+            if(Wahana(InfoHead(*Q))[i]!='\0'){
+                StringCopy(255, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            }else{
+                StringCopy(255, (*X).wahana[i],'\0');
+            }
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = Nil; Tail(*Q) = Nil;
     }
     else{
         Prio(*X) = Prio(InfoHead(*Q));
+        *X = InfoHead(*Q);
         for(int i = 0; i < 5; i++){
-            StringCopy(255, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            //  printf("INI WAHANA DARI DEQUEUE: %s\n", (*X).wahana[i]);
+            if(Wahana(InfoHead(*Q))[i]!='\0'){
+                StringCopy(255, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            }else{
+                StringCopy(255, (*X).wahana[i],'\0');
+            }
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = (Head(*Q) % MaxElQ(*Q)) + 1;
@@ -127,12 +144,11 @@ void PrintPrioQueueChar (PrioQueueChar Q){
             printf("Wangkies %d ", count + 1);
             printf("(");
             int i = 0;
-            while(CInfo.wahana[i][0] != '\0'){
+            for(int i = 0; i<5; i++){
                 printf("%s", CInfo.wahana[i]);
-                if(CInfo.wahana[i+1][0] != '\0'){
+                if(i<4){
                     printf(", ");
                 }
-                i++;
             }
             printf("), Patience: %d\n", CInfo.kesabaran);
             count++;

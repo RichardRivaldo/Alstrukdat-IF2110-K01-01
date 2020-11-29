@@ -9,6 +9,7 @@
 #include "stackt.h"
 #include "PrepCommand.c"
 #include "lokasi.h"
+#include "wahana.h"
 
 void loadingInitialFile(MatriksOfString * MWahana, MatriksOfString * MMaterial){
 	LoadFileWahana(MWahana, 8, 12);
@@ -143,7 +144,10 @@ void mainPhaseMsg(){
 	printf("- W,A,S,D : Movement                             -\n");
 	printf("- M       : Shows Map                            -\n");
 	printf("- O       : Entering office                      -\n");
-	printf("- G       : Start Main Phase                     -\n");
+	printf("- L       : Serve Queue Pengunjung               -\n");
+	printf("- R       : Repair Wahana                        -\n");
+	printf("- I       : Info Wahana                          -\n");
+	printf("- P       : Prepare (Finish Current Session)     -\n");
 	printf("-                                                -\n");
 	printf("- Q       : Quit game                            -\n");
 	printf("-                                                -\n");
@@ -155,6 +159,20 @@ void unableMoveMsg(){
 	printf("--------------------------------------------------\n");
 	printf("-           Ouch! It seems like you              -\n");
 	printf("-             bump into something!               -\n");
+	printf("--------------------------------------------------\n");
+}
+
+void unableServeMsg(){
+	printf("--------------------------------------------------\n");
+	printf("-         You can't serve anyone here!           -\n");
+	printf("-        make sure you're near A legend          -\n");
+	printf("--------------------------------------------------\n");
+}
+
+void wahana404(){
+	printf("--------------------------------------------------\n");
+	printf("-         Uh oh! Wahana doesn't exist!           -\n");
+	printf("-     maybe you have to built it tomorrow!       -\n");
 	printf("--------------------------------------------------\n");
 }
 
@@ -265,6 +283,46 @@ void handleEnteringMainPhase(boolean *prep, boolean *main, Stack * S){
 	*main = true;
 }
 
+void initializeListWahana(Wahana listWahana[8], MatriksOfString MWahana, Lokasi PlokasiWahana[barisMatriksWahana]){
+	for(int i = 0; i<8; i++){
+		Wahana target;
+		StringCopy(lengthStr, target.nama, MWahana.Mem[i][0]);
+		target.kapasitas = StringToInt(lengthStr,MWahana.Mem[i][1]);
+		target.profit = StringToInt(lengthStr,MWahana.Mem[i][2]);
+		target.durasi = StringToInt(lengthStr, MWahana.Mem[i][3])/60;
+		target.reparationTime = StringToInt(lengthStr, MWahana.Mem[i][4]);
+		target.status = StringToInt(lengthStr, MWahana.Mem[i][9]);
+		StringCopy(lengthStr, target.deskripsi, MWahana.Mem[i][11]);
+		target.lokasi = PlokasiWahana[i];
+		target.qty = 0;
+		target.income = 0;
+		target.qtyAll = 0;
+		target.incomeAll = 0;
+		listWahana[i] = target;
+	}
+}
+
+void updateListWahana(Wahana listWahana[8], MatriksOfString MWahana, Lokasi PlokasiWahana[barisMatriksWahana]){
+	for(int i = 0; i<8; i++){
+		Wahana target;
+		StringCopy(lengthStr, target.nama, MWahana.Mem[i][0]);
+		target.kapasitas = StringToInt(lengthStr,MWahana.Mem[i][1]);
+		target.profit = StringToInt(lengthStr,MWahana.Mem[i][2]);
+		target.durasi = StringToInt(lengthStr, MWahana.Mem[i][3])/60;
+		target.reparationTime = StringToInt(lengthStr, MWahana.Mem[i][4]);
+		target.status = StringToInt(lengthStr, MWahana.Mem[i][9]);
+		StringCopy(lengthStr, target.deskripsi, MWahana.Mem[i][11]);
+		target.lokasi = PlokasiWahana[i];
+		printf("INI QTY ALL : %d\n", qtyAll(target));
+		setQtyAll(&target);
+		printf("INI QTY ALL : %d\n", qtyAll(target));
+		target.incomeAll= incomeAll(target) + income(target);
+		target.qty = 0;
+		target.income = 0;
+		listWahana[i] = target;
+	}
+}
+
 boolean checkMovement(char input){
 	return input=='W' || input=='A' || input=='S' || input=='D';
 }
@@ -292,7 +350,6 @@ void PointToNama(MatriksOfString M, Stack S,Lokasi P,Lokasi PlokasiWahana[barisM
 	}
 	StringCopy(lengthStr,Nama,M.Mem[idx][0]);
 }
-
 
 void exitGame(boolean *quit){
 	*quit = true;

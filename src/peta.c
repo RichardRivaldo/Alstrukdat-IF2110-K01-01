@@ -225,6 +225,10 @@ boolean isInOffice(Peta * peta){
     return getCurrentPosition(peta) == 'O';
 }
 
+boolean nearA(Peta * peta){
+    return (getAtas(peta)=='A' || getBawah(peta)=='A' || getKanan(peta)=='A' || getKiri(peta)=='A');
+}
+
 Lokasi checkWahanaSurrounding(Peta * peta){
     POINT targetPoin = (*peta).coords;  
     int y = targetPoin.Y;

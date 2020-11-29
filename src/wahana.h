@@ -3,46 +3,52 @@
 
 #include "boolean.h"
 #include "point.h"
+#include "lokasi.h"
 
 #define Nil -1 //wahana yang kosong diberi ini
 #define MaxEl 100 //100 wahana
 
 typedef struct{
-    int id;
     char nama[255];
-    char tipe[255];
-    int harga;
-    POINT point;
     int kapasitas;
+    int profit;
+    int durasi;
+    int reparationTime;
+    int status;
     char deskripsi[255];
-    int state;
+    Lokasi lokasi;
+    int qtyAll;
+    int incomeAll;
+    int qty;
+    int income;
 } Wahana;
 
 extern Wahana CWahana;
 
 //setter and getter
-#define id(W) (W).id
 #define nama(W) (W).nama
-#define tipe(W) (W).tipe
-#define harga(W) (W).harga
-#define point(W) (W).point
 #define kapasitas(W) (W).kapasitas
+#define profit(W) (W).profit
+#define durasi(W) (W).durasi
+#define reparationTime(W) (W).reparationTime
+#define status(W) (W).status
 #define deskripsi(W) (W).deskripsi
-#define state(W) (W).state
+#define lokasi(W) (W).lokasi
+#define qtyAll(W) (W).qtyAll
+#define incomeAll(W) (W).incomeAll
+#define qty(W) (W).qty
+#define income(W) (W).income
 
-/* Mengubah array of char menjadi integer */
-int convertToInt(char data[]);
+void displayWahana(Wahana wahana);
 
-/* Mengubah array of char menjadi Point */
-POINT convertToPoint(char data[]);
+void setQtyAll(Wahana * wahana);
 
-/* Memetakan array of char berdasarkan part yang sesuai kedalam struct wahana */
-void mapToWahana(int part, char data[], Wahana * wahana);
+Wahana findWahana(Wahana listWahana[], char nama[]);
 
-/* Membaca 1 baris dari wahana.txt */
-void readWahanaRow(char data[], Wahana* wahana);
+boolean IsNotFull(Wahana wahana);
 
-/* Mencetak detil setiap wahana yang dibaca dari wahana.txt */
-void cetakDetailWahana(Wahana* wahana);
+boolean IsNotBroken(Wahana wahana);
+
+boolean IsBuilt(Wahana wahana);
 
 #endif

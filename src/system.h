@@ -10,6 +10,7 @@
 #include "point.h"
 #include "stackt.h"
 #include "lokasi.h"
+#include "wahana.h"
 
 //loading initial file (data wahana sama data material)
 void loadingInitialFile(MatriksOfString * MWahana, MatriksOfString * MMaterial);
@@ -32,6 +33,12 @@ void tidakAdaWahanaMsg();
 // pesan yang ditampilkan hanya jika player bergerak tidak bisa bergerak ke arah tersebut alias bertemu dengan wahana/antrian/tembok
 void unableMoveMsg();
 
+//pesan jika tidak bisa serve
+void unableServeMsg();
+
+//pesan jika wahana tidak ada
+void wahana404();
+
 // fungsi untuk mengenali char yang dimasukkan player
 char getCharInput();
 
@@ -43,6 +50,12 @@ void handleEnteringMainPhase(boolean *prep, boolean *main, Stack * S);
 
 //bangun wahana di W/A/S/D dari posisi user
 void bangunWahana(Peta * peta, MatriksOfString MWahana);
+
+//intiialize nilai awal list wahana
+void initializeListWahana(Wahana listWahana[8], MatriksOfString MWahana, Lokasi PlokasiWahana[barisMatriksWahana]);
+
+//updating list wahana untuk main phase
+void updateListWahana(Wahana listWahana[], MatriksOfString MWahana, Lokasi PlokasiWahana[]);
 
 // fungsi yang berguna untuk mengecek move input yang digunakan pemain valid ato tidak
 boolean checkMovement(char input);

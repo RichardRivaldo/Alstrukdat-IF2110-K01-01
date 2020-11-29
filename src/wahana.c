@@ -1,5 +1,5 @@
 #include "wahana.h"
-#include "point.c"
+#include "point.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,93 +7,53 @@
 #include "mesinkar.h"
 #include "mesinkata.h"
 
-int convertToInt(char data[]){
-    int res = atoi(data);
-    return res;
+void displayWahana(Wahana wahana){
+    printf("--------------------------------------------------\n");
+    printf("Nama Wahana : %s\n", wahana.nama);
+    printf("Deskripsi Wahana : %s\n", wahana.deskripsi);
+    printf("Harga Wahana : $%d\n", wahana.profit);
+    printf("Lokasi Wahana : \n");
+    printf("    Submap : %d\n Koordinat : ", wahana.lokasi.Submap);
+    TulisPOINT(wahana.lokasi.Koordinat);
+    printf("Durasi Wahana : %d\n", wahana.durasi);
+    printf("Kapasitas Wahana : %d\n", wahana.kapasitas);
+    printf("--------------------------------------------------\n");
+    printf("-----------------------REPORT---------------------\n");
+    printf("-                                                -\n");
+    printf("  Total Pengunjung : %d\n", wahana.qtyAll);
+    printf("  Total Pendapatan : $ %d\n", wahana.incomeAll);
+    printf("  Pengunjung Hari Ini : %d\n", wahana.qty);
+    printf("  Pendapatan Hari Ini : $ %d\n", wahana.income);
+    printf("-                                                -\n");
+    printf("--------------------------------------------------\n");
 }
 
-POINT convertToPoint(char data[]){
-    char x[5], y[5];
+void setQtyAll(Wahana * wahana){
+    (*wahana).qtyAll += (*wahana).qty;
+}
+
+Wahana findWahana(Wahana listWahana[], char nama[]){
     boolean found = false;
-    int i,j;
-    for(i = 0; i<5 && !found; i++){
-        if(data[i]!='_'){
-            x[i] = data[i];
-        }else{
+    Wahana target;
+    printf("Finding wahana for name : %s\n", nama);
+    StringCopy(lengthStr, target.nama, "404");
+    for(int i = 0; i<8 && !found; i++){
+        if(StringTrueCompare(lengthStr, nama, listWahana[i].nama) && listWahana[i].lokasi.Submap!=-1){
             found = true;
+            target = listWahana[i];
         }
     }
-    for(j = i; j<i+5; j++){
-        y[j-i] = data[j];
-    }
-    return MakePOINT((float)convertToInt(x),(float)convertToInt(y));
+    return target;
 }
 
-void mapToWahana(int part, char data[], Wahana * wahana){
-    int res;
-    switch(part){
-        case 0 :
-            res = convertToInt(data);
-            (*wahana).id=res;
-            break;
-        case 1 :
-            strncpy((*wahana).nama, data, 255);
-            break;
-        case 2 :
-            strncpy((*wahana).tipe, data, 255);
-            break;
-        case 3 :
-            (*wahana).harga = convertToInt(data);
-            break;
-        case 4 :
-            (*wahana).point = convertToPoint(data);
-            break;
-        case 5 :
-            (*wahana).kapasitas = convertToInt(data);
-            break;
-        case 6 :
-            strncpy((*wahana).deskripsi, data, 255);
-            break;
-    }
+boolean IsNotFull(Wahana wahana){
+    return wahana.kapasitas>1;
 }
 
-void readWahanaRow(char data[], Wahana* wahana){
-    char cc, line[255];
-    memset(line,0,255); //ngosongin linenya
-    int i = 0;
-    int idx = 0;
-    int part = 0;
-    boolean point = false;
-    // cc = (char)fgetc(fPointer);
-    // printf("%c",cc);
-    while(!point){
-        cc = data[idx];
-        if(cc != ',' && cc != '.'){
-            line[i]=cc;
-            i++;
-        }else{
-            mapToWahana(part, line, wahana);
-            // printf("%s %d\n",line,part);
-            memset(line, 0, 255);
-            i=0;
-            part++;
-            if(cc == '.'){
-                point = true;
-            }
-        }
-        idx++;
-    }
+boolean IsNotBroken(Wahana wahana){
+    return wahana.status==1;
 }
 
-void cetakDetailWahana(Wahana* wahana){
-    printf("ID WAHANA : %d\n",(*wahana).id);
-    printf("NAMA WAHANA : %s\n",(*wahana).nama);
-    printf("TIPE WAHANA : %s\n",(*wahana).tipe);
-    printf("HARGA WAHANA : %d\n",(*wahana).harga);
-    printf("POINT WAHANA : ");
-    TulisPOINT((*wahana).point);
-    printf("\n");
-    printf("KAPASITAS WAHANA : %d\n",(*wahana).kapasitas);
-    printf("DESKRIPSI WAHANA : %s\n",(*wahana).deskripsi);
-    printf("STATE WAHANA : %d\n",(*wahana).state);
+boolean IsBuilt(Wahana wahana){
+    return wahana.lokasi.Submap!=-1;
 }

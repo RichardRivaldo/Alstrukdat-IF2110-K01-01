@@ -63,6 +63,8 @@ void bangunKiri(Peta * peta);
 //check apakah posisi sekarang di office
 boolean isInOffice(Peta * peta);
 
+boolean nearA(Peta * peta);
+
 Lokasi checkWahanaSurrounding(Peta * peta);
 
 #endif
