@@ -4,6 +4,11 @@
 // Library buatan sendiri:
 #include "prioqueuechar.c"
 #include "PrepCommand.c"
+#include "jam.h"
+#include "jam.c"
+
+// Variabel global
+JAM timeMain;
 
 void SistemQueue(PrioQueueChar *Q, MatriksOfString M){
     /* Sistem Queue yang akan digunakan dalam main phase */
@@ -190,6 +195,14 @@ int main(){
 
     /* Deklarasi Variabel */
     PrioQueueChar Q;
+
+    /* Deklarasi Jam */
+    timeMain = MakeJAM(9,0,0);
+
+    /* Waktu saat Main Phase */
+    while (JAMToDetik(timeMain) < 75600){
+        // Ntar fungsinya dimasukin disini ?
+    }
 
     /* Matriks Wahana */
     MatriksOfString M;
