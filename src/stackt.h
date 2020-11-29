@@ -14,10 +14,16 @@
 /* Nil adalah stack dengan elemen kosong . */
 typedef struct 
 {
+	POINT Koordinat;
+	int Submap; 
+} Lokasi;
+
+typedef struct 
+{
 	int Money;
 	int Time; //Dalam Detik, digunakan jam.h untuk menampilkan jam nanti
 	int Mat[5]; //Isinya [Semen,Baja,Sekrup,Kayu,Primogem]
-	POINT Wah[barisMatriksWahana];//Isinya koordinat untuk wahana [Rumah Kaca, Bianglala,ARungJeram, Roller Coaster, Impact]. <-1,-1> = Kosong;
+	Lokasi Wah[barisMatriksWahana];//Isinya koordinat untuk wahana [Rumah Kaca, Bianglala,ARungJeram, Roller Coaster, Impact]. <-1,-1> = Kosong;
 } Aksi;
 
 
@@ -50,7 +56,9 @@ void CreateEmpty (Stack *S);
 /* Ciri stack kosong : TOP bernilai Nil */
 
 void InitializeStack (Stack *S);
-/*Fungsi untuk main stack aksi*/
+/*I.S. sembarang
+F.S. Meninisialisasi Stack kosong dan Aksi kosong untuk digunakan dalam preparation phase*/
+
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack (Stack S);
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
@@ -81,10 +89,12 @@ int stackToRequiredMoney(Stack S);
 void stackToMaterial(Stack S, int material[5]);
 //Menjumlahkan semua material di stack
 
-void stackToLokasi(Stack S, POINT lokasiWahana[barisMatriksWahana]);
+void stackToLokasi(Stack S, Lokasi lokasiWahana[barisMatriksWahana]);
+//Memberi tahu lokasi yang telah dibangun stack
 
 void CreateEmptyAksi(Aksi *X);
 //Membuat Aksi dengan Money = 0, Time = 0, Mat =[0,0,0,0,0], Wah = [<-1,-1>*5]
 
-
+Lokasi CreateLokasi(POINT Koordinat,int Submap);
+//Membuat Lokasi dengan POINT Koordinat, dan int submap.
 #endif

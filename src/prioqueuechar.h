@@ -88,17 +88,7 @@ void PrintPrioQueueChar (PrioQueueChar Q);
 #
 */
 
-void RandomizePrio (Pengunjung X);
-    /* Melakukan randomize terhadap priority pengunjung */
-    /* I.S. Pengunjung tidak memiliki priority */
-    /* F.S. Pengunjung memiliki priority antara 0-100 */
-
-void RandomizeWahana (Pengunjung X);
-    /* Melakukan randomize terhadap wahana yang ingin dikunjungi pengunjung */
-    /* I.S. Pengunjung tidak memiliki tujuan wahana */
-    /* F.S. Pengunjung memiliki wahana yang ingin dituju */
-
-void SistemQueue(PrioQueueChar Q);
+void SistemQueue(PrioQueueChar *Q, MatriksOfString M);
     /* Sistem Queue yang akan digunakan dalam main phase */
 
 void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]);

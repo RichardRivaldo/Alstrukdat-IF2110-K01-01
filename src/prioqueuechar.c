@@ -92,7 +92,7 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
     if(NBElmtQ(*Q) == 1){
         Prio(*X) = Prio(InfoHead(*Q));
         for(int i = 0; i < 5; i++){
-            StringCopy(lengthStr, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            StringCopy(255, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = Nil; Tail(*Q) = Nil;
@@ -100,7 +100,7 @@ void Dequeue (PrioQueueChar * Q, Pengunjung * X){
     else{
         Prio(*X) = Prio(InfoHead(*Q));
         for(int i = 0; i < 5; i++){
-            StringCopy(lengthStr, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
+            StringCopy(255, (*X).wahana[i], Wahana(InfoHead(*Q))[i]);
         }
         Sabar(*X) = Sabar(InfoHead(*Q));
         Head(*Q) = (Head(*Q) % MaxElQ(*Q)) + 1;
@@ -143,27 +143,19 @@ void PrintPrioQueueChar (PrioQueueChar Q){
     }
 }
 
-void RandomizePrio (Pengunjung X){
-    /* Melakukan randomize terhadap priority pengunjung */
-    /* I.S. Pengunjung tidak memiliki priority */
-    /* F.S. Pengunjung memiliki priority antara 0-100 */
-    X.prio = rand() % 100 + 1;
-    if(X.prio == 1){
-        X.prio += 25;
-    }
-}
-
-void SistemQueue(PrioQueueChar Q){
+void SistemQueue(PrioQueueChar *Q, MatriksOfString M){
     /* Sistem Queue yang akan digunakan dalam main phase */
-    MakeEmpty(&Q, 5);
+    MakeEmpty(Q, 5);
+    Pengunjung Y;
     for(int i = 0; i < 5; i++){
-        Pengunjung X;
-        X.kesabaran = 20;
-        RandomizePrio(X);
+        Y.kesabaran = 20;
+        Y.prio = (rand() % 100 + 1);
         int jumlahWahana = (rand() % 5) + 1;
-        for(int j = 1; j < jumlahWahana; j++){
+        for(int j = 0; j < jumlahWahana; j++){
             int randomWahana = (rand() % 8);
+            StringCopy(255, Y.wahana[j], M.Mem[randomWahana][0]);
         }
+        Enqueue(Q, Y);
     }
 }
 
@@ -193,6 +185,10 @@ void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
             if(StringTrueCompare(255, Whn, nama)){
                 if(StringToInt(lengthStr, M.Mem[baris][1]) > 1){
                     if(StringToInt(lengthStr, M.Mem[baris][9]) == 1){
+                        int Cpc = StringToInt(255, M.Mem[baris][1]) - 1;
+                        char NewCpc[255];
+                        sprintf(NewCpc, "%d", Cpc);
+                        StringCopy(255, M.Mem[baris][1], NewCpc);
                         while(X.wahana[j][0] != '\0'){
                             StringCopy(255, X.wahana[j], X.wahana[j+1]);
                             j++;
@@ -233,10 +229,7 @@ void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]){
                     else{
                         X.prio -= 3;
                     }
-                    if(X.kesabaran > 0){
-                        Enqueue(Q, X);
-                    }
-                    else{
+                    if(X.kesabaran <= 0){
                         printf("The customer will now leave the Queue!\n");
                     }
                     Enqueue(Q, X);
@@ -275,37 +268,51 @@ void Repair(MatriksOfString M, char Whn[255]){
     }
 } 
 
-void cetakDetailWahana(Wahana* wahana){
-    printf("ID WAHANA : %d\n",(*wahana).id);
-    printf("NAMA WAHANA : %s\n",(*wahana).nama);
-    printf("TIPE WAHANA : %s\n",(*wahana).tipe);
-    printf("HARGA WAHANA : %d\n",(*wahana).harga);
-    printf("POINT WAHANA : ");
-    TulisPOINT((*wahana).point);
-    printf("\n");
-    printf("KAPASITAS WAHANA : %d\n",(*wahana).kapasitas);
-    printf("DESKRIPSI WAHANA : %s\n",(*wahana).deskripsi);
-    printf("STATE WAHANA : %d\n",(*wahana).state);
-}
 
 void Detail(MatriksOfString M, char Whn[255]){
     /* Mengecek detail wahana yang berada disekitar P  */
     /* Daftar kan wahana yang ada di sekitar player  */
     Wahana wahana;
+    BinTree P;
+    BinTree pohonUpgrade[5];
+    IsiPohonUpgrade(M, &pohonUpgrade);
+
+    StringCopy(255, wahana.nama, Whn);
     for (int i = 0; i < 8; i++){
         if(StringTrueCompare(255, M.Mem[i][0], Whn)){
-            StringCopy(255, wahana.nama, Whn);
-            cetakDetailWahana(&wahana);
+            printf("NAMA WAHANA      : %s\n", M.Mem[i][0]);
+            printf("HARGA WAHANA     : %d\n", StringToInt(255, M.Mem[i][2]));
+            printf("POINT WAHANA     : "); TulisPOINT(wahana.point); printf("\n");
+            printf("KAPASITAS WAHANA : %d\n", StringToInt(255, M.Mem[i][1]));
+            int Waktu = StringToInt(255, M.Mem[i][3]);
+            printf("DURASI WAHANA    : %d Menit\n", Waktu/60);
+            printf("DESKRIPSI WAHANA : %s\n", M.Mem[i][11]);
+            printf("STATE WAHANA     : %d\n", StringToInt(255, M.Mem[i][9]));
+            printf("Keterangan: 0 -> Wahana sedang rusak.\n");
+            printf("            1 -> Berfungsi dengan baik.\n");
+
+            for (int i = 0; i < 5; ++i){
+                if (SearchTree(pohonUpgrade[i], Whn)){
+                    P = pohonUpgrade[i]; /*Cari pohon dengan nama upgrade*/
+                }
+            }
+            printf("UPGRADE          : "), PrintHistory(M, P, Whn); printf("\n");
+            
+            printf("Total Dinaiki    : %d\n", StringToInt(255, M.Mem[i][10]));
+            printf("Penghasilan      : %d\n", StringToInt(255, M.Mem[i][11]));
+            printf("Dinaiki Harian   : %d\n", StringToInt(255, M.Mem[i][12]));
+            printf("Total Penghasilan: %d\n\n", StringToInt(255, M.Mem[i][13]));
         }
     }
 }
 
-/*
-void Office(){ 
-    /* Mengecek detail dan laporan Wahana 
-    int i;
-    cetakDetailWahana(wahana[i]);
-} */
+
+void Office(MatriksOfString M){ 
+    /* Mengecek detail dan laporan Wahana */
+    for(int i = 0; i < 8; i++){
+        Detail(M, M.Mem[i][0]);
+    }
+}
 
 
 void Prepare(PrioQueueChar *Q){
