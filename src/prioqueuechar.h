@@ -88,25 +88,4 @@ void PrintPrioQueueChar (PrioQueueChar Q);
 #
 */
 
-void SistemQueue(PrioQueueChar *Q, MatriksOfString M);
-    /* Sistem Queue yang akan digunakan dalam main phase */
-
-void Serve(PrioQueueChar *Q, MatriksOfString M, char Whn[255]);
-    /* Melayani pengunjung yang masuk sesuai dengan wahana yang ingin dituju */
-
-void ChanceRusak(MatriksOfString M, char Whn[255]);
-    /* Probabilitas Wahana rusak (25%) */
-
-void Repair(MatriksOfString M, char Whn[255]);
-    /* Mengembalikan state wahana */
-
-void Detail();
-    /* Mengecek detail wahana yang berada disekitar P */
-
-void Office();
-    /* Mengecek detail dan laporan Wahana */
-
-void Prepare(PrioQueueChar *Q);
-    /* Masuk ke dalam Prepare Phase */
-
 #endif

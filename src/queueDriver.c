@@ -1,6 +1,6 @@
 /* Driver PrioQueueChar */
 
-#include "prioqueuechar.c"
+#include "prioqueuechar.h"
 #include <stdio.h>
 
 int main(){
