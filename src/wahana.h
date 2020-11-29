@@ -41,8 +41,6 @@ extern Wahana CWahana;
 
 void displayWahana(Wahana wahana);
 
-void setQtyAll(Wahana * wahana);
-
 Wahana findWahana(Wahana listWahana[], char nama[]);
 
 boolean IsNotFull(Wahana wahana);

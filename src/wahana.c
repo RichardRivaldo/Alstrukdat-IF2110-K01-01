@@ -28,10 +28,6 @@ void displayWahana(Wahana wahana){
     printf("--------------------------------------------------\n");
 }
 
-void setQtyAll(Wahana * wahana){
-    (*wahana).qtyAll += (*wahana).qty;
-}
-
 Wahana findWahana(Wahana listWahana[], char nama[]){
     boolean found = false;
     Wahana target;
