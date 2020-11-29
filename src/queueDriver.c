@@ -86,5 +86,8 @@ int main(){
         printf("Queue not empty yet\n");
     }
 
+    /* Fungsi Detail */
+    Detail(M, "Halilintar");
+
     return 0;
 }

@@ -5,7 +5,6 @@
 // #include "peta.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "point.h"
 #include "PrepCommand.c"
 
 boolean IsEmptyQ (PrioQueueChar Q){
@@ -276,19 +275,33 @@ void Repair(MatriksOfString M, char Whn[255]){
     }
 } 
 
-/*
-void Detail(Peta * peta){
-    /* Mengecek detail wahana yang berada disekitar P 
-    int currentArea = (*peta).currentArea;
+void cetakDetailWahana(Wahana* wahana){
+    printf("ID WAHANA : %d\n",(*wahana).id);
+    printf("NAMA WAHANA : %s\n",(*wahana).nama);
+    printf("TIPE WAHANA : %s\n",(*wahana).tipe);
+    printf("HARGA WAHANA : %d\n",(*wahana).harga);
+    printf("POINT WAHANA : ");
+    TulisPOINT((*wahana).point);
+    printf("\n");
+    printf("KAPASITAS WAHANA : %d\n",(*wahana).kapasitas);
+    printf("DESKRIPSI WAHANA : %s\n",(*wahana).deskripsi);
+    printf("STATE WAHANA : %d\n",(*wahana).state);
+}
+
+void Detail(MatriksOfString M, char Whn[255]){
+    /* Mengecek detail wahana yang berada disekitar P  */
+    /* Daftar kan wahana yang ada di sekitar player  */
     Wahana wahana;
-    /* Ngecek sekitar player */
-    /* Daftar kan wahana yang ada di sekitar player 
-    cetakDetailWahana(wahana);
-} */
+    for (int i = 0; i < 8; i++){
+        if(StringTrueCompare(255, M.Mem[i][0], Whn)){
+            StringCopy(255, wahana.nama, Whn);
+            cetakDetailWahana(&wahana);
+        }
+    }
+}
 
 /*
-/*** Tunggu ada detail wahana ***/
-void Office();
+void Office(){ 
     /* Mengecek detail dan laporan Wahana 
     int i;
     cetakDetailWahana(wahana[i]);
